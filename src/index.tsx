@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './App/App';
 import reportWebVitals from './reportWebVitals';
+import generateAndStoreJwt from './generateAndStoreJwt';
+
+generateAndStoreJwt();
 
 ReactDOM.render(
   <React.StrictMode>
