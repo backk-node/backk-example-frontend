@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App/App';
+import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
-import generateAndStoreJwt from './generateAndStoreJwt';
+import storeJwtToSessionStorage from './jwt/storeJwtToSessionStorage';
+import generateJwt from './jwt/generateJwt';
 
-generateAndStoreJwt();
+const jwt = generateJwt();
+storeJwtToSessionStorage(jwt);
 
 ReactDOM.render(
   <React.StrictMode>
