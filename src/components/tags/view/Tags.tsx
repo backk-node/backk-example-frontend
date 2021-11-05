@@ -9,7 +9,7 @@ export default function Tags() {
 
   useEffect(() => {
     // noinspection JSIgnoredPromiseFromCall
-    getTagsByName('');
+    getTagsByName('11');
   }, []);
 
   if (tagsState.isGettingTags) {

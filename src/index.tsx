@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
-import storeJwtToSessionStorage from './jwt/storeJwtToSessionStorage';
-import generateJwt from './jwt/generateJwt';
+import storeAccessTokenToSessionStorage from './authorization/accesstoken/storeAccessTokenToSessionStorage';
+import generateAccessToken from './authorization/accesstoken/generateAccessToken';
 
-const jwt = generateJwt();
-storeJwtToSessionStorage(jwt);
+const jwt = generateAccessToken();
+storeAccessTokenToSessionStorage(jwt);
 
 ReactDOM.render(
   <React.StrictMode>

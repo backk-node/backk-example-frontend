@@ -1,6 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import { callRemoteService, Many, One, PromiseErrorOr } from 'backk-frontend-utils';
-import jwtStorageEncryptionKey from '../../../jwt/jwtStorageEncryptionKey';
+import accessTokenStorageEncryptionKey from '../../../authorization/accesstoken/accessTokenStorageEncryptionKey';
 import TagName from './args/TagName';
 import Tag from './entities/Tag';
 
@@ -11,17 +11,17 @@ export default class TagService {
       'tagService.createTag',
       tag,
       'default',
-      jwtStorageEncryptionKey
+      accessTokenStorageEncryptionKey
     );
   }
 
-  static getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
+  static async getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
     return callRemoteService(
       'backk-example-microservice',
       'tagService.getTagsByName',
       tagName,
       'default',
-      jwtStorageEncryptionKey
+      accessTokenStorageEncryptionKey
     );
   }
 }
