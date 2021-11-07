@@ -2,16 +2,18 @@
 import {
   IsAnyString,
   IsDataUri,
-  IsOneOf,
+  IsFloat,
   IsStringOrObjectId,
   IsUndefined,
   Lengths,
   MaxLength,
   MaxLengthAndMatches,
+  MinMax,
   ValidateIf,
+  Values,
 } from 'backk-frontend-utils'; // This is an auto-generated file from the respective .type file
 
-export default class FollowingUserAccount {
+export default class FavoriteSalesItem {
   @IsUndefined({
     groups: ['__backk_create__'],
   })
@@ -23,24 +25,35 @@ export default class FollowingUserAccount {
   })
   _id!: string;
 
-  @MaxLength(Lengths._128)
+  @MaxLength(Lengths._64)
   @IsAnyString()
-  @ValidateIf((o: any) => o.displayName !== undefined, {
+  @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
-  displayName!: string;
+  title!: string;
 
-  @MaxLength(Lengths._256)
-  @IsOneOf('userAccountsService.getCities', 'Tampere')
-  @ValidateIf((o: any) => o.city !== undefined, {
+  @IsFloat(2)
+  @MinMax(0, Values._1B)
+  @ValidateIf((o: any) => o.price !== undefined, {
     groups: ['__backk_update__'],
   })
-  city!: string;
+  price!: number;
+
+  @IsFloat(2)
+  @MinMax(0, Values._1B)
+  @IsUndefined({
+    groups: ['__backk_create__', '__backk_update__'],
+  })
+  @ValidateIf((o: any) => o.previousPrice !== null)
+  @ValidateIf((o: any) => o.previousPrice !== undefined, {
+    groups: ['__backk_update__'],
+  })
+  previousPrice!: number | null;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ValidateIf((o: any) => o.imageDataUri !== undefined, {
+  @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  imageDataUri!: string;
+  primaryImageDataUri!: string;
 }

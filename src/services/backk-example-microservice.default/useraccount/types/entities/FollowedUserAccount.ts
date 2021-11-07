@@ -14,7 +14,6 @@ import {
   ValidateNested,
 } from 'backk-frontend-utils'; // This is an auto-generated file from the respective .type file
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
-import getCities from '../../validation/getCities';
 
 export default class FollowedUserAccount {
   @IsUndefined({
@@ -36,7 +35,7 @@ export default class FollowedUserAccount {
   displayName!: string;
 
   @MaxLength(Lengths._256)
-  @IsOneOf(getCities, 'userAccountsService.getCities', 'Tampere')
+  @IsOneOf('userAccountsService.getCities', 'Tampere')
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })

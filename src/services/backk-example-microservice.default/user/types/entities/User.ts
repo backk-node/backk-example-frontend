@@ -16,7 +16,6 @@ import {
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
 import FollowedUserAccount from '../../../useraccount/types/entities/FollowedUserAccount';
 import FollowingUserAccount from '../../../useraccount/types/entities/FollowingUserAccount';
-import getCities from '../../../useraccount/validation/getCities';
 
 export default class User {
   @IsUndefined({
@@ -38,7 +37,7 @@ export default class User {
   displayName!: string;
 
   @MaxLength(Lengths._256)
-  @IsOneOf(getCities, 'userAccountsService.getCities', 'Tampere')
+  @IsOneOf('userAccountsService.getCities', 'Tampere')
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })

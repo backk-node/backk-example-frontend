@@ -22,7 +22,6 @@ import _ from 'lodash';
 import Order from '../../../order/types/entities/Order';
 import FavoriteSalesItem from '../../../salesitem/types/entities/FavoriteSalesItem';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
-import getCities from '../../validation/getCities';
 import FollowedUserAccount from './FollowedUserAccount';
 import FollowingUserAccount from './FollowingUserAccount';
 import PaymentMethod from './PaymentMethod';
@@ -71,7 +70,7 @@ export default class UserAccount extends BaseUserAccount {
   postalCode!: string;
 
   @MaxLength(Lengths._256)
-  @IsOneOf(getCities, 'userAccountsService.getCities', 'Tampere')
+  @IsOneOf('userAccountsService.getCities', 'Tampere')
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
