@@ -15,7 +15,7 @@ export default class UserService {
   static async getUsers(getUsersArg: GetUsersArg): PromiseErrorOr<Many<User>> {
     try {
       await validateServiceFunctionArgumentOrThrow(getUsersArg, GetUsersArg, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -36,7 +36,7 @@ export default class UserService {
   static async getUser(_id: _Id): PromiseErrorOr<One<User>> {
     try {
       await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {

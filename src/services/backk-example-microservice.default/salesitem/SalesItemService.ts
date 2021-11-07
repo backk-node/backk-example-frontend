@@ -19,7 +19,7 @@ export default class SalesItemService {
   static async createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
     try {
       await validateServiceFunctionArgumentOrThrow(salesItem, SalesItem, 'create');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -40,7 +40,7 @@ export default class SalesItemService {
   static async getSalesItems(getSalesItemsArg: GetSalesItemsArg): PromiseErrorOr<Many<SalesItem>> {
     try {
       await validateServiceFunctionArgumentOrThrow(getSalesItemsArg, GetSalesItemsArg, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -67,7 +67,7 @@ export default class SalesItemService {
         GetSalesItemsByUserDefinedFiltersArg,
         'other'
       );
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -90,7 +90,7 @@ export default class SalesItemService {
   ): PromiseErrorOr<Many<FollowedUserSalesItem>> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -111,7 +111,7 @@ export default class SalesItemService {
   static async getSalesItem(_id: _Id): PromiseErrorOr<One<SalesItem>> {
     try {
       await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -132,7 +132,7 @@ export default class SalesItemService {
   static async followSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_idAndUserAccountId, _IdAndUserAccountId, 'update');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -153,7 +153,7 @@ export default class SalesItemService {
   static async unfollowSalesItemPriceChange(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_idAndUserAccountId, _IdAndUserAccountId, 'update');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -174,7 +174,7 @@ export default class SalesItemService {
   static async toggleLikeSalesItem(_idAndUserAccountId: _IdAndUserAccountId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_idAndUserAccountId, _IdAndUserAccountId, 'update');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -195,7 +195,7 @@ export default class SalesItemService {
   static async updateSalesItem(salesItem: SalesItem): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(salesItem, SalesItem, 'update');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -216,7 +216,7 @@ export default class SalesItemService {
   static async deleteSalesItem(_id: _Id): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {

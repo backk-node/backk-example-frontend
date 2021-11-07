@@ -14,7 +14,7 @@ export default class ShoppingCartService {
   static async getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -41,7 +41,7 @@ export default class ShoppingCartService {
         UserAccountIdAndSalesItemId,
         'update'
       );
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -68,7 +68,7 @@ export default class ShoppingCartService {
         UserAccountIdAndSalesItemId,
         'update'
       );
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -89,7 +89,7 @@ export default class ShoppingCartService {
   static async emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {

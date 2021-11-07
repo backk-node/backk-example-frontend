@@ -19,7 +19,7 @@ export default class UserAccountService {
   static async createUserAccount(userAccount: UserAccount): PromiseErrorOr<One<UserAccount>> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccount, UserAccount, 'create');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -40,7 +40,7 @@ export default class UserAccountService {
   static async getIdBySubject(subject: Subject): PromiseErrorOr<One<_Id>> {
     try {
       await validateServiceFunctionArgumentOrThrow(subject, Subject, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -61,7 +61,7 @@ export default class UserAccountService {
   static async getUserAccount(getUserAccountArg: GetUserAccountArg): PromiseErrorOr<One<UserAccount>> {
     try {
       await validateServiceFunctionArgumentOrThrow(getUserAccountArg, GetUserAccountArg, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -86,7 +86,7 @@ export default class UserAccountService {
         _IdAndFollowedUserAccountId,
         'update'
       );
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -111,7 +111,7 @@ export default class UserAccountService {
         _IdAndFollowedUserAccountId,
         'update'
       );
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -132,7 +132,7 @@ export default class UserAccountService {
   static async addToFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_idAndSalesItemId, _IdAndSalesItemId, 'update');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -153,7 +153,7 @@ export default class UserAccountService {
   static async removeFromFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_idAndSalesItemId, _IdAndSalesItemId, 'update');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -174,7 +174,7 @@ export default class UserAccountService {
   static async updateUserAccount(userAccount: UserAccount): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccount, UserAccount, 'update');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -195,7 +195,7 @@ export default class UserAccountService {
   static async deleteUserAccount(_id: _Id): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {

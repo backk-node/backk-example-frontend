@@ -14,7 +14,7 @@ export default class TagService {
   static async createTag(tag: Tag): PromiseErrorOr<One<Tag>> {
     try {
       await validateServiceFunctionArgumentOrThrow(tag, Tag, 'create');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
@@ -35,7 +35,7 @@ export default class TagService {
   static async getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
     try {
       await validateServiceFunctionArgumentOrThrow(tagName, TagName, 'other');
-    } catch (error) {
+    } catch (error: any) {
       return [
         null,
         {
