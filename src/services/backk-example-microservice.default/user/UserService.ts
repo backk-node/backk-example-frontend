@@ -5,15 +5,16 @@ import {
   One,
   PromiseErrorOr,
   validateServiceFunctionArgumentOrThrow,
+  _Id,
 } from 'backk-frontend-utils';
 import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
-import TagName from './args/TagName';
-import Tag from './entities/Tag';
+import GetUsersArg from './/types/args/GetUsersArg';
+import User from './types/entities/User';
 
-export default class TagService {
-  static async createTag(tag: Tag): PromiseErrorOr<One<Tag>> {
+export default class UserService {
+  static async getUsers(getUsersArg: GetUsersArg): PromiseErrorOr<Many<User>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(tag, Tag, 'create');
+      await validateServiceFunctionArgumentOrThrow(getUsersArg, GetUsersArg, 'other');
     } catch (error) {
       return [
         null,
@@ -25,16 +26,16 @@ export default class TagService {
 
     return callRemoteService(
       'backk-example-microservice',
-      'tagService.createTag',
-      tag,
+      'userService.getUsers',
+      getUsersArg,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
   }
 
-  static async getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
+  static async getUser(_id: _Id): PromiseErrorOr<One<User>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(tagName, TagName, 'other');
+      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
     } catch (error) {
       return [
         null,
@@ -46,8 +47,8 @@ export default class TagService {
 
     return callRemoteService(
       'backk-example-microservice',
-      'tagService.getTagsByName',
-      tagName,
+      'userService.getUser',
+      _id,
       'default',
       EncryptionKeyManager.accessTokenStorageEncryptionKey
     );
