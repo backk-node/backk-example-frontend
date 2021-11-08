@@ -6,7 +6,7 @@ import {
   UserAccountId,
   validateServiceFunctionArgumentOrThrow,
 } from 'backk-frontend-utils';
-import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
+import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
 import ShoppingCart from './types/entities/ShoppingCart';
 
@@ -28,7 +28,8 @@ export default class ShoppingCartService {
       'shoppingCartService.getShoppingCart',
       userAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -55,7 +56,8 @@ export default class ShoppingCartService {
       'shoppingCartService.addToShoppingCart',
       userAccountIdAndSalesItemId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -82,7 +84,8 @@ export default class ShoppingCartService {
       'shoppingCartService.removeFromShoppingCart',
       userAccountIdAndSalesItemId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -103,7 +106,8 @@ export default class ShoppingCartService {
       'shoppingCartService.emptyShoppingCart',
       userAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 }

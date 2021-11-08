@@ -9,7 +9,7 @@ import {
   Value,
   _Id,
 } from 'backk-frontend-utils';
-import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
+import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import GetUserAccountArg from './types/args/GetUserAccountArg';
 import _IdAndFollowedUserAccountId from './types/args/_IdAndFollowedUserAccountId';
 import _IdAndSalesItemId from './types/args/_IdAndSalesItemId';
@@ -33,7 +33,8 @@ export default class UserAccountService {
       'userAccountService.createUserAccount',
       userAccount,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -54,7 +55,8 @@ export default class UserAccountService {
       'userAccountService.getIdBySubject',
       subject,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -75,7 +77,8 @@ export default class UserAccountService {
       'userAccountService.getUserAccount',
       getUserAccountArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -100,7 +103,8 @@ export default class UserAccountService {
       'userAccountService.followUser',
       _idAndFollowedUserAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -125,7 +129,8 @@ export default class UserAccountService {
       'userAccountService.unfollowUser',
       _idAndFollowedUserAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -146,7 +151,8 @@ export default class UserAccountService {
       'userAccountService.addToFavoriteSalesItems',
       _idAndSalesItemId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -167,7 +173,8 @@ export default class UserAccountService {
       'userAccountService.removeFromFavoriteSalesItems',
       _idAndSalesItemId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -188,7 +195,8 @@ export default class UserAccountService {
       'userAccountService.updateUserAccount',
       userAccount,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -209,7 +217,8 @@ export default class UserAccountService {
       'userAccountService.deleteUserAccount',
       _id,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -219,7 +228,8 @@ export default class UserAccountService {
       'userAccountService.getCities',
       undefined,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 }

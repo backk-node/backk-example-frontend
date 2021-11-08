@@ -9,7 +9,8 @@ import {
   MaxLength,
   MaxLengthAndMatches,
   ValidateIf,
-} from 'backk-frontend-utils'; // This is an auto-generated file from the respective .type file
+} from 'backk-frontend-utils';
+import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
 
 export default class FollowingUserAccount {
   @IsUndefined({
@@ -31,7 +32,14 @@ export default class FollowingUserAccount {
   displayName!: string;
 
   @MaxLength(Lengths._256)
-  @IsOneOf('userAccountsService.getCities', 'Tampere')
+  @IsOneOf(
+    'backk-example-microservice',
+    'default',
+    MicroserviceOptions.fqdn,
+    MicroserviceOptions.accessTokenStorageEncryptionKey,
+    'userAccountsService.getCities',
+    'Tampere'
+  )
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })

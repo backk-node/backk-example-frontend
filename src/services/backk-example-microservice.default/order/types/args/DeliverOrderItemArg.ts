@@ -11,7 +11,7 @@ import {
   Min,
   Type,
   ValidateNested,
-} from 'backk-frontend-utils'; // This is an auto-generated file from the respective .type file
+} from 'backk-frontend-utils';
 import OrderItemForDelivery from './OrderItemForDelivery';
 
 export default class DeliverOrderItemArg {

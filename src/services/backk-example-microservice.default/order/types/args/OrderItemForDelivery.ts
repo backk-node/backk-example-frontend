@@ -7,7 +7,7 @@ import {
   MaxLengthAndMatches,
   ShouldBeTrueForObject,
   ValidateIf,
-} from 'backk-frontend-utils'; // This is an auto-generated file from the respective .type file
+} from 'backk-frontend-utils';
 import OrderItem from '../entities/OrderItem';
 
 export default class OrderItemForDelivery {

@@ -6,7 +6,7 @@ import {
   PromiseErrorOr,
   validateServiceFunctionArgumentOrThrow,
 } from 'backk-frontend-utils';
-import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
+import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import TagName from './args/TagName';
 import Tag from './entities/Tag';
 
@@ -28,7 +28,8 @@ export default class TagService {
       'tagService.createTag',
       tag,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -49,7 +50,8 @@ export default class TagService {
       'tagService.getTagsByName',
       tagName,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 }

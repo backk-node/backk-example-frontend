@@ -7,7 +7,7 @@ import {
   validateServiceFunctionArgumentOrThrow,
   _Id,
 } from 'backk-frontend-utils';
-import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
+import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import GetUsersArg from './/types/args/GetUsersArg';
 import User from './types/entities/User';
 
@@ -29,7 +29,8 @@ export default class UserService {
       'userService.getUsers',
       getUsersArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -50,7 +51,8 @@ export default class UserService {
       'userService.getUser',
       _id,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 }

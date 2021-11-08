@@ -6,7 +6,7 @@ import {
   validateServiceFunctionArgumentOrThrow,
   _Id,
 } from 'backk-frontend-utils';
-import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
+import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import DeliverOrderItemArg from './types/args/DeliverOrderItemArg';
 import PayOrderArg from './types/args/PayOrderArg';
 import PlaceOrderArg from './types/args/PlaceOrderArg';
@@ -32,7 +32,8 @@ export default class OrderService {
       'orderService.placeOrder',
       placeOrderArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -53,7 +54,8 @@ export default class OrderService {
       'orderService.getOrder',
       _id,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -74,7 +76,8 @@ export default class OrderService {
       'orderService.discardUnpaidOrder',
       _id,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -95,7 +98,8 @@ export default class OrderService {
       'orderService.payOrder',
       payOrderArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -116,7 +120,8 @@ export default class OrderService {
       'orderService.removeUndeliveredOrderItem',
       removeOrderItemArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -137,7 +142,8 @@ export default class OrderService {
       'orderService.deleteUndeliveredPaidOrder',
       _id,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -158,7 +164,8 @@ export default class OrderService {
       'orderService.deliverOrderItem',
       deliverOrderItemArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -179,7 +186,8 @@ export default class OrderService {
       'orderService.receiveOrderItem',
       _idAndOrderItemId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -200,7 +208,8 @@ export default class OrderService {
       'orderService.returnOrderItem',
       _idAndOrderItemId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -221,7 +230,8 @@ export default class OrderService {
       'orderService.receiveReturnedOrderItem',
       _idAndOrderItemId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 }

@@ -9,7 +9,7 @@ import {
   _Id,
   _IdAndUserAccountId,
 } from 'backk-frontend-utils';
-import EncryptionKeyManager from '../_backk/EncryptionKeyManager';
+import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import GetSalesItemsArg from './types/args/GetSalesItemsArg';
 import GetSalesItemsByUserDefinedFiltersArg from './types/args/GetSalesItemsByUserDefinedFiltersArg';
 import SalesItem from './types/entities/SalesItem';
@@ -33,7 +33,8 @@ export default class SalesItemService {
       'salesItemService.createSalesItem',
       salesItem,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -54,7 +55,8 @@ export default class SalesItemService {
       'salesItemService.getSalesItems',
       getSalesItemsArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -81,7 +83,8 @@ export default class SalesItemService {
       'salesItemService.getSalesItemsByUserDefinedFilters',
       getSalesItemsByUserDefinedFiltersArg,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -104,7 +107,8 @@ export default class SalesItemService {
       'salesItemService.getFollowedUsersSalesItems',
       userAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -125,7 +129,8 @@ export default class SalesItemService {
       'salesItemService.getSalesItem',
       _id,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -146,7 +151,8 @@ export default class SalesItemService {
       'salesItemService.followSalesItemPriceChange',
       _idAndUserAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -167,7 +173,8 @@ export default class SalesItemService {
       'salesItemService.unfollowSalesItemPriceChange',
       _idAndUserAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -188,7 +195,8 @@ export default class SalesItemService {
       'salesItemService.toggleLikeSalesItem',
       _idAndUserAccountId,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -209,7 +217,8 @@ export default class SalesItemService {
       'salesItemService.updateSalesItem',
       salesItem,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
@@ -230,7 +239,8 @@ export default class SalesItemService {
       'salesItemService.deleteSalesItem',
       _id,
       'default',
-      EncryptionKeyManager.accessTokenStorageEncryptionKey
+      MicroserviceOptions.fqdn,
+      MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 }

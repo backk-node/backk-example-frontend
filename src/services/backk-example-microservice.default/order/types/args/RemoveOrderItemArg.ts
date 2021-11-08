@@ -7,7 +7,7 @@ import {
   MaxLengthAndMatches,
   Min,
   Values,
-} from 'backk-frontend-utils'; // This is an auto-generated file from the respective .type file
+} from 'backk-frontend-utils';
 
 export default class RemoveOrderItemArg {
   @IsUndefined({
