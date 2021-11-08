@@ -5,9 +5,12 @@ import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
 import storeAccessTokenToSessionStorage from './authorization/accesstoken/storeAccessTokenToSessionStorage';
 import generateAccessToken from './authorization/accesstoken/generateAccessToken';
+import MicroserviceOptions from './services/backk-example-microservice.default/_backk/MicroserviceOptions';
+import accessTokenStorageEncryptionKey from './authorization/accesstoken/accessTokenStorageEncryptionKey';
 
 const jwt = generateAccessToken();
 storeAccessTokenToSessionStorage(jwt);
+MicroserviceOptions.setAccessTokenStorageEncryptionKey(accessTokenStorageEncryptionKey);
 
 ReactDOM.render(
   <React.StrictMode>
