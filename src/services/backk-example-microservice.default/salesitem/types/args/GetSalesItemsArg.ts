@@ -12,7 +12,9 @@ import {
   MaxLength,
   MinMax,
   SortBy,
+  Type,
   ValidateIf,
+  ValidateNested,
 } from 'backk-frontend-utils';
 import { Area } from '../enums/Area';
 import { Category } from '../enums/Category';
@@ -65,6 +67,10 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   @IsInstance(SortBy, {
     each: true,
   })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => SortBy)
   sortBys: SortBy[] = [
     {
       fieldName: '_id',

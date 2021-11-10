@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { validateServiceFunctionArgumentOrThrow } from 'backk-frontend-utils';
+import { useBackkState, validateServiceFunctionArgument } from 'backk-frontend-utils';
 import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
 
 export default function CreateSalesItem() {
-  const [newSalesItem, setNewSalesItem] = useState({
+  const [salesItem, updateSalesItemIfNotError] = useBackkState({
     title: '',
     description: '',
   });
@@ -11,32 +11,20 @@ export default function CreateSalesItem() {
   const [errorMessages, setErrorMessages] = useState({
     title: null,
     description: null,
-  });
+  } as { [key: string]: string | null });
 
   const changeTitle = async ({ currentTarget: { value: title } }: React.FormEvent<HTMLInputElement>) => {
-    try {
-      await validateServiceFunctionArgumentOrThrow({ title }, SalesItem, 'other');
-      setNewSalesItem({
-        ...newSalesItem,
-        title,
-      });
-    } catch (error: any) {
-      setErrorMessages({ ...errorMessages, title: error.message });
-    }
+    const errorMessage = await validateServiceFunctionArgument({ title }, SalesItem, 'other');
+    setErrorMessages({ ...errorMessages, title: errorMessage });
+    updateSalesItemIfNotError({ title }, errorMessage);
   };
 
   const changeDescription = async ({
     currentTarget: { value: description },
   }: React.FormEvent<HTMLInputElement>) => {
-    try {
-      await validateServiceFunctionArgumentOrThrow({ description }, SalesItem, 'other');
-      setNewSalesItem({
-        ...newSalesItem,
-        description,
-      });
-    } catch (error: any) {
-      setErrorMessages({ ...errorMessages, description: error.message });
-    }
+    const errorMessage = await validateServiceFunctionArgument(salesItem, SalesItem, 'other');
+    setErrorMessages({ ...errorMessages, description: errorMessage });
+    updateSalesItemIfNotError({ description }, errorMessage);
   };
 
   return (

@@ -4,7 +4,9 @@ import {
   ArrayMinSize,
   IsInstance,
   IsUndefined,
+  Type,
   ValidateIf,
+  ValidateNested,
   _IdAndUserAccountId,
 } from 'backk-frontend-utils';
 import ShoppingCartOrOrderSalesItem from './ShoppingCartOrOrderSalesItem';
@@ -18,6 +20,12 @@ export default class ShoppingCart extends _IdAndUserAccountId {
   @IsInstance(ShoppingCartOrOrderSalesItem, {
     each: true,
   })
-  @ValidateIf((o: any) => o.salesItems !== undefined)
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => ShoppingCartOrOrderSalesItem)
+  @ValidateIf((o: any) => o.salesItems !== undefined, {
+    groups: ['__backk_update__'],
+  })
   salesItems!: ShoppingCartOrOrderSalesItem[];
 }

@@ -9,6 +9,8 @@ import {
   Max,
   MaxLengthAndMatches,
   Min,
+  Type,
+  ValidateNested,
 } from 'backk-frontend-utils';
 import OrderItemForDelivery from './OrderItemForDelivery';
 
@@ -39,5 +41,9 @@ export default class DeliverOrderItemArg {
   @IsInstance(OrderItemForDelivery, {
     each: true,
   })
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => OrderItemForDelivery)
   orderItems!: OrderItemForDelivery[];
 }

@@ -9,7 +9,9 @@ import {
   Lengths,
   MaxLength,
   MaxLengthAndMatches,
+  Type,
   ValidateIf,
+  ValidateNested,
 } from 'backk-frontend-utils';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
 import FollowedUserAccount from '../../../useraccount/types/entities/FollowedUserAccount';
@@ -30,7 +32,9 @@ export default class User {
 
   @MaxLength(Lengths._128)
   @IsAnyString()
-  @ValidateIf((o: any) => o.displayName !== undefined)
+  @ValidateIf((o: any) => o.displayName !== undefined, {
+    groups: ['__backk_update__'],
+  })
   displayName!: string;
 
   @MaxLength(Lengths._256)
@@ -42,12 +46,16 @@ export default class User {
     'userAccountsService.getCities',
     'Tampere'
   )
-  @ValidateIf((o: any) => o.city !== undefined)
+  @ValidateIf((o: any) => o.city !== undefined, {
+    groups: ['__backk_update__'],
+  })
   city!: string;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ValidateIf((o: any) => o.imageDataUri !== undefined)
+  @ValidateIf((o: any) => o.imageDataUri !== undefined, {
+    groups: ['__backk_update__'],
+  })
   imageDataUri!: string;
 
   @IsUndefined({
@@ -56,7 +64,13 @@ export default class User {
   @IsInstance(OwnSalesItem, {
     each: true,
   })
-  @ValidateIf((o: any) => o.ownSalesItems !== undefined)
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => OwnSalesItem)
+  @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
+    groups: ['__backk_update__'],
+  })
   ownSalesItems!: OwnSalesItem[];
 
   @IsUndefined({
@@ -65,7 +79,13 @@ export default class User {
   @IsInstance(FollowedUserAccount, {
     each: true,
   })
-  @ValidateIf((o: any) => o.followedUserAccounts !== undefined)
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => FollowedUserAccount)
+  @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
+    groups: ['__backk_update__'],
+  })
   followedUserAccounts!: FollowedUserAccount[];
 
   @IsUndefined({
@@ -74,6 +94,12 @@ export default class User {
   @IsInstance(FollowingUserAccount, {
     each: true,
   })
-  @ValidateIf((o: any) => o.followingUserAccounts !== undefined)
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => FollowingUserAccount)
+  @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
+    groups: ['__backk_update__'],
+  })
   followingUserAccounts!: FollowingUserAccount[];
 }
