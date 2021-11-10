@@ -36,9 +36,7 @@ export default class OwnSalesItem {
     groups: ['__backk_none__'],
   })
   @Type(() => Date)
-  @ValidateIf((o: any) => o.createdAtTimestamp !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.createdAtTimestamp !== undefined)
   createdAtTimestamp!: Date;
 
   @IsUndefined({
@@ -48,23 +46,17 @@ export default class OwnSalesItem {
     groups: ['__backk_none__'],
   })
   @Type(() => Date)
-  @ValidateIf((o: any) => o.lastModifiedTimestamp !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.lastModifiedTimestamp !== undefined)
   lastModifiedTimestamp!: Date;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ValidateIf((o: any) => o.title !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.title !== undefined)
   title!: string;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  @ValidateIf((o: any) => o.price !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.price !== undefined)
   price!: number;
 
   @IsFloat(2)
@@ -73,16 +65,12 @@ export default class OwnSalesItem {
     groups: ['__backk_create__', '__backk_update__'],
   })
   @ValidateIf((o: any) => o.previousPrice !== null)
-  @ValidateIf((o: any) => o.previousPrice !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.previousPrice !== undefined)
   previousPrice!: number | null;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.primaryImageDataUri !== undefined)
   primaryImageDataUri!: string;
 
   @MaxLength(Lengths._1M)
@@ -90,17 +78,13 @@ export default class OwnSalesItem {
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
-  @ValidateIf((o: any) => o.primaryImageThumbnailDataUri !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.primaryImageThumbnailDataUri !== undefined)
   primaryImageThumbnailDataUri!: string;
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
   @IsIn(['forSale', 'reserved', 'sold'])
-  @ValidateIf((o: any) => o.state !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.state !== undefined)
   state!: SalesItemState;
 }

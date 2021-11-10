@@ -18,6 +18,11 @@ export default function Tags() {
     return <div>{'Getting tags failed: ' + tagsState.lastError.message}</div>;
   } else {
     const tags = tagsState.tags.map((tag) => <li key={tag._id}>{tag.name}</li>);
-    return <div className="tags">{tags}</div>;
+    return (
+      <React.Fragment>
+        <div>Tags:</div>
+        <div className="tags">{tags}</div>
+      </React.Fragment>
+    );
   }
 }

@@ -27,23 +27,17 @@ export default class ShoppingCartOrOrderSalesItem {
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ValidateIf((o: any) => o.title !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.title !== undefined)
   title!: string;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  @ValidateIf((o: any) => o.price !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.price !== undefined)
   price!: number;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  @ValidateIf((o: any) => o.shippingCost !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.shippingCost !== undefined)
   shippingCost!: number;
 
   @MaxLength(Lengths._1M)
@@ -51,8 +45,6 @@ export default class ShoppingCartOrOrderSalesItem {
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
-  @ValidateIf((o: any) => o.primaryImageThumbnailDataUri !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.primaryImageThumbnailDataUri !== undefined)
   primaryImageThumbnailDataUri!: string;
 }

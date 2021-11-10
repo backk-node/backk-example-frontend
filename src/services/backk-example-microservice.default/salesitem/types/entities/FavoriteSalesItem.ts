@@ -27,16 +27,12 @@ export default class FavoriteSalesItem {
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ValidateIf((o: any) => o.title !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.title !== undefined)
   title!: string;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  @ValidateIf((o: any) => o.price !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.price !== undefined)
   price!: number;
 
   @IsFloat(2)
@@ -45,15 +41,11 @@ export default class FavoriteSalesItem {
     groups: ['__backk_create__', '__backk_update__'],
   })
   @ValidateIf((o: any) => o.previousPrice !== null)
-  @ValidateIf((o: any) => o.previousPrice !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.previousPrice !== undefined)
   previousPrice!: number | null;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.primaryImageDataUri !== undefined)
   primaryImageDataUri!: string;
 }

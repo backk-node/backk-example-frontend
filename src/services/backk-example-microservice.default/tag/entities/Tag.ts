@@ -4,8 +4,6 @@ import { IsAnyString, Lengths, MaxLength, ValidateIf, _Id } from 'backk-frontend
 export default class Tag extends _Id {
   @MaxLength(Lengths._64)
   @IsAnyString()
-  @ValidateIf((o: any) => o.name !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.name !== undefined)
   name!: string;
 }

@@ -5,16 +5,20 @@ import {
   One,
   PromiseErrorOr,
   validateServiceFunctionArgumentOrThrow,
-  _Id,
 } from 'backk-frontend-utils';
 import MicroserviceOptions from '../_backk/MicroserviceOptions';
-import GetUsersArg from './/types/args/GetUsersArg';
-import User from './types/entities/User';
+import TagName from './args/TagName';
+import Tag from './entities/Tag';
 
-export default class UserService {
-  static async getUsers(getUsersArg: GetUsersArg): PromiseErrorOr<Many<User>> {
+export interface TagService {
+  createTag(arg: Tag): PromiseErrorOr<One<Tag>>;
+  getTagsByName(arg: TagName): PromiseErrorOr<Many<Tag>>;
+}
+
+export class TagServiceImpl implements TagService {
+  async createTag(tag: Tag): PromiseErrorOr<One<Tag>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(getUsersArg, GetUsersArg, 'other');
+      await validateServiceFunctionArgumentOrThrow(tag, Tag, 'create');
     } catch (error: any) {
       return [
         null,
@@ -26,17 +30,17 @@ export default class UserService {
 
     return callRemoteService(
       'backk-example-microservice',
-      'userService.getUsers',
-      getUsersArg,
+      'tagService.createTag',
+      tag,
       'default',
       MicroserviceOptions.fqdn,
       MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 
-  static async getUser(_id: _Id): PromiseErrorOr<One<User>> {
+  async getTagsByName(tagName: TagName): PromiseErrorOr<Many<Tag>> {
     try {
-      await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
+      await validateServiceFunctionArgumentOrThrow(tagName, TagName, 'other');
     } catch (error: any) {
       return [
         null,
@@ -48,11 +52,14 @@ export default class UserService {
 
     return callRemoteService(
       'backk-example-microservice',
-      'userService.getUser',
-      _id,
+      'tagService.getTagsByName',
+      tagName,
       'default',
       MicroserviceOptions.fqdn,
       MicroserviceOptions.accessTokenStorageEncryptionKey
     );
   }
 }
+
+const tagService = new TagServiceImpl();
+export default tagService;

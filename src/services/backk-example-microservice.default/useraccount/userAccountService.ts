@@ -15,8 +15,26 @@ import _IdAndFollowedUserAccountId from './types/args/_IdAndFollowedUserAccountI
 import _IdAndSalesItemId from './types/args/_IdAndSalesItemId';
 import UserAccount from './types/entities/UserAccount';
 
-export default class UserAccountService {
-  static async createUserAccount(userAccount: UserAccount): PromiseErrorOr<One<UserAccount>> {
+/** Users service doc goes here
+ * - jee
+ * - jaa
+ * **/
+export interface UserAccountService {
+  // createUserAccount documentation goes here..
+  createUserAccount(arg: UserAccount): PromiseErrorOr<One<UserAccount>>;
+  getIdBySubject(arg: Subject): PromiseErrorOr<One<_Id>>;
+  getUserAccount(arg: GetUserAccountArg): PromiseErrorOr<One<UserAccount>>;
+  followUser(arg: _IdAndFollowedUserAccountId): PromiseErrorOr<null>;
+  unfollowUser(arg: _IdAndFollowedUserAccountId): PromiseErrorOr<null>;
+  addToFavoriteSalesItems(arg: _IdAndSalesItemId): PromiseErrorOr<null>;
+  removeFromFavoriteSalesItems(arg: _IdAndSalesItemId): PromiseErrorOr<null>;
+  updateUserAccount(arg: UserAccount): PromiseErrorOr<null>;
+  deleteUserAccount(arg: _Id): PromiseErrorOr<null>;
+  getCities(): PromiseErrorOr<Many<Value>>;
+}
+
+export class UserAccountServiceImpl implements UserAccountService {
+  async createUserAccount(userAccount: UserAccount): PromiseErrorOr<One<UserAccount>> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccount, UserAccount, 'create');
     } catch (error: any) {
@@ -38,7 +56,7 @@ export default class UserAccountService {
     );
   }
 
-  static async getIdBySubject(subject: Subject): PromiseErrorOr<One<_Id>> {
+  async getIdBySubject(subject: Subject): PromiseErrorOr<One<_Id>> {
     try {
       await validateServiceFunctionArgumentOrThrow(subject, Subject, 'other');
     } catch (error: any) {
@@ -60,7 +78,7 @@ export default class UserAccountService {
     );
   }
 
-  static async getUserAccount(getUserAccountArg: GetUserAccountArg): PromiseErrorOr<One<UserAccount>> {
+  async getUserAccount(getUserAccountArg: GetUserAccountArg): PromiseErrorOr<One<UserAccount>> {
     try {
       await validateServiceFunctionArgumentOrThrow(getUserAccountArg, GetUserAccountArg, 'other');
     } catch (error: any) {
@@ -82,7 +100,7 @@ export default class UserAccountService {
     );
   }
 
-  static async followUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
+  async followUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(
         _idAndFollowedUserAccountId,
@@ -108,7 +126,7 @@ export default class UserAccountService {
     );
   }
 
-  static async unfollowUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
+  async unfollowUser(_idAndFollowedUserAccountId: _IdAndFollowedUserAccountId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(
         _idAndFollowedUserAccountId,
@@ -134,7 +152,7 @@ export default class UserAccountService {
     );
   }
 
-  static async addToFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
+  async addToFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_idAndSalesItemId, _IdAndSalesItemId, 'update');
     } catch (error: any) {
@@ -156,7 +174,7 @@ export default class UserAccountService {
     );
   }
 
-  static async removeFromFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
+  async removeFromFavoriteSalesItems(_idAndSalesItemId: _IdAndSalesItemId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_idAndSalesItemId, _IdAndSalesItemId, 'update');
     } catch (error: any) {
@@ -178,7 +196,7 @@ export default class UserAccountService {
     );
   }
 
-  static async updateUserAccount(userAccount: UserAccount): PromiseErrorOr<null> {
+  async updateUserAccount(userAccount: UserAccount): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccount, UserAccount, 'update');
     } catch (error: any) {
@@ -200,7 +218,7 @@ export default class UserAccountService {
     );
   }
 
-  static async deleteUserAccount(_id: _Id): PromiseErrorOr<null> {
+  async deleteUserAccount(_id: _Id): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(_id, _Id, 'other');
     } catch (error: any) {
@@ -222,7 +240,7 @@ export default class UserAccountService {
     );
   }
 
-  static async getCities(): PromiseErrorOr<Many<Value>> {
+  async getCities(): PromiseErrorOr<Many<Value>> {
     return callRemoteService(
       'backk-example-microservice',
       'userAccountService.getCities',
@@ -233,3 +251,6 @@ export default class UserAccountService {
     );
   }
 }
+
+const userAccountService = new UserAccountServiceImpl();
+export default userAccountService;

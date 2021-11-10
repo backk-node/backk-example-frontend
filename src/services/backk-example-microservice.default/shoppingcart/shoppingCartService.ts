@@ -10,8 +10,15 @@ import MicroserviceOptions from '../_backk/MicroserviceOptions';
 import UserAccountIdAndSalesItemId from './types/args/UserAccountIdAndSalesItemId';
 import ShoppingCart from './types/entities/ShoppingCart';
 
-export default class ShoppingCartService {
-  static async getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
+export interface ShoppingCartService {
+  getShoppingCart(arg: UserAccountId): PromiseErrorOr<One<ShoppingCart>>;
+  addToShoppingCart(arg: UserAccountIdAndSalesItemId): PromiseErrorOr<null>;
+  removeFromShoppingCart(arg: UserAccountIdAndSalesItemId): PromiseErrorOr<null>;
+  emptyShoppingCart(arg: UserAccountId): PromiseErrorOr<null>;
+}
+
+export class ShoppingCartServiceImpl implements ShoppingCartService {
+  async getShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<One<ShoppingCart>> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
     } catch (error: any) {
@@ -33,9 +40,7 @@ export default class ShoppingCartService {
     );
   }
 
-  static async addToShoppingCart(
-    userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId
-  ): PromiseErrorOr<null> {
+  async addToShoppingCart(userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(
         userAccountIdAndSalesItemId,
@@ -61,7 +66,7 @@ export default class ShoppingCartService {
     );
   }
 
-  static async removeFromShoppingCart(
+  async removeFromShoppingCart(
     userAccountIdAndSalesItemId: UserAccountIdAndSalesItemId
   ): PromiseErrorOr<null> {
     try {
@@ -89,7 +94,7 @@ export default class ShoppingCartService {
     );
   }
 
-  static async emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
+  async emptyShoppingCart(userAccountId: UserAccountId): PromiseErrorOr<null> {
     try {
       await validateServiceFunctionArgumentOrThrow(userAccountId, UserAccountId, 'other');
     } catch (error: any) {
@@ -111,3 +116,6 @@ export default class ShoppingCartService {
     );
   }
 }
+
+const shoppingCartService = new ShoppingCartServiceImpl();
+export default shoppingCartService;

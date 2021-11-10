@@ -9,9 +9,7 @@ import {
   Lengths,
   MaxLength,
   ShouldBeTrueForObject,
-  Type,
   ValidateIf,
-  ValidateNested,
 } from 'backk-frontend-utils';
 import ShoppingCartOrOrderSalesItem from '../../../shoppingcart/types/entities/ShoppingCartOrOrderSalesItem';
 import { OrderItemState } from '../enum/OrderItemState';
@@ -22,13 +20,7 @@ export default class OrderItem extends Id {
   @IsInstance(ShoppingCartOrOrderSalesItem, {
     each: true,
   })
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => ShoppingCartOrOrderSalesItem)
-  @ValidateIf((o: any) => o.salesItems !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.salesItems !== undefined)
   salesItems!: ShoppingCartOrOrderSalesItem[];
 
   @ShouldBeTrueForObject<OrderItem>(
@@ -37,15 +29,11 @@ export default class OrderItem extends Id {
       (state !== 'toBeDelivered' && deliveryTimestamp !== null)
   )
   @ValidateIf((o: any) => o.deliveryTimestamp !== null)
-  @ValidateIf((o: any) => o.deliveryTimestamp !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.deliveryTimestamp !== undefined)
   deliveryTimestamp!: Date | null;
 
   @IsIn(['toBeDelivered', 'delivering', 'delivered', 'returning', 'returned'])
-  @ValidateIf((o: any) => o.state !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.state !== undefined)
   state!: OrderItemState;
 
   @MaxLength(Lengths._3K)
@@ -56,8 +44,6 @@ export default class OrderItem extends Id {
       (state !== 'toBeDelivered' && trackingUrl !== null)
   )
   @ValidateIf((o: any) => o.trackingUrl !== null)
-  @ValidateIf((o: any) => o.trackingUrl !== undefined, {
-    groups: ['__backk_update__'],
-  })
+  @ValidateIf((o: any) => o.trackingUrl !== undefined)
   trackingUrl!: string | null;
 }

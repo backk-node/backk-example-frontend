@@ -6,5 +6,4 @@ const initialState = {
 };
 
 export type State = typeof initialState;
-
 export default createStore<State, {}>(initialState, {});
