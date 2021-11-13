@@ -32,14 +32,14 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
-  title!: string;
+  title!: string | undefined;
 
   @MaxLength(Lengths._1K)
   @IsAnyString()
   @ValidateIf((o: any) => o.description !== undefined, {
     groups: ['__backk_update__'],
   })
-  description!: string;
+  description!: string | undefined;
 
   @ArrayMinSize(0)
   @ArrayMaxSize(Values._25)
@@ -53,38 +53,38 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.tags !== undefined, {
     groups: ['__backk_update__'],
   })
-  tags!: Tag[];
+  tags!: Tag[] | undefined;
 
   @IsIn(['Area1', 'Area2', 'Area3'])
   @ValidateIf((o: any) => o.area !== undefined, {
     groups: ['__backk_update__'],
   })
-  area!: Area;
+  area!: Area | undefined;
 
   @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productDepartment !== undefined, {
     groups: ['__backk_update__'],
   })
-  productDepartment!: Department;
+  productDepartment!: Department | undefined;
 
   @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productCategory !== undefined, {
     groups: ['__backk_update__'],
   })
-  productCategory!: Category;
+  productCategory!: Category | undefined;
 
   @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productSubCategory !== undefined, {
     groups: ['__backk_update__'],
   })
-  productSubCategory!: Category;
+  productSubCategory!: Category | undefined;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
   @ValidateIf((o: any) => o.price !== undefined, {
     groups: ['__backk_update__'],
   })
-  price!: number;
+  price!: number | undefined;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
@@ -95,21 +95,21 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.previousPrice !== undefined, {
     groups: ['__backk_update__'],
   })
-  previousPrice!: number | null;
+  previousPrice!: number | null | undefined;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
   @ValidateIf((o: any) => o.shippingCost !== undefined, {
     groups: ['__backk_update__'],
   })
-  shippingCost!: number;
+  shippingCost!: number | undefined;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
   @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  primaryImageDataUri!: string;
+  primaryImageDataUri!: string | undefined;
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
@@ -119,7 +119,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.primaryImageThumbnailDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  primaryImageThumbnailDataUri!: string;
+  primaryImageThumbnailDataUri!: string | undefined;
 
   @MaxLength(Lengths._10M, {
     each: true,
@@ -133,16 +133,15 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.secondaryImageDataUris !== undefined, {
     groups: ['__backk_update__'],
   })
-  secondaryImageDataUris!: string[];
+  secondaryImageDataUris!: string[] | undefined;
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
-  @IsIn(['forSale', 'reserved', 'sold'])
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })
-  state!: SalesItemState;
+  state!: SalesItemState | undefined;
 
   @IsInt()
   @MinMax(0, MAX_INT_VALUE)
@@ -152,5 +151,5 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.likeCount !== undefined, {
     groups: ['__backk_update__'],
   })
-  likeCount!: number;
+  likeCount!: number | undefined;
 }

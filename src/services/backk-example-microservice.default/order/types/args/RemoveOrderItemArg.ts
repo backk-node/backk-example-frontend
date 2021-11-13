@@ -19,7 +19,7 @@ export default class RemoveOrderItemArg {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  _id!: string;
+  _id!: string | undefined;
 
   @IsUndefined({
     groups: ['__backk_create__'],
@@ -29,7 +29,7 @@ export default class RemoveOrderItemArg {
   })
   @Min(-1)
   @Max(Number.MAX_SAFE_INTEGER)
-  version!: number;
+  version!: number | undefined;
 
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsStringOrObjectId()

@@ -7,5 +7,5 @@ export default class Tag extends _Id {
   @ValidateIf((o: any) => o.name !== undefined, {
     groups: ['__backk_update__'],
   })
-  name!: string;
+  name!: string | undefined;
 }

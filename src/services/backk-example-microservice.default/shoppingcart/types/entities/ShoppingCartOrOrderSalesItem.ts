@@ -23,28 +23,28 @@ export default class ShoppingCartOrOrderSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  _id!: string;
+  _id!: string | undefined;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
   @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
-  title!: string;
+  title!: string | undefined;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
   @ValidateIf((o: any) => o.price !== undefined, {
     groups: ['__backk_update__'],
   })
-  price!: number;
+  price!: number | undefined;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
   @ValidateIf((o: any) => o.shippingCost !== undefined, {
     groups: ['__backk_update__'],
   })
-  shippingCost!: number;
+  shippingCost!: number | undefined;
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
@@ -54,5 +54,5 @@ export default class ShoppingCartOrOrderSalesItem {
   @ValidateIf((o: any) => o.primaryImageThumbnailDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  primaryImageThumbnailDataUri!: string;
+  primaryImageThumbnailDataUri!: string | undefined;
 }

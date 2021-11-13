@@ -31,13 +31,13 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   @ValidateIf((o: any) => o.orderItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  orderItems!: OrderItem[];
+  orderItems!: OrderItem[] | undefined;
 
   @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   @ValidateIf((o: any) => o.paymentGateway !== undefined, {
     groups: ['__backk_update__'],
   })
-  paymentGateway: PaymentGateway = 'Paytrail';
+  paymentGateway: PaymentGateway | undefined = 'Paytrail';
 
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
@@ -45,13 +45,13 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   @ValidateIf((o: any) => o.transactionId !== undefined, {
     groups: ['__backk_update__'],
   })
-  transactionId!: string | null;
+  transactionId!: string | null | undefined;
 
   @ValidateIf((o: any) => o.transactionTimestamp !== null)
   @ValidateIf((o: any) => o.transactionTimestamp !== undefined, {
     groups: ['__backk_update__'],
   })
-  transactionTimestamp!: Date | null;
+  transactionTimestamp!: Date | null | undefined;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
@@ -59,5 +59,5 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   @ValidateIf((o: any) => o.paymentAmount !== undefined, {
     groups: ['__backk_update__'],
   })
-  paymentAmount!: number | null;
+  paymentAmount!: number | null | undefined;
 }

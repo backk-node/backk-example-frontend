@@ -22,14 +22,14 @@ export default class FollowingUserAccount {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  _id!: string;
+  _id!: string | undefined;
 
   @MaxLength(Lengths._128)
   @IsAnyString()
   @ValidateIf((o: any) => o.displayName !== undefined, {
     groups: ['__backk_update__'],
   })
-  displayName!: string;
+  displayName!: string | undefined;
 
   @MaxLength(Lengths._256)
   @IsOneOf(
@@ -43,12 +43,12 @@ export default class FollowingUserAccount {
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
-  city!: string;
+  city!: string | undefined;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
   @ValidateIf((o: any) => o.imageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  imageDataUri!: string;
+  imageDataUri!: string | undefined;
 }

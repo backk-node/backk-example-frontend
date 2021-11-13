@@ -29,7 +29,7 @@ export default class OrderItem extends Id {
   @ValidateIf((o: any) => o.salesItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  salesItems!: ShoppingCartOrOrderSalesItem[];
+  salesItems!: ShoppingCartOrOrderSalesItem[] | undefined;
 
   @ShouldBeTrueForObject<OrderItem>(
     ({ state, deliveryTimestamp }) =>
@@ -40,13 +40,13 @@ export default class OrderItem extends Id {
   @ValidateIf((o: any) => o.deliveryTimestamp !== undefined, {
     groups: ['__backk_update__'],
   })
-  deliveryTimestamp!: Date | null;
+  deliveryTimestamp!: Date | null | undefined;
 
   @IsIn(['toBeDelivered', 'delivering', 'delivered', 'returning', 'returned'])
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })
-  state!: OrderItemState;
+  state!: OrderItemState | undefined;
 
   @MaxLength(Lengths._3K)
   @IsUrl()
@@ -59,5 +59,5 @@ export default class OrderItem extends Id {
   @ValidateIf((o: any) => o.trackingUrl !== undefined, {
     groups: ['__backk_update__'],
   })
-  trackingUrl!: string | null;
+  trackingUrl!: string | null | undefined;
 }

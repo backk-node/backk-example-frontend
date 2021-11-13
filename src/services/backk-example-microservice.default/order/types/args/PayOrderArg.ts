@@ -24,7 +24,7 @@ export default class PayOrderArg {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  _id!: string;
+  _id!: string | undefined;
 
   @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   paymentGateway: PaymentGateway = 'Paytrail';

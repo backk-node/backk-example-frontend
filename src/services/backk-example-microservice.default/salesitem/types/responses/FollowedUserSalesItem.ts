@@ -23,7 +23,7 @@ export default class FollowedUserSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  _id!: string;
+  _id!: string | undefined;
 
   @MaxLength(Lengths._64)
   @IsAnyString()
@@ -39,7 +39,7 @@ export default class FollowedUserSalesItem {
     groups: ['__backk_create__', '__backk_update__'],
   })
   @ValidateIf((o: any) => o.previousPrice !== null)
-  previousPrice!: number | null;
+  previousPrice!: number | null | undefined;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
@@ -54,7 +54,7 @@ export default class FollowedUserSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  userAccountId!: string;
+  userAccountId!: string | undefined;
 
   @MaxLength(Lengths._128)
   @IsAnyString()
