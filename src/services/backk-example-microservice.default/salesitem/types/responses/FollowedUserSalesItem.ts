@@ -3,6 +3,7 @@ import {
   IsAnyString,
   IsDataUri,
   IsFloat,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Lengths,
@@ -23,15 +24,17 @@ export default class FollowedUserSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  _id!: string | undefined;
+  @IsString()
+  _id: string | undefined = '';
 
   @MaxLength(Lengths._64)
   @IsAnyString()
-  title!: string;
+  @IsString()
+  title: string = '';
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
-  price!: number;
+  price: number = NaN;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
@@ -39,11 +42,12 @@ export default class FollowedUserSalesItem {
     groups: ['__backk_create__', '__backk_update__'],
   })
   @ValidateIf((o: any) => o.previousPrice !== null)
-  previousPrice!: number | null | undefined;
+  previousPrice: number | null | undefined = NaN;
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
-  primaryImageDataUri!: string;
+  @IsString()
+  primaryImageDataUri: string = '';
 
   @IsUndefined({
     groups: ['__backk_create__'],
@@ -54,9 +58,11 @@ export default class FollowedUserSalesItem {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  userAccountId!: string | undefined;
+  @IsString()
+  userAccountId: string | undefined = '';
 
   @MaxLength(Lengths._128)
   @IsAnyString()
-  displayName!: string;
+  @IsString()
+  displayName: string = '';
 }

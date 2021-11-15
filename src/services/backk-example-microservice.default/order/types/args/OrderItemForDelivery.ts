@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  IsString,
   IsStringOrObjectId,
   IsUrl,
   Lengths,
@@ -13,7 +14,8 @@ import OrderItem from '../entities/OrderItem';
 export default class OrderItemForDelivery {
   @IsStringOrObjectId()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
-  id!: string;
+  @IsString()
+  id: string = '';
 
   @ShouldBeTrueForObject<OrderItem>(
     ({ state, deliveryTimestamp }) =>
@@ -30,6 +32,7 @@ export default class OrderItemForDelivery {
       (state === 'toBeDelivered' && trackingUrl === null) ||
       (state !== 'toBeDelivered' && trackingUrl !== null)
   )
+  @IsString()
   @ValidateIf((o: any) => o.trackingUrl !== null)
-  trackingUrl!: string | null;
+  trackingUrl: string | null = '';
 }

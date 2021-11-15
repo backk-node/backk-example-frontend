@@ -18,5 +18,5 @@ export default class GetSalesItemsByUserDefinedFiltersArg {
     each: true,
   })
   @Type(() => UserDefinedFilter)
-  filters!: UserDefinedFilter[];
+  filters: UserDefinedFilter[] = [];
 }

@@ -1,11 +1,18 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
-import { DefaultPostQueryOperations, IsInstance, SortBy, Type, ValidateNested } from 'backk-frontend-utils';
+import {
+  DefaultPostQueryOperations,
+  IsInstance,
+  IsString,
+  SortBy,
+  Type,
+  ValidateNested,
+} from 'backk-frontend-utils';
 
 export default class GetUserAccountArg extends DefaultPostQueryOperations {
-  excludeResponseFields: string[] = [
-    'ownSalesItems.primaryImageDataUri',
-    'followedUserAccounts.ownSalesItems',
-  ];
+  @IsString({
+    each: true,
+  })
+  excludeResponseFields: string[] = [];
 
   @IsInstance(SortBy, {
     each: true,
@@ -14,9 +21,5 @@ export default class GetUserAccountArg extends DefaultPostQueryOperations {
     each: true,
   })
   @Type(() => SortBy)
-  sortBys: SortBy[] = [
-    ...new DefaultPostQueryOperations().sortBys,
-    new SortBy('paymentMethods', 'isDefault', 'DESC'),
-    new SortBy('ownSalesItems', 'state', 'ASC'),
-  ];
+  sortBys: SortBy[] = [];
 }

@@ -3,6 +3,7 @@ import {
   IsAnyString,
   IsDataUri,
   IsOneOf,
+  IsString,
   IsStringOrObjectId,
   IsUndefined,
   Lengths,
@@ -25,14 +26,16 @@ export default class User {
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/, {
     groups: ['__backk_update__'],
   })
-  _id!: string | undefined;
+  @IsString()
+  _id: string | undefined = '';
 
   @MaxLength(Lengths._128)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.displayName !== undefined, {
     groups: ['__backk_update__'],
   })
-  displayName!: string | undefined;
+  displayName: string | undefined = '';
 
   @MaxLength(Lengths._256)
   @IsOneOf(
@@ -43,17 +46,19 @@ export default class User {
     'userAccountsService.getCities',
     'Tampere'
   )
+  @IsString()
   @ValidateIf((o: any) => o.city !== undefined, {
     groups: ['__backk_update__'],
   })
-  city!: string | undefined;
+  city: string | undefined = '';
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @IsString()
   @ValidateIf((o: any) => o.imageDataUri !== undefined, {
     groups: ['__backk_update__'],
   })
-  imageDataUri!: string | undefined;
+  imageDataUri: string | undefined = '';
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -61,7 +66,7 @@ export default class User {
   @ValidateIf((o: any) => o.ownSalesItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  ownSalesItems!: OwnSalesItem[] | undefined;
+  ownSalesItems: OwnSalesItem[] | undefined = [];
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -69,7 +74,7 @@ export default class User {
   @ValidateIf((o: any) => o.followedUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })
-  followedUserAccounts!: FollowedUserAccount[] | undefined;
+  followedUserAccounts: FollowedUserAccount[] | undefined = [];
 
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -77,5 +82,5 @@ export default class User {
   @ValidateIf((o: any) => o.followingUserAccounts !== undefined, {
     groups: ['__backk_update__'],
   })
-  followingUserAccounts!: FollowingUserAccount[] | undefined;
+  followingUserAccounts: FollowingUserAccount[] | undefined = [];
 }

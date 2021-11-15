@@ -5,6 +5,7 @@ import {
   Id,
   IsIn,
   IsInstance,
+  IsString,
   IsUrl,
   Lengths,
   MaxLength,
@@ -29,7 +30,7 @@ export default class OrderItem extends Id {
   @ValidateIf((o: any) => o.salesItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  salesItems!: ShoppingCartOrOrderSalesItem[] | undefined;
+  salesItems: ShoppingCartOrOrderSalesItem[] | undefined = [];
 
   @ShouldBeTrueForObject<OrderItem>(
     ({ state, deliveryTimestamp }) =>
@@ -46,7 +47,7 @@ export default class OrderItem extends Id {
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })
-  state!: OrderItemState | undefined;
+  state: OrderItemState | undefined = 'toBeDelivered';
 
   @MaxLength(Lengths._3K)
   @IsUrl()
@@ -55,9 +56,10 @@ export default class OrderItem extends Id {
       (state === 'toBeDelivered' && trackingUrl === null) ||
       (state !== 'toBeDelivered' && trackingUrl !== null)
   )
+  @IsString()
   @ValidateIf((o: any) => o.trackingUrl !== null)
   @ValidateIf((o: any) => o.trackingUrl !== undefined, {
     groups: ['__backk_update__'],
   })
-  trackingUrl!: string | null | undefined;
+  trackingUrl: string | null | undefined = '';
 }

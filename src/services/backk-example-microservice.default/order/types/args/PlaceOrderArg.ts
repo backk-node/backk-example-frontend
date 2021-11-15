@@ -1,6 +1,8 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  IsBoolean,
   IsIn,
+  IsString,
   IsStringOrObjectId,
   IsUrl,
   Lengths,
@@ -12,18 +14,22 @@ import { PaymentGateway } from '../enum/PaymentGateway';
 export default class PlaceOrderArg {
   @IsStringOrObjectId()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
-  userAccountId!: string;
+  @IsString()
+  userAccountId: string = '';
 
   @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   paymentGateway: PaymentGateway = 'Paytrail';
 
+  @IsString()
   @MaxLengthAndMatches(24, /^[a-f\d]{1,24}$/)
   @IsStringOrObjectId()
-  shoppingCartId!: string;
+  shoppingCartId: string = '';
 
-  iAgreeWithTermsAndConditions!: boolean;
+  @IsBoolean()
+  iAgreeWithTermsAndConditions: boolean = false;
 
   @MaxLength(Lengths._4K)
   @IsUrl()
-  uiRedirectUrl!: string;
+  @IsString()
+  uiRedirectUrl: string = '';
 }

@@ -17,5 +17,5 @@ export default class ShoppingCart extends _IdAndUserAccountId {
   @ValidateIf((o: any) => o.salesItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  salesItems!: ShoppingCartOrOrderSalesItem[] | undefined;
+  salesItems: ShoppingCartOrOrderSalesItem[] | undefined = [];
 }

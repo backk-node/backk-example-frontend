@@ -1,0 +1,24 @@
+form div.row {
+  display: table-row;
+}
+
+form input,
+form label {
+  display: table-cell;
+  margin-bottom: 0.25rem;
+}
+
+form input {
+  margin-left: 0.25rem;
+}
+
+form label.validationMessage {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: green;
+  padding-left: 0.5rem;
+}
+
+form label.validationMessage.error {
+  color: red;
+}

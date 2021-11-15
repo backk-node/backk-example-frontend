@@ -6,6 +6,7 @@ import {
   IsFloat,
   IsIn,
   IsInstance,
+  IsString,
   Lengths,
   MaxLength,
   MinMax,
@@ -31,7 +32,7 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   @ValidateIf((o: any) => o.orderItems !== undefined, {
     groups: ['__backk_update__'],
   })
-  orderItems!: OrderItem[] | undefined;
+  orderItems: OrderItem[] | undefined = [];
 
   @IsIn(['Paytrail', 'PayPal', 'Klarna'])
   @ValidateIf((o: any) => o.paymentGateway !== undefined, {
@@ -41,11 +42,12 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
 
   @MaxLength(Lengths._256)
   @IsAlphanumeric()
+  @IsString()
   @ValidateIf((o: any) => o.transactionId !== null)
   @ValidateIf((o: any) => o.transactionId !== undefined, {
     groups: ['__backk_update__'],
   })
-  transactionId!: string | null | undefined;
+  transactionId: string | null | undefined = '';
 
   @ValidateIf((o: any) => o.transactionTimestamp !== null)
   @ValidateIf((o: any) => o.transactionTimestamp !== undefined, {
@@ -59,5 +61,5 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   @ValidateIf((o: any) => o.paymentAmount !== undefined, {
     groups: ['__backk_update__'],
   })
-  paymentAmount!: number | null | undefined;
+  paymentAmount: number | null | undefined = NaN;
 }

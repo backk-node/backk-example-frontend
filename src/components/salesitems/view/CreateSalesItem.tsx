@@ -1,75 +1,52 @@
 import React, { useState } from 'react';
 import './CreateSalesItem.css';
-import {
-  createServiceFunctionArgumentPropertyUpdater,
-  getInitialErrorMessages,
-  getValidationMessage,
-  getValidationMessageClassNames,
-} from 'backk-frontend-utils';
 import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
-import { Area } from '../../../services/backk-example-microservice.default/salesitem/types/enums/Area';
+import Input from '../../common/input/Input';
+import { ServiceFunctionType } from 'backk-frontend-utils/lib/callRemoteService';
+import { isObjectProperty, PossibleBackkError, shouldPropertyBePresent } from 'backk-frontend-utils';
+import createSalesItem from '../model/actions/createSalesItem';
+import BackEndError from '../../common/backenderror/BackEndError';
 
 export default function CreateSalesItem() {
   const [salesItem, setSalesItem] = useState(new SalesItem());
-  const [errorMessages, setErrorMessages] = useState(getInitialErrorMessages(salesItem));
-  const updateSalesItemProperty = createServiceFunctionArgumentPropertyUpdater(
-    SalesItem,
-    'create',
-    setSalesItem,
-    setErrorMessages
-  );
+  const [error, setError] = useState(null as PossibleBackkError);
+  const [forceImmediateValidationId, setForceImmediateValidationId] = useState(-1);
 
-  const updateTitle = async (event: React.FocusEvent<HTMLInputElement>) => {
-    await updateSalesItemProperty('title', event.currentTarget.value);
+  const updateProperty = (propertyName: string, propertyValue: any) => {
+    setSalesItem({ ...salesItem, [propertyName]: propertyValue });
   };
 
-  const updateDescription = async (event: React.FormEvent<HTMLInputElement>) => {
-    await updateSalesItemProperty('description', event.currentTarget.value);
+  const onCreateSalesItemButtonClick = async (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const [, error] = await createSalesItem(salesItem);
+    setError(error);
+    setForceImmediateValidationId(forceImmediateValidationId + 1);
   };
 
-  const updateTag = async (event: React.FormEvent<HTMLInputElement>) => {
-    await updateSalesItemProperty('tags', [{ _id: undefined, name: event.currentTarget.value }]);
+  const inputProps = {
+    updateProperty,
+    Class: SalesItem,
+    serviceFunctionType: 'create' as ServiceFunctionType,
+    forceImmediateValidationId: !error?.statusCode && error?.message ? forceImmediateValidationId : null,
   };
 
-  const updateArea = async (event: React.FormEvent<HTMLInputElement>) => {
-    await updateSalesItemProperty('area', event.currentTarget.value as Area);
-  };
+  const inputs = Object.keys(salesItem)
+    .filter(
+      (propertyName: any) =>
+        shouldPropertyBePresent(SalesItem, propertyName, 'create') &&
+        !isObjectProperty(SalesItem, propertyName)
+    )
+    .map((propertyName: any) => {
+      const props = { ...inputProps, propertyName };
+      return <Input key={propertyName} {...props} />;
+    });
 
   return (
     <form>
       <p>Create new sales item:</p>
-
-      <div className="row">
-        <label>Title</label>
-        <input onBlur={updateTitle} />
-        <label className={getValidationMessageClassNames(errorMessages.title)}>
-          {getValidationMessage(errorMessages.title)}
-        </label>
-      </div>
-
-      <div className="row">
-        <label>Description</label>
-        <input onBlur={updateDescription} />
-        <label className={getValidationMessageClassNames(errorMessages.description)}>
-          {getValidationMessage(errorMessages.description)}
-        </label>
-      </div>
-
-      <div className="row">
-        <label>Tag</label>
-        <input onBlur={updateTag} />
-        <label className={getValidationMessageClassNames(errorMessages.tags)}>
-          {getValidationMessage(errorMessages.tags)}
-        </label>
-      </div>
-
-      <div className="row">
-        <label>Area</label>
-        <input onBlur={updateArea} />
-        <label className={getValidationMessageClassNames(errorMessages.area)}>
-          {getValidationMessage(errorMessages.area)}
-        </label>
-      </div>
+      {inputs}
+      <button onClick={onCreateSalesItemButtonClick}>Create sales item</button>
+      <BackEndError error={error} />
     </form>
   );
 }

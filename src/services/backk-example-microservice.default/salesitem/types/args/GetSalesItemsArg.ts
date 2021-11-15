@@ -8,6 +8,7 @@ import {
   IsIn,
   IsInstance,
   IsInt,
+  IsString,
   Lengths,
   MaxLength,
   MinMax,
@@ -23,46 +24,47 @@ import { Department } from '../enums/Department';
 export default class GetSalesItemsArg extends DefaultSortingAndPagination {
   @MaxLength(Lengths._512)
   @IsAnyString()
+  @IsString()
   @ValidateIf((o: any) => o.textFilter !== undefined)
-  textFilter?: string;
+  textFilter?: string = '';
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
   @IsIn(['Area1', 'Area2', 'Area3'])
   @ValidateIf((o: any) => o.areas !== undefined)
-  areas?: Area[];
+  areas?: Area[] = [];
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
   @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productDepartments !== undefined)
-  productDepartments?: Department[];
+  productDepartments?: Department[] = [];
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
   @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productCategories !== undefined)
-  productCategories?: Category[];
+  productCategories?: Category[] = [];
 
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @ArrayUnique()
   @IsIn(['Vehicles', 'Clothes'])
   @ValidateIf((o: any) => o.productSubCategories !== undefined)
-  productSubCategories?: Category[];
+  productSubCategories?: Category[] = [];
 
   @IsInt()
   @MinMax(0, 1000000000)
   @ValidateIf((o: any) => o.minPrice !== undefined)
-  minPrice?: number;
+  minPrice?: number = NaN;
 
   @IsInt()
   @MinMax(0, 1000000000)
   @ValidateIf((o: any) => o.maxPrice !== undefined)
-  maxPrice?: number;
+  maxPrice?: number = NaN;
 
   @IsInstance(SortBy, {
     each: true,
@@ -71,20 +73,5 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
     each: true,
   })
   @Type(() => SortBy)
-  sortBys: SortBy[] = [
-    {
-      fieldName: '_id',
-      sortDirection: 'DESC',
-    },
-    {
-      subEntityPath: '*',
-      fieldName: '_id',
-      sortDirection: 'ASC',
-    },
-    {
-      subEntityPath: '*',
-      fieldName: 'id',
-      sortDirection: 'ASC',
-    },
-  ];
+  sortBys: SortBy[] = [];
 }
