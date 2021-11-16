@@ -1,22 +1,22 @@
 import React from 'react';
 import './Input.css';
-import { getInputProps, isBuiltIntTypeArrayProperty } from 'backk-frontend-utils';
-import { Props } from '../basicinput/Input';
+import { getSelectInputPossibleValues, isBuiltIntTypeArrayProperty } from 'backk-frontend-utils';
+import { GenericInputProps } from '../genericinput/GenericInput';
 
 export default function SelectInput<T extends { [key: string]: any }>({
   Class,
   propertyName,
   updateProperty,
-}: Props<T>) {
-  const onChange = async (event: React.FormEvent<HTMLSelectElement>) => {
+}: GenericInputProps<T>) {
+  async function onChange(event: React.FormEvent<HTMLSelectElement>) {
     const propertyValue = event.currentTarget.value;
     const isArray = isBuiltIntTypeArrayProperty(Class, propertyName);
     updateProperty(propertyName, isArray ? [propertyValue] : propertyValue);
-  };
+  }
 
-  const inputProps = getInputProps(Class, propertyName);
-  const options = inputProps.options.map((option: any, index: number) => (
-    <option selected={index === 0}>{option}</option>
+  const selectInputValues = getSelectInputPossibleValues(Class, propertyName);
+  const options = selectInputValues.map((selectInputValue: any, index: number) => (
+    <option selected={index === 0}>{selectInputValue}</option>
   ));
 
   return (
