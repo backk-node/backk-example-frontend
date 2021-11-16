@@ -1,7 +1,7 @@
 import React from 'react';
 import './Input.css';
 import { getInputProps, isBuiltIntTypeArrayProperty } from 'backk-frontend-utils';
-import { Props } from '../input/Input';
+import { Props } from '../basicinput/Input';
 
 export default function SelectInput<T extends { [key: string]: any }>({
   Class,

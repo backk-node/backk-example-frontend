@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './CreateSalesItem.css';
 import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
-import Input from '../../common/input/Input';
 import { ServiceFunctionType } from 'backk-frontend-utils/lib/callRemoteService';
 import { isObjectProperty, PossibleBackkError, shouldPropertyBePresent } from 'backk-frontend-utils';
 import createSalesItem from '../model/actions/createSalesItem';
 import BackEndError from '../../common/backenderror/BackEndError';
+import GenericInput from '../../common/input/genericinput/GenericInput';
 
 export default function CreateSalesItem() {
   const [salesItem, setSalesItem] = useState(new SalesItem());
@@ -38,7 +38,7 @@ export default function CreateSalesItem() {
     )
     .map((propertyName: any) => {
       const props = { ...inputProps, propertyName };
-      return <Input key={propertyName} {...props} />;
+      return <GenericInput key={propertyName} {...props} />;
     });
 
   return (
