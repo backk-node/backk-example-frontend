@@ -1,6 +1,5 @@
 import React from 'react';
 import noop from 'lodash/noop';
-import './Input.css';
 import BasicInput from '../basic/BasicInput';
 import { GenericInputProps } from '../generic/GenericInput';
 

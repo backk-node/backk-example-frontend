@@ -1,5 +1,4 @@
 import React from 'react';
-import './Input.css';
 import { GenericInputProps } from '../generic/GenericInput';
 import SelectInput from './SelectInput';
 

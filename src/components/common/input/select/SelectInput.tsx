@@ -1,5 +1,5 @@
 import React from 'react';
-import './Input.css';
+import '../basic/BasicInput.css';
 import { getSelectInputPossibleValues } from 'backk-frontend-utils';
 import { GenericInputProps } from '../generic/GenericInput';
 
@@ -25,14 +25,14 @@ export default function SelectInput<T extends { [key: string]: any }>({
   }
 
   const selectInputValues = getSelectInputPossibleValues(Class, propertyName);
-  const options = selectInputValues.map((selectInputValue: any, index: number) => (
-    <option selected={index === 0}>{selectInputValue}</option>
+  const options = selectInputValues.map((selectInputValue: any) => (
+    <option key={selectInputValue}>{selectInputValue}</option>
   ));
 
   return (
     <React.Fragment>
       <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
-      <select multiple={multiple} onChange={onChange}>
+      <select multiple={multiple} defaultValue={selectInputValues[0]} onChange={onChange}>
         {options}
       </select>
     </React.Fragment>

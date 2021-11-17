@@ -1,4 +1,5 @@
 import React from 'react';
+import '../basic/BasicInput.css';
 import { GenericInputProps } from '../generic/GenericInput';
 
 export default function CheckboxInput<T extends { [key: string]: any }>({
