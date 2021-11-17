@@ -1,19 +1,18 @@
 import React from 'react';
 import './GenericInput.css';
 import { getInputType, ServiceFunctionType } from 'backk-frontend-utils';
-import FileInput from '../fileinput/FileInput';
-import SelectInput from '../selectInput/SelectInput';
-import BasicInput from '../basicinput/BasicInput';
-import DateInput from '../dateinput/DateInput';
-import TimeInput from '../timeinput/TimeInput';
-import DateTimeInput from '../datetimeinput/DateTimeInput';
-import MonthInput from '../monthinput/MonthInput';
+import FileInput from '../file/FileInput';
+import BasicInput from '../basic/BasicInput';
+import CheckboxInput from '../checkbox/CheckboxInput';
+import NumberInput from '../number/NumberInput';
+import GenericDateTimeInput from '../datetime/genericdatetimeinput/GenericDateTimeInput';
+import GenericSelectInput from '../select/GenericSelectInput';
 
 export interface GenericInputProps<T extends { [key: string]: any }> {
+  instance: T;
   Class: new () => T;
   propertyName: keyof T & string;
   serviceFunctionType: ServiceFunctionType;
-  updateProperty: (propertyName: string, propertyValue: any) => void;
   forceImmediateValidationId: number | null;
 }
 
@@ -23,22 +22,22 @@ export default function GenericInput<T extends { [key: string]: any }>(props: Ge
   let input;
   switch (inputType) {
     case 'select':
-      input = <SelectInput {...props} />;
+      input = <GenericSelectInput {...props} />;
+      break;
+    case 'time':
+    case 'datetime-local':
+    case 'date':
+    case 'month':
+      input = <GenericDateTimeInput type={inputType} {...props} />;
       break;
     case 'file':
       input = <FileInput {...props} />;
       break;
-    case 'time':
-      input = <TimeInput {...props} />;
+    case 'checkbox':
+      input = <CheckboxInput {...props} />;
       break;
-    case 'datetime':
-      input = <DateTimeInput {...props} />;
-      break;
-    case 'date':
-      input = <DateInput {...props} />;
-      break;
-    case 'month':
-      input = <MonthInput {...props} />;
+    case 'number':
+      input = <NumberInput {...props} />;
       break;
     default:
       input = <BasicInput type={inputType} {...props} />;
