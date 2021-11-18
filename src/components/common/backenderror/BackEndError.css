@@ -1,4 +1,5 @@
 div.errorMessage {
   font-weight: bold;
   color: red;
+  margin-top: 0.5rem;
 }

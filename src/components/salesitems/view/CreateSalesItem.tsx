@@ -6,6 +6,7 @@ import { isObjectProperty, PossibleBackkError, shouldPropertyBePresent } from 'b
 import createSalesItem from '../model/actions/createSalesItem';
 import BackEndError from '../../common/backenderror/BackEndError';
 import GenericInput from '../../common/input/generic/GenericInput';
+import isLocalValidationError from 'backk-frontend-utils/lib/errors/isLocalValidationError';
 
 const salesItem = new SalesItem();
 
@@ -24,7 +25,7 @@ export default function CreateSalesItem() {
     instance: salesItem,
     Class: SalesItem,
     serviceFunctionType: 'create' as ServiceFunctionType,
-    forceImmediateValidationId: !error?.statusCode && error?.message ? forceImmediateValidationId : null,
+    forceImmediateValidationId: isLocalValidationError(error) ? forceImmediateValidationId : null,
   };
 
   const inputs = Object.keys(salesItem)
@@ -39,11 +40,13 @@ export default function CreateSalesItem() {
     });
 
   return (
-    <form>
-      <p>Create new sales item:</p>
-      {inputs}
-      <button onClick={onCreateSalesItemButtonClick}>Create sales item</button>
+    <React.Fragment>
+      <form>
+        <p>Create new sales item:</p>
+        {inputs}
+        <button onClick={onCreateSalesItemButtonClick}>Create sales item</button>
+      </form>
       <BackEndError error={error} />
-    </form>
+    </React.Fragment>
   );
 }
