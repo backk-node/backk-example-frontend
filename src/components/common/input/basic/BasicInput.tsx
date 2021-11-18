@@ -43,14 +43,15 @@ export default function BasicInput<T extends { [key: string]: any }>({
 
   async function validateAndUpdatePropertyValue(event: React.FocusEvent<HTMLInputElement>) {
     const inputValue = event.currentTarget.files?.[0] ?? event.currentTarget.value;
-    const propertyValue = await transformInputValueToPropertyValue(inputValue);
+    let propertyValue = await transformInputValueToPropertyValue(inputValue);
+    const isArray = isBuiltIntTypeArrayProperty(Class, propertyName);
+    propertyValue = isArray ? [propertyValue] : propertyValue;
     if (propertyValue === '') {
       setValidationErrorMessage(undefined);
     } else {
       await validatePropertyValue(propertyValue);
     }
-    const isArray = isBuiltIntTypeArrayProperty(Class, propertyName);
-    instance[propertyName] = isArray ? [propertyValue] : propertyValue;
+    instance[propertyName] = propertyValue;
   }
 
   useEffect(() => {
