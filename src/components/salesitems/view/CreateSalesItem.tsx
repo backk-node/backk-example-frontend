@@ -17,6 +17,7 @@ export default function CreateSalesItem() {
   const onCreateSalesItemButtonClick = async (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const [, error] = await createSalesItem(salesItem);
+    console.log(salesItem);
     setError(error);
     setForceImmediateValidationId(forceImmediateValidationId + 1);
   };

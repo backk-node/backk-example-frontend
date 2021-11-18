@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
   ArrayMaxSize,
   ArrayMinSize,
   ArrayNotUnique,
@@ -12,14 +13,13 @@ import {
   IsString,
   IsUndefined,
   Lengths,
-  MaxLength,
   MAX_INT_VALUE,
+  MaxLength,
   MinMax,
   Type,
   ValidateIf,
   ValidateNested,
   Values,
-  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk-frontend-utils';
 import Tag from '../../../tag/entities/Tag';
 import { Area } from '../enums/Area';
