@@ -3,7 +3,8 @@ import { GenericInputProps } from '../generic/GenericInput';
 import BasicInput from '../basic/BasicInput';
 
 function transformInputValueToPropertyValue(inputValue: any) {
-  return Promise.resolve(Number(inputValue));
+  const numericValue = parseFloat(inputValue);
+  return isNaN(numericValue) ? inputValue : numericValue;
 }
 
 export default function NumberInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {

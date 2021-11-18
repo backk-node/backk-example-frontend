@@ -5,10 +5,10 @@ import { GenericInputProps } from '../generic/GenericInput';
 
 export interface SelectInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
   multiple?: boolean;
-  transformInputValueToPropertyValue?: (value: any) => any;
+  transformInputValueToPropertyValue?: (value: string) => any;
 }
 
-function defaultTransformInputValueToPropertyValue(value: any): any {
+function defaultTransformInputValueToPropertyValue(value: string): any {
   const numericValue = Number(value);
   return isNaN(numericValue) ? value : numericValue;
 }

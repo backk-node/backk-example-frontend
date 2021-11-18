@@ -6,7 +6,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
 function transformInputValueToPropertyValue(propertyValue: any) {
-  return Promise.resolve(dayjs(propertyValue, 'HH:mm').toDate());
+  return dayjs(propertyValue, 'HH:mm').toDate();
 }
 
 export default function TimeInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {

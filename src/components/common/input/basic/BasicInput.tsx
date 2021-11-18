@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './BasicInput.css';
 import {
   getInputValidationProps,
@@ -8,20 +8,11 @@ import {
   PossibleString,
   validateServiceFunctionArgumentProperty,
 } from 'backk-frontend-utils';
-import { ServiceFunctionType } from 'backk-frontend-utils/lib/callRemoteService';
 import { GenericInputProps } from '../generic/GenericInput';
 
 export interface BasicInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
   type: string;
-  validateProperty?: <T>(
-    Class: new () => T,
-    propertyName: keyof T,
-    propertyValue: any,
-    serviceFunctionType: ServiceFunctionType,
-    validationErrorMessage: PossibleString,
-    setValidationErrorMessage: React.Dispatch<any>
-  ) => Promise<void>;
-  transformInputValueToPropertyValue?: (inputValue: any) => Promise<any>;
+  transformInputValueToPropertyValue?: (inputValue: string | File) => Promise<any> | any;
 }
 
 export default function BasicInput<T extends { [key: string]: any }>({
@@ -29,7 +20,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
   Class,
   propertyName,
   serviceFunctionType,
-  transformInputValueToPropertyValue = (inputValue) => Promise.resolve(inputValue),
+  transformInputValueToPropertyValue = (inputValue) => inputValue as any,
   forceImmediateValidationId,
   type,
 }: BasicInputProps<T>) {
@@ -50,25 +41,37 @@ export default function BasicInput<T extends { [key: string]: any }>({
     }
   }
 
-  async function validateAndUpdatePropertyValue(event?: React.FocusEvent<HTMLInputElement>) {
-    const inputValue = event?.currentTarget.files?.[0] ?? event?.currentTarget.value;
+  async function validateAndUpdatePropertyValue(event: React.FocusEvent<HTMLInputElement>) {
+    const inputValue = event.currentTarget.files?.[0] ?? event.currentTarget.value;
     const propertyValue = await transformInputValueToPropertyValue(inputValue);
-    if (propertyValue !== '') {
+    if (propertyValue === '') {
+      setValidationErrorMessage(undefined);
+    } else {
       await validatePropertyValue(propertyValue);
     }
     const isArray = isBuiltIntTypeArrayProperty(Class, propertyName);
     instance[propertyName] = isArray ? [propertyValue] : propertyValue;
   }
 
-  if (
-    forceImmediateValidationId !== null &&
-    lastDoneImmediateValidationId !== forceImmediateValidationId &&
-    inputRef?.current
-  ) {
-    setLastDoneImmediateValidationId(forceImmediateValidationId);
+  useEffect(() => {
+    async function forcePropertyValueValidation() {
+      if (
+        forceImmediateValidationId !== null &&
+        lastDoneImmediateValidationId !== forceImmediateValidationId &&
+        inputRef?.current
+      ) {
+        setLastDoneImmediateValidationId(forceImmediateValidationId);
+        await validatePropertyValue(
+          await transformInputValueToPropertyValue(inputRef.current.files?.[0] ?? inputRef.current.value)
+        );
+      }
+    }
+
     // noinspection JSIgnoredPromiseFromCall
-    validatePropertyValue(transformInputValueToPropertyValue(inputRef.current.value));
-  }
+    forcePropertyValueValidation();
+  });
+
+  const isDialogInputType = type === 'file' || type === 'color';
 
   return (
     <React.Fragment>
@@ -77,7 +80,8 @@ export default function BasicInput<T extends { [key: string]: any }>({
         ref={inputRef}
         type={type}
         {...getInputValidationProps(Class, propertyName)}
-        onBlur={validateAndUpdatePropertyValue}
+        onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
+        onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}
       />
       <label className={getValidationMessageClassNames(validationErrorMessage)}>
         {getValidationMessage(validationErrorMessage)}
