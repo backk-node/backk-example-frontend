@@ -1,0 +1,9 @@
+form label,
+form select {
+  display: table-cell;
+  margin-bottom: 0.25rem;
+}
+
+form select {
+  margin-left: 0.25rem;
+}

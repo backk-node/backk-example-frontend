@@ -1,5 +1,5 @@
 import React from 'react';
-import '../basic/BasicInput.css';
+import './SelectInput.css';
 import { getSelectInputPossibleValues } from 'backk-frontend-utils';
 import { GenericInputProps } from '../generic/GenericInput';
 

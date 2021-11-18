@@ -27,6 +27,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
   const inputRef = useRef(null as HTMLInputElement | null);
   const [validationErrorMessage, setValidationErrorMessage] = useState(undefined as PossibleString);
   const [lastDoneImmediateValidationId, setLastDoneImmediateValidationId] = useState(-1);
+  const isArray = isBuiltIntTypeArrayProperty(Class, propertyName);
 
   async function validatePropertyValue(propertyValue: any): Promise<void> {
     const possibleValidationErrorMessage = await validateServiceFunctionArgumentProperty(
@@ -44,7 +45,6 @@ export default function BasicInput<T extends { [key: string]: any }>({
   async function validateAndUpdatePropertyValue(event: React.FocusEvent<HTMLInputElement>) {
     const inputValue = event.currentTarget.files?.[0] ?? event.currentTarget.value;
     let propertyValue = await transformInputValueToPropertyValue(inputValue);
-    const isArray = isBuiltIntTypeArrayProperty(Class, propertyName);
     propertyValue = isArray ? [propertyValue] : propertyValue;
     if (propertyValue === '') {
       setValidationErrorMessage(undefined);
@@ -62,9 +62,9 @@ export default function BasicInput<T extends { [key: string]: any }>({
         inputRef?.current
       ) {
         setLastDoneImmediateValidationId(forceImmediateValidationId);
-        await validatePropertyValue(
-          await transformInputValueToPropertyValue(inputRef.current.files?.[0] ?? inputRef.current.value)
-        );
+        const inputValue = inputRef.current.files?.[0] ?? inputRef.current.value;
+        const propertyValue = await transformInputValueToPropertyValue(inputValue);
+        await validatePropertyValue(isArray ? [propertyValue] : propertyValue);
       }
     }
 
