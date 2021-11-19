@@ -16,8 +16,8 @@ export default function CreateSalesItem() {
       Class={SalesItem}
       instance={salesItem}
       serviceFunctionType={'create'}
-      forceImmediateValidationId={salesItemState.forceImmediateFormValidationId}
-      error={salesItemState.tagCreationError}
+      forceImmediateValidationId={salesItemState.forceImmediateCreateFormValidationId}
+      error={salesItemState.salesItemCreationError}
       onSubmitForm={preventDefaultAnd(createSalesItem, salesItem)}
     />
   );

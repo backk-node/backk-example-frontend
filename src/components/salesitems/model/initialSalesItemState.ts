@@ -3,8 +3,10 @@ import SalesItem from '../../../services/backk-example-microservice.default/sale
 
 const initialSalesItemState = {
   createdSalesItem: undefined as SalesItem | undefined,
-  tagCreationError: undefined as PossibleBackkError,
-  forceImmediateFormValidationId: 0,
+  salesItemCreationError: undefined as PossibleBackkError,
+  salesItemUpdateError: undefined as PossibleBackkError,
+  forceImmediateCreateFormValidationId: 0,
+  forceImmediateUpdateFormValidationId: 0,
 };
 
 export default initialSalesItemState;
