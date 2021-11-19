@@ -23,8 +23,8 @@ export default function SuccessOrErrorIndicator({ error }: Props) {
   if (error) {
     if (!isLocalValidationError(error)) {
       const errorMessage = [
-        error.statusCode ? `Status ${error.statusCode}:` : '',
-        error.errorCode + ':' ?? '',
+        error.statusCode ? `Status ${error.statusCode},` : '',
+        error.errorCode + ',' ?? '',
         error.message,
       ].join(' ');
       return <div className="errorMessage">{errorMessage}</div>;
