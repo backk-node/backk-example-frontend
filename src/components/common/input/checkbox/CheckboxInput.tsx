@@ -6,6 +6,7 @@ export default function CheckboxInput<T extends { [key: string]: any }>({
   instance,
   propertyName,
   isInputEnabled,
+  serviceFunctionType,
 }: GenericInputProps<T>) {
   function onChange(event: React.FormEvent<HTMLInputElement>) {
     instance[propertyName] = event.currentTarget.checked as any;
@@ -14,7 +15,12 @@ export default function CheckboxInput<T extends { [key: string]: any }>({
   return (
     <React.Fragment>
       <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
-      <input type="checkbox" disabled={!isInputEnabled} onChange={onChange} />
+      <input
+        type="checkbox"
+        defaultChecked={serviceFunctionType === 'update' ? instance[propertyName] : undefined}
+        disabled={!isInputEnabled}
+        onChange={onChange}
+      />
     </React.Fragment>
   );
 }

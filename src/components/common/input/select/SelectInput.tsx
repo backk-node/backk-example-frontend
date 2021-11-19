@@ -17,6 +17,7 @@ export default function SelectInput<T extends { [key: string]: any }>({
   instance,
   Class,
   propertyName,
+  serviceFunctionType,
   isInputEnabled,
   transformInputValueToPropertyValue = defaultTransformInputValueToPropertyValue,
   multiple = false,
@@ -35,7 +36,7 @@ export default function SelectInput<T extends { [key: string]: any }>({
       <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
       <select
         multiple={multiple}
-        defaultValue={selectInputValues[0]}
+        defaultValue={serviceFunctionType === 'update' ? instance[propertyName] : selectInputValues[0]}
         disabled={!isInputEnabled}
         onChange={onChange}
       >

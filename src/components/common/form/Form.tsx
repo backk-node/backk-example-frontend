@@ -23,6 +23,7 @@ export interface FormProps<T extends { [key: string]: any }> {
 
 export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) {
   const { Class, instance, serviceFunctionType } = props;
+
   const inputs = Object.keys(instance)
     .filter(
       (propertyName: any) =>
@@ -37,12 +38,14 @@ export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) 
       return <GenericInput isInputEnabled={true} key={propertyName} {...genericInputProps} />;
     });
 
+  const verb = serviceFunctionType[0].toUpperCase() + serviceFunctionType.slice(1);
+
   return (
     <React.Fragment>
       <form>
-        <p>{`Create new ${Class.name}:`}</p>
+        <p>{`${verb} new ${Class.name}:`}</p>
         {inputs}
-        <button onClick={onSubmitForm}>{`Create ${Class.name}`}</button>
+        <button onClick={onSubmitForm}>{`${verb} ${Class.name}`}</button>
       </form>
       <SuccessOrErrorIndicator error={error} />
     </React.Fragment>

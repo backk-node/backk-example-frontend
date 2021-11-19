@@ -7,8 +7,8 @@ const { salesItemState } = store.getState();
 
 export default async function createSalesItem(salesItem: SalesItem): Promise<void> {
   salesItemState.tagCreationError = undefined; // NOSONAR
-  console.log(salesItem);
-  const [, error] = await salesItemService.createSalesItem(salesItem);
+  const [createdSalesItem, error] = await salesItemService.createSalesItem(salesItem);
+  salesItemState.createdSalesItem = createdSalesItem?.data;
   salesItemState.tagCreationError = error;
   if (isLocalValidationError(error)) {
     salesItemState.forceImmediateFormValidationId += 1;

@@ -63,11 +63,13 @@ export default function BasicInput<T extends { [key: string]: any }>({
 
   useEffect(() => {
     async function forcePropertyValueValidation() {
-      if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef?.current) {
+      if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef.current) {
         setLastDoneImmediateValidationId(forceImmediateValidationId);
         const inputValue = inputRef.current.files?.[0] ?? inputRef.current.value;
-        const propertyValue = await transformInputValueToPropertyValue(inputValue);
-        await validatePropertyValue(isArray ? [...(inputValue ? [propertyValue] : [])] : propertyValue);
+        if (serviceFunctionType !== 'update' || (serviceFunctionType === 'update' && inputValue !== '')) {
+          const propertyValue = await transformInputValueToPropertyValue(inputValue);
+          await validatePropertyValue(isArray ? [...(inputValue ? [propertyValue] : [])] : propertyValue);
+        }
       }
     }
 
@@ -96,7 +98,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
       <input
         ref={inputRef}
         type={type}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue ?? serviceFunctionType === 'update' ? instance[propertyName] : undefined}
         disabled={!isInputEnabled}
         {...getInputValidationProps(Class, propertyName)}
         onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
