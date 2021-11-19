@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './BasicInput.css';
+import './GenericInput.css';
 import GenericInput, { GenericInputProps } from './GenericInput';
 
 export default function OptionalGenericInput<T extends { [key: string]: any }>(
@@ -23,9 +23,9 @@ export default function OptionalGenericInput<T extends { [key: string]: any }>(
   }
 
   return (
-    <React.Fragment>
+    <div className="row">
       <input type="checkbox" onChange={enableOrDisableInput} />
       <GenericInput isInputEnabled={isInputEnabled} {...props} />
-    </React.Fragment>
+    </div>
   );
 }

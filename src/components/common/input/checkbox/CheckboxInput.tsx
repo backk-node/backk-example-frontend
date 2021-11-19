@@ -18,7 +18,7 @@ export default function CheckboxInput<T extends { [key: string]: any }>({
       <input
         type="checkbox"
         defaultChecked={serviceFunctionType === 'update' ? instance[propertyName] : undefined}
-        disabled={!isInputEnabled}
+        disabled={isInputEnabled === undefined ? undefined : !isInputEnabled}
         onChange={onChange}
       />
     </React.Fragment>

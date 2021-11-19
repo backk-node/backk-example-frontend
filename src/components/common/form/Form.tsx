@@ -35,7 +35,7 @@ export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) 
       if (isOptionalProperty(Class, propertyName)) {
         return <OptionalGenericInput key={propertyName} {...genericInputProps} />;
       }
-      return <GenericInput isInputEnabled={true} key={propertyName} {...genericInputProps} />;
+      return <GenericInput key={propertyName} {...genericInputProps} />;
     });
 
   const verb = serviceFunctionType[0].toUpperCase() + serviceFunctionType.slice(1);

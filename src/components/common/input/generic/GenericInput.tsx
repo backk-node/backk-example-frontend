@@ -15,11 +15,12 @@ export interface GenericInputProps<T extends { [key: string]: any }> {
   propertyName: keyof T & string;
   serviceFunctionType: ServiceFunctionType;
   forceImmediateValidationId: number;
-  isInputEnabled: boolean;
+  isInputEnabled?: boolean;
 }
 
 export default function GenericInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
-  const inputType = getInputType(props.Class, props.propertyName);
+  const { Class, isInputEnabled, propertyName } = props;
+  const inputType = getInputType(Class, propertyName);
 
   let input;
   switch (inputType) {
@@ -48,5 +49,5 @@ export default function GenericInput<T extends { [key: string]: any }>(props: Ge
       input = <BasicInput type={inputType} {...props} />;
   }
 
-  return <div className="row">{input}</div>;
+  return isInputEnabled ? <span>{input}</span> : <div className="row">{input}</div>;
 }

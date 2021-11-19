@@ -99,7 +99,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
         ref={inputRef}
         type={type}
         defaultValue={defaultValue ?? serviceFunctionType === 'update' ? instance[propertyName] : undefined}
-        disabled={!isInputEnabled}
+        disabled={isInputEnabled === undefined ? undefined : !isInputEnabled}
         {...getInputValidationProps(Class, propertyName)}
         onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
         onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}

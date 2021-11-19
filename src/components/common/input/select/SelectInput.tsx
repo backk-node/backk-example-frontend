@@ -37,7 +37,7 @@ export default function SelectInput<T extends { [key: string]: any }>({
       <select
         multiple={multiple}
         defaultValue={serviceFunctionType === 'update' ? instance[propertyName] : selectInputValues[0]}
-        disabled={!isInputEnabled}
+        disabled={isInputEnabled === undefined ? undefined : !isInputEnabled}
         onChange={onChange}
       >
         {options}
