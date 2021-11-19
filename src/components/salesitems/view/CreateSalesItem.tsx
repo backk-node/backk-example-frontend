@@ -1,53 +1,24 @@
-import React, { useState } from 'react';
-import './CreateSalesItem.css';
+import React from 'react';
 import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
-import { ServiceFunctionType } from 'backk-frontend-utils/lib/callRemoteService';
-import { isObjectProperty, PossibleBackkError, shouldPropertyBePresent } from 'backk-frontend-utils';
 import createSalesItem from '../model/actions/createSalesItem';
-import BackEndError from '../../common/backenderror/BackEndError';
-import GenericInput from '../../common/input/generic/GenericInput';
-import isLocalValidationError from 'backk-frontend-utils/lib/errors/isLocalValidationError';
+import store from '../../../store/store';
+import preventDefaultAnd from '../../../utils/preventDefaultAnd';
+import Form from '../../common/form/Form';
 
 const salesItem = new SalesItem();
+const { salesItemState } = store.getState();
 
 export default function CreateSalesItem() {
-  const [error, setError] = useState(null as PossibleBackkError);
-  const [forceImmediateValidationId, setForceImmediateValidationId] = useState(-1);
-
-  const onCreateSalesItemButtonClick = async (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    const [, error] = await createSalesItem(salesItem);
-    console.log(salesItem);
-    setError(error);
-    setForceImmediateValidationId(forceImmediateValidationId + 1);
-  };
-
-  const inputProps = {
-    instance: salesItem,
-    Class: SalesItem,
-    serviceFunctionType: 'create' as ServiceFunctionType,
-    forceImmediateValidationId: isLocalValidationError(error) ? forceImmediateValidationId : null,
-  };
-
-  const inputs = Object.keys(salesItem)
-    .filter(
-      (propertyName: any) =>
-        shouldPropertyBePresent(SalesItem, propertyName, 'create') &&
-        !isObjectProperty(SalesItem, propertyName)
-    )
-    .map((propertyName: any) => {
-      const props = { ...inputProps, propertyName };
-      return <GenericInput key={propertyName} {...props} />;
-    });
+  store.useState([salesItemState]);
 
   return (
-    <React.Fragment>
-      <form>
-        <p>Create new sales item:</p>
-        {inputs}
-        <button onClick={onCreateSalesItemButtonClick}>Create sales item</button>
-      </form>
-      <BackEndError error={error} />
-    </React.Fragment>
+    <Form
+      Class={SalesItem}
+      instance={salesItem}
+      serviceFunctionType={'create'}
+      forceImmediateValidationId={salesItemState.forceImmediateFormValidationId}
+      error={salesItemState.tagCreationError}
+      onSubmitForm={preventDefaultAnd(createSalesItem, salesItem)}
+    />
   );
 }

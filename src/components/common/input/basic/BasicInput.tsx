@@ -26,7 +26,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
 }: BasicInputProps<T>) {
   const inputRef = useRef(null as HTMLInputElement | null);
   const [validationErrorMessage, setValidationErrorMessage] = useState(undefined as PossibleString);
-  const [lastDoneImmediateValidationId, setLastDoneImmediateValidationId] = useState(-1);
+  const [lastDoneImmediateValidationId, setLastDoneImmediateValidationId] = useState(0);
   const isArray = isBuiltIntTypeArrayProperty(Class, propertyName);
 
   async function validatePropertyValue(propertyValue: any): Promise<void> {
@@ -56,11 +56,8 @@ export default function BasicInput<T extends { [key: string]: any }>({
 
   useEffect(() => {
     async function forcePropertyValueValidation() {
-      if (
-        forceImmediateValidationId !== null &&
-        lastDoneImmediateValidationId !== forceImmediateValidationId &&
-        inputRef?.current
-      ) {
+      if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef?.current) {
+        console.log(lastDoneImmediateValidationId, forceImmediateValidationId);
         setLastDoneImmediateValidationId(forceImmediateValidationId);
         const inputValue = inputRef.current.files?.[0] ?? inputRef.current.value;
         const propertyValue = await transformInputValueToPropertyValue(inputValue);

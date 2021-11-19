@@ -13,7 +13,7 @@ export interface GenericInputProps<T extends { [key: string]: any }> {
   Class: new () => T;
   propertyName: keyof T & string;
   serviceFunctionType: ServiceFunctionType;
-  forceImmediateValidationId: number | null;
+  forceImmediateValidationId: number;
 }
 
 export default function GenericInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {

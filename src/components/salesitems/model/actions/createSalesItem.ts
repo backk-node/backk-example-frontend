@@ -1,7 +1,15 @@
 import salesItemService from '../../../../services/backk-example-microservice.default/salesitem/salesItemService';
 import SalesItem from '../../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
-import { One, PromiseErrorOr } from 'backk-frontend-utils';
+import store from '../../../../store/store';
+import isLocalValidationError from 'backk-frontend-utils/lib/errors/isLocalValidationError';
 
-export default function createSalesItem(salesItem: SalesItem): PromiseErrorOr<One<SalesItem>> {
-  return salesItemService.createSalesItem(salesItem);
+const { salesItemState } = store.getState();
+
+export default async function createSalesItem(salesItem: SalesItem): Promise<void> {
+  salesItemState.tagCreationError = undefined; // NOSONAR
+  const [, error] = await salesItemService.createSalesItem(salesItem);
+  salesItemState.tagCreationError = error;
+  if (isLocalValidationError(error)) {
+    salesItemState.forceImmediateFormValidationId += 1;
+  }
 }
