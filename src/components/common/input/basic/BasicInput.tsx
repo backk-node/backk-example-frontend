@@ -13,6 +13,9 @@ import { GenericInputProps } from '../generic/GenericInput';
 export interface BasicInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
   type: string;
   transformInputValueToPropertyValue?: (inputValue: string | File) => Promise<any> | any;
+  defaultValue?: any;
+  isDialogInputType?: boolean;
+  shouldShowValidationMessage?: boolean;
 }
 
 export default function BasicInput<T extends { [key: string]: any }>({
@@ -23,6 +26,10 @@ export default function BasicInput<T extends { [key: string]: any }>({
   transformInputValueToPropertyValue = (inputValue) => inputValue as any,
   forceImmediateValidationId,
   type,
+  defaultValue,
+  isInputEnabled,
+  isDialogInputType = false,
+  shouldShowValidationMessage = true,
 }: BasicInputProps<T>) {
   const inputRef = useRef(null as HTMLInputElement | null);
   const [validationErrorMessage, setValidationErrorMessage] = useState(undefined as PossibleString);
@@ -57,11 +64,10 @@ export default function BasicInput<T extends { [key: string]: any }>({
   useEffect(() => {
     async function forcePropertyValueValidation() {
       if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef?.current) {
-        console.log(lastDoneImmediateValidationId, forceImmediateValidationId);
         setLastDoneImmediateValidationId(forceImmediateValidationId);
         const inputValue = inputRef.current.files?.[0] ?? inputRef.current.value;
         const propertyValue = await transformInputValueToPropertyValue(inputValue);
-        await validatePropertyValue(isArray ? [propertyValue] : propertyValue);
+        await validatePropertyValue(isArray ? [...(inputValue ? [propertyValue] : [])] : propertyValue);
       }
     }
 
@@ -69,7 +75,20 @@ export default function BasicInput<T extends { [key: string]: any }>({
     forcePropertyValueValidation();
   });
 
-  const isDialogInputType = type === 'file' || type === 'color';
+  useEffect(() => {
+    if (defaultValue !== undefined) {
+      instance[propertyName] = defaultValue;
+    }
+  }, [defaultValue, instance, propertyName]);
+
+  let validationMessage;
+  if (shouldShowValidationMessage) {
+    validationMessage = (
+      <label className={getValidationMessageClassNames(validationErrorMessage)}>
+        {getValidationMessage(validationErrorMessage)}
+      </label>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -77,13 +96,13 @@ export default function BasicInput<T extends { [key: string]: any }>({
       <input
         ref={inputRef}
         type={type}
+        defaultValue={defaultValue}
+        disabled={!isInputEnabled}
         {...getInputValidationProps(Class, propertyName)}
         onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
         onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}
       />
-      <label className={getValidationMessageClassNames(validationErrorMessage)}>
-        {getValidationMessage(validationErrorMessage)}
-      </label>
+      {validationMessage}
     </React.Fragment>
   );
 }

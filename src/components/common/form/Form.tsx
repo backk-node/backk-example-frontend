@@ -9,6 +9,8 @@ import {
 } from 'backk-frontend-utils';
 import SuccessOrErrorIndicator from '../successorerrorindicator/SuccessOrErrorIndicator';
 import GenericInput from '../../common/input/generic/GenericInput';
+import isOptionalProperty from 'backk-frontend-utils/lib/utils/isOptionalProperty';
+import OptionalGenericInput from '../input/generic/OptionalGenericInput';
 
 export interface FormProps<T extends { [key: string]: any }> {
   Class: new () => T;
@@ -20,25 +22,27 @@ export interface FormProps<T extends { [key: string]: any }> {
 }
 
 export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) {
-  const inputs = Object.keys(props.instance)
+  const { Class, instance, serviceFunctionType } = props;
+  const inputs = Object.keys(instance)
     .filter(
       (propertyName: any) =>
-        shouldPropertyBePresent(SalesItem, propertyName, props.serviceFunctionType) &&
+        shouldPropertyBePresent(SalesItem, propertyName, serviceFunctionType) &&
         !isObjectProperty(SalesItem, propertyName)
     )
     .map((propertyName: any) => {
       const genericInputProps = { ...props, propertyName };
-      return <GenericInput key={propertyName} {...genericInputProps} />;
+      if (isOptionalProperty(Class, propertyName)) {
+        return <OptionalGenericInput key={propertyName} {...genericInputProps} />;
+      }
+      return <GenericInput isInputEnabled={true} key={propertyName} {...genericInputProps} />;
     });
-
-  const className = props.Class.name;
 
   return (
     <React.Fragment>
       <form>
-        <p>{`Create new ${className}:`}</p>
+        <p>{`Create new ${Class.name}:`}</p>
         {inputs}
-        <button onClick={onSubmitForm}>{`Create ${className}`}</button>
+        <button onClick={onSubmitForm}>{`Create ${Class.name}`}</button>
       </form>
       <SuccessOrErrorIndicator error={error} />
     </React.Fragment>

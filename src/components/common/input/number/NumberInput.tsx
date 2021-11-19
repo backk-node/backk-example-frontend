@@ -8,6 +8,6 @@ function transformInputValueToPropertyValue(inputValue: any) {
 }
 
 export default function NumberInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
-  const finalProps = { ...props, transformInputValueToPropertyValue };
-  return <BasicInput type="number" {...finalProps} />;
+  const basicInputProps = { ...props, transformInputValueToPropertyValue };
+  return <BasicInput type="number" {...basicInputProps} />;
 }

@@ -7,6 +7,7 @@ import CheckboxInput from '../checkbox/CheckboxInput';
 import NumberInput from '../number/NumberInput';
 import GenericDateTimeInput from '../datetime/genericdatetimeinput/GenericDateTimeInput';
 import GenericSelectInput from '../select/GenericSelectInput';
+import ColorInput from '../color/ColorInput';
 
 export interface GenericInputProps<T extends { [key: string]: any }> {
   instance: T;
@@ -14,6 +15,7 @@ export interface GenericInputProps<T extends { [key: string]: any }> {
   propertyName: keyof T & string;
   serviceFunctionType: ServiceFunctionType;
   forceImmediateValidationId: number;
+  isInputEnabled: boolean;
 }
 
 export default function GenericInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
@@ -38,6 +40,9 @@ export default function GenericInput<T extends { [key: string]: any }>(props: Ge
       break;
     case 'number':
       input = <NumberInput {...props} />;
+      break;
+    case 'color':
+      input = <ColorInput {...props} />;
       break;
     default:
       input = <BasicInput type={inputType} {...props} />;

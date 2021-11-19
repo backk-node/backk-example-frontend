@@ -7,6 +7,7 @@ import {
   IsAnyString,
   IsDataUri,
   IsFloat,
+  IsHexColor,
   IsIn,
   IsInstance,
   IsInt,
@@ -28,6 +29,10 @@ import { Department } from '../enums/Department';
 import { SalesItemState } from '../enums/SalesItemState';
 
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
+  @IsString()
+  @IsHexColor()
+  color: string | undefined = '';
+
   @MaxLength(Lengths._64)
   @IsAnyString()
   @IsString()
