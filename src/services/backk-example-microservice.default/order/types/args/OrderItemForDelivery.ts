@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  IsDate,
   IsString,
   IsStringOrObjectId,
   IsUrl,
@@ -7,6 +8,7 @@ import {
   MaxLength,
   MaxLengthAndMatches,
   ShouldBeTrueForObject,
+  Type,
   ValidateIf,
 } from 'backk-frontend-utils';
 import OrderItem from '../entities/OrderItem';
@@ -22,6 +24,8 @@ export default class OrderItemForDelivery {
       (state === 'toBeDelivered' && deliveryTimestamp === null) ||
       (state !== 'toBeDelivered' && deliveryTimestamp !== null)
   )
+  @Type(() => Date)
+  @IsDate()
   @ValidateIf((o: any) => o.deliveryTimestamp !== null)
   deliveryTimestamp!: Date | null;
 

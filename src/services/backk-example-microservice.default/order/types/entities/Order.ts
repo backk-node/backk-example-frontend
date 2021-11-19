@@ -3,6 +3,7 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   IsAlphanumeric,
+  IsDate,
   IsFloat,
   IsIn,
   IsInstance,
@@ -49,6 +50,8 @@ export default class Order extends _IdAndVersionAndCreatedAtTimestampAndLastModi
   })
   transactionId: string | null | undefined = '';
 
+  @Type(() => Date)
+  @IsDate()
   @ValidateIf((o: any) => o.transactionTimestamp !== null)
   @ValidateIf((o: any) => o.transactionTimestamp !== undefined, {
     groups: ['__backk_update__'],

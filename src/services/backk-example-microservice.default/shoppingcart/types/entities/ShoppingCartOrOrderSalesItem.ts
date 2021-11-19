@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  AcceptFileTypes,
   IsAnyString,
   IsDataUri,
   IsFloat,
@@ -51,6 +52,7 @@ export default class ShoppingCartOrOrderSalesItem {
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],

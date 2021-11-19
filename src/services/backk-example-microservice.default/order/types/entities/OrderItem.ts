@@ -3,6 +3,7 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   Id,
+  IsDate,
   IsIn,
   IsInstance,
   IsString,
@@ -37,6 +38,8 @@ export default class OrderItem extends Id {
       (state === 'toBeDelivered' && deliveryTimestamp === null) ||
       (state !== 'toBeDelivered' && deliveryTimestamp !== null)
   )
+  @Type(() => Date)
+  @IsDate()
   @ValidateIf((o: any) => o.deliveryTimestamp !== null)
   @ValidateIf((o: any) => o.deliveryTimestamp !== undefined, {
     groups: ['__backk_update__'],

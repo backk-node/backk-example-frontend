@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  AcceptFileTypes,
   IsAnyString,
   IsDataUri,
   IsOneOf,
@@ -54,6 +55,7 @@ export default class User {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @ValidateIf((o: any) => o.imageDataUri !== undefined, {
     groups: ['__backk_update__'],

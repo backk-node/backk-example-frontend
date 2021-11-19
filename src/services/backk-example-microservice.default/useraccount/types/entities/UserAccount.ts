@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  AcceptFileTypes,
   ArrayMaxSize,
   ArrayMinSize,
   BaseUserAccount,
@@ -109,6 +110,7 @@ export default class UserAccount extends BaseUserAccount {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @ValidateIf((o: any) => o.imageDataUri !== undefined, {
     groups: ['__backk_update__'],

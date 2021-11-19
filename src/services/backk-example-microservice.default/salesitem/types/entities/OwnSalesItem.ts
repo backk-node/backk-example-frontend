@@ -1,9 +1,11 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  AcceptFileTypes,
   IsAnyString,
   IsDataUri,
   IsDate,
   IsFloat,
+  IsIn,
   IsString,
   IsStringOrObjectId,
   IsUndefined,
@@ -11,6 +13,7 @@ import {
   MaxLength,
   MaxLengthAndMatches,
   MinMax,
+  Type,
   ValidateIf,
   Values,
 } from 'backk-frontend-utils';
@@ -35,6 +38,8 @@ export default class OwnSalesItem {
   @IsDate({
     groups: ['__backk_none__'],
   })
+  @Type(() => Date)
+  @IsDate()
   @ValidateIf((o: any) => o.createdAtTimestamp !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -46,6 +51,8 @@ export default class OwnSalesItem {
   @IsDate({
     groups: ['__backk_none__'],
   })
+  @Type(() => Date)
+  @IsDate()
   @ValidateIf((o: any) => o.lastModifiedTimestamp !== undefined, {
     groups: ['__backk_update__'],
   })
@@ -79,6 +86,7 @@ export default class OwnSalesItem {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],
@@ -87,6 +95,7 @@ export default class OwnSalesItem {
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -99,6 +108,7 @@ export default class OwnSalesItem {
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
+  @IsIn(['forSale', 'reserved', 'sold'])
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })

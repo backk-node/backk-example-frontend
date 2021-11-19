@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  AcceptFileTypes,
   IsAnyString,
   IsDataUri,
   IsFloat,
@@ -46,6 +47,7 @@ export default class FollowedUserSalesItem {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   primaryImageDataUri: string = '';
 

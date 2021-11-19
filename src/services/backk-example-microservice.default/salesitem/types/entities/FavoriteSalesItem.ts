@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  AcceptFileTypes,
   IsAnyString,
   IsDataUri,
   IsFloat,
@@ -55,6 +56,7 @@ export default class FavoriteSalesItem {
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],

@@ -1,26 +1,26 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
-  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
+  AcceptFileTypes,
   ArrayMaxSize,
   ArrayMinSize,
   ArrayNotUnique,
   IsAnyString,
   IsDataUri,
   IsFloat,
-  IsHexColor,
   IsIn,
   IsInstance,
   IsInt,
   IsString,
   IsUndefined,
   Lengths,
-  MAX_INT_VALUE,
   MaxLength,
+  MAX_INT_VALUE,
   MinMax,
   Type,
   ValidateIf,
   ValidateNested,
   Values,
+  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk-frontend-utils';
 import Tag from '../../../tag/entities/Tag';
 import { Area } from '../enums/Area';
@@ -29,10 +29,6 @@ import { Department } from '../enums/Department';
 import { SalesItemState } from '../enums/SalesItemState';
 
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
-  @IsString()
-  @IsHexColor()
-  color: string | undefined = '';
-
   @MaxLength(Lengths._64)
   @IsAnyString()
   @IsString()
@@ -114,6 +110,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
 
   @MaxLength(Lengths._10M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @ValidateIf((o: any) => o.primaryImageDataUri !== undefined, {
     groups: ['__backk_update__'],
@@ -122,6 +119,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
 
   @MaxLength(Lengths._1M)
   @IsDataUri()
+  @AcceptFileTypes(['image/*'])
   @IsString()
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
@@ -135,6 +133,9 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
     each: true,
   })
   @IsDataUri({
+    each: true,
+  })
+  @AcceptFileTypes(['image/*'], {
     each: true,
   })
   @ArrayMinSize(0)
@@ -151,6 +152,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @IsUndefined({
     groups: ['__backk_create__', '__backk_update__'],
   })
+  @IsIn(['forSale', 'reserved', 'sold'])
   @ValidateIf((o: any) => o.state !== undefined, {
     groups: ['__backk_update__'],
   })
