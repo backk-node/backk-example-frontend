@@ -19,5 +19,5 @@ function transformInputValueToPropertyValue(file: any): Promise<any> {
 
 export default function FileInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
   const basicInputProps = { ...props, isDialogInputType: true, transformInputValueToPropertyValue };
-  return <BasicInput type="file" defaultValue={''} {...basicInputProps} />;
+  return <BasicInput type="file" {...basicInputProps} />;
 }

@@ -12,17 +12,17 @@ export interface GenericDateTimeInputProps<T extends { [key: string]: any }> ext
 
 export default function GenericDateTimeInput<T extends { [key: string]: any }>({
   type,
-  ...genericProps
+  ...genericInputProps
 }: GenericDateTimeInputProps<T>) {
   switch (type) {
     case 'time':
-      return <TimeInput {...genericProps} />;
+      return <TimeInput {...genericInputProps} />;
     case 'datetime-local':
-      return <DateTimeInput {...genericProps} />;
+      return <DateTimeInput {...genericInputProps} />;
     case 'date':
-      return <DateInput {...genericProps} />;
+      return <DateInput {...genericInputProps} />;
     case 'month':
-      return <MonthInput {...genericProps} />;
+      return <MonthInput {...genericInputProps} />;
     default:
       return null;
   }

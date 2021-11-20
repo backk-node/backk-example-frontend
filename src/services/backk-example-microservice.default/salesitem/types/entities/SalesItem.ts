@@ -1,26 +1,28 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
   AcceptFileTypes,
   ArrayMaxSize,
   ArrayMinSize,
   ArrayNotUnique,
   IsAnyString,
   IsDataUri,
+  IsDate,
   IsFloat,
   IsIn,
   IsInstance,
   IsInt,
   IsString,
+  IsTimestampBetween,
   IsUndefined,
   Lengths,
-  MaxLength,
   MAX_INT_VALUE,
+  MaxLength,
   MinMax,
   Type,
   ValidateIf,
   ValidateNested,
   Values,
-  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk-frontend-utils';
 import Tag from '../../../tag/entities/Tag';
 import { Area } from '../enums/Area';
@@ -29,6 +31,12 @@ import { Department } from '../enums/Department';
 import { SalesItemState } from '../enums/SalesItemState';
 
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
+  @Type(() => Date)
+  @IsDate()
+  @IsTimestampBetween('year', 2021, 2021)
+  @IsTimestampBetween('month', 10, 10)
+  transactionTimestamp!: Date | null | undefined;
+
   @MaxLength(Lengths._64)
   @IsAnyString()
   @IsString()
