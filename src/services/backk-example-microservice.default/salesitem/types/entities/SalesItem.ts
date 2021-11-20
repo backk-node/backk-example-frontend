@@ -8,12 +8,13 @@ import {
   IsAnyString,
   IsDataUri,
   IsDate,
+  IsDateBetweenRelative,
+  IsDayOfWeekBetween,
   IsFloat,
   IsIn,
   IsInstance,
   IsInt,
   IsString,
-  IsTimestampBetween,
   IsUndefined,
   Lengths,
   MAX_INT_VALUE,
@@ -29,13 +30,13 @@ import { Area } from '../enums/Area';
 import { Category } from '../enums/Category';
 import { Department } from '../enums/Department';
 import { SalesItemState } from '../enums/SalesItemState';
-import UiProperties from 'backk-frontend-utils/lib/decorators/typeproperty/UiProperties';
+import { DayOfWeek } from 'backk-frontend-utils/lib/decorators/typeproperty/datetime/IsDayOfWeekBetween';
 
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
   @Type(() => Date)
   @IsDate()
-  @IsTimestampBetween('hour', 8, 18)
-  @UiProperties({ isTimeOnly: true })
+  @IsDateBetweenRelative(0, 'date', 1, 'month')
+  @IsDayOfWeekBetween(DayOfWeek.Tuesday, DayOfWeek.Friday)
   transactionTimestamp!: Date | null | undefined;
 
   @MaxLength(Lengths._64)
