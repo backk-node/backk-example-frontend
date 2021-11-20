@@ -29,12 +29,13 @@ import { Area } from '../enums/Area';
 import { Category } from '../enums/Category';
 import { Department } from '../enums/Department';
 import { SalesItemState } from '../enums/SalesItemState';
+import UiProperties from 'backk-frontend-utils/lib/decorators/typeproperty/UiProperties';
 
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
   @Type(() => Date)
   @IsDate()
-  @IsTimestampBetween('year', 2021, 2021)
-  @IsTimestampBetween('month', 10, 10)
+  @IsTimestampBetween('hour', 8, 18)
+  @UiProperties({ isTimeOnly: true })
   transactionTimestamp!: Date | null | undefined;
 
   @MaxLength(Lengths._64)

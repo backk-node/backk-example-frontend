@@ -14,7 +14,7 @@
     "@types/react": "17.0.33",
     "@types/react-dom": "17.0.10",
     "@types/uuid": "8.3.1",
-    "backk-frontend-utils": "1.0.100",
+    "backk-frontend-utils": "1.0.103",
     "classnames": "2.3.1",
     "cross-env": "7.0.3",
     "crypto-js": "4.1.1",
