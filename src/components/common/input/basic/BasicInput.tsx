@@ -17,6 +17,8 @@ export interface BasicInputProps<T extends { [key: string]: any }> extends Gener
   defaultValue?: any;
   isDialogInputType?: boolean;
   shouldShowValidationMessage?: boolean;
+  associatedButtonText?: string;
+  onAssociatedButtonClick?: () => void;
 }
 
 export function defaultTransformInputValueToPropertyValue(
@@ -38,6 +40,8 @@ export default function BasicInput<T extends { [key: string]: any }>({
   defaultValue,
   isDialogInputType = false,
   shouldShowValidationMessage = true,
+  associatedButtonText,
+  onAssociatedButtonClick,
 }: BasicInputProps<T>) {
   const inputRef = useRef(null as HTMLInputElement | null);
   const [validationErrorMessage, setValidationErrorMessage] = useState(undefined as PossibleString);
@@ -87,6 +91,11 @@ export default function BasicInput<T extends { [key: string]: any }>({
     }
   }, [defaultValue, instance, propertyName]);
 
+  let associatedButton;
+  if (associatedButtonText) {
+    associatedButton = <button onClick={onAssociatedButtonClick}>{associatedButtonText}</button>;
+  }
+
   let validationMessage;
   if (shouldShowValidationMessage) {
     validationMessage = (
@@ -107,6 +116,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
         onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
         onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}
       />
+      {associatedButton}
       {validationMessage}
     </React.Fragment>
   );

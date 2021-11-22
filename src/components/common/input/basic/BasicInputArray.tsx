@@ -33,23 +33,15 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
   const inputs = Array(inputCount)
     .fill(0)
     .map((_, index) => {
-      let addOrRemoveInputButton;
-      if (index === inputCount - 1) {
-        addOrRemoveInputButton = <button onClick={addInput}>+</button>;
-      } else {
-        addOrRemoveInputButton = <button onClick={() => removeInput(index)}>-</button>;
-      }
-
       return (
-        <span>
-          <BasicInput
-            transformInputValueToPropertyValue={(inputEventOrRef) =>
-              transformInputValueToArrayPropertyValue(inputEventOrRef, index)
-            }
-            {...props}
-          />
-          {addOrRemoveInputButton}
-        </span>
+        <BasicInput
+          associatedButtonText={index === inputCount - 1 ? '+' : '-'}
+          onAssociatedButtonClick={index === inputCount - 1 ? addInput : () => removeInput(index)}
+          transformInputValueToPropertyValue={(inputEventOrRef) =>
+            transformInputValueToArrayPropertyValue(inputEventOrRef, index)
+          }
+          {...props}
+        />
       );
     });
 
