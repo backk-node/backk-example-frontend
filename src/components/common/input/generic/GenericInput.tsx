@@ -2,12 +2,12 @@ import React from 'react';
 import './GenericInput.css';
 import { getInputType, ServiceFunctionType } from 'backk-frontend-utils';
 import FileInput from '../file/FileInput';
-import BasicInput from '../basic/BasicInput';
 import CheckboxInput from '../checkbox/CheckboxInput';
 import NumberInput from '../number/NumberInput';
 import GenericDateTimeInput from '../datetime/genericdatetimeinput/GenericDateTimeInput';
 import GenericSelectInput from '../select/GenericSelectInput';
 import ColorInput from '../color/ColorInput';
+import GenericBasicInput from '../basic/GenericBasicInput';
 
 export interface GenericInputProps<T extends { [key: string]: any }> {
   instance: T;
@@ -15,11 +15,10 @@ export interface GenericInputProps<T extends { [key: string]: any }> {
   propertyName: keyof T & string;
   serviceFunctionType: ServiceFunctionType;
   forceImmediateValidationId: number;
-  isInputEnabled?: boolean;
 }
 
 export default function GenericInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
-  const { Class, isInputEnabled, propertyName } = props;
+  const { Class, propertyName } = props;
   const inputType = getInputType(Class, propertyName);
 
   let input;
@@ -46,8 +45,8 @@ export default function GenericInput<T extends { [key: string]: any }>(props: Ge
       input = <ColorInput {...props} />;
       break;
     default:
-      input = <BasicInput type={inputType} {...props} />;
+      input = <GenericBasicInput type={inputType} {...props} />;
   }
 
-  return isInputEnabled ? <span>{input}</span> : <div className="row">{input}</div>;
+  return <div className="row">{input}</div>;
 }

@@ -1,15 +1,25 @@
 import React from 'react';
-import BasicInput from '../basic/BasicInput';
 import { GenericInputProps } from '../generic/GenericInput';
+import GenericBasicInput from '../basic/GenericBasicInput';
 
-function transformInputValueToPropertyValue(file: any): Promise<any> {
+function transformInputValueToPropertyValue(
+  inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
+): Promise<any> {
   return new Promise<string | ArrayBuffer | null>((resolve) => {
     const fileReader = new FileReader();
+
     fileReader.onload = function () {
       resolve(fileReader.result);
     };
+
     fileReader.onerror = () => resolve('');
+
     try {
+      const file =
+        'currentTarget' in inputEventOrRef
+          ? inputEventOrRef.currentTarget.files?.[0]
+          : inputEventOrRef.current.files?.[0];
+
       fileReader.readAsDataURL(file);
     } catch {
       resolve('');
@@ -19,5 +29,5 @@ function transformInputValueToPropertyValue(file: any): Promise<any> {
 
 export default function FileInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
   const basicInputProps = { ...props, isDialogInputType: true, transformInputValueToPropertyValue };
-  return <BasicInput type="file" {...basicInputProps} />;
+  return <GenericBasicInput type="file" {...basicInputProps} />;
 }

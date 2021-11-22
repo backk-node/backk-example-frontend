@@ -7,9 +7,6 @@ import {
   ArrayNotUnique,
   IsAnyString,
   IsDataUri,
-  IsDate,
-  IsDateBetweenRelative,
-  IsDayOfWeekBetween,
   IsFloat,
   IsIn,
   IsInstance,
@@ -30,15 +27,8 @@ import { Area } from '../enums/Area';
 import { Category } from '../enums/Category';
 import { Department } from '../enums/Department';
 import { SalesItemState } from '../enums/SalesItemState';
-import { DayOfWeek } from 'backk-frontend-utils/lib/decorators/typeproperty/datetime/IsDayOfWeekBetween';
 
 export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId {
-  @Type(() => Date)
-  @IsDate()
-  @IsDateBetweenRelative(0, 'date', 1, 'month')
-  @IsDayOfWeekBetween(DayOfWeek.Tuesday, DayOfWeek.Friday)
-  transactionTimestamp!: Date | null | undefined;
-
   @MaxLength(Lengths._64)
   @IsAnyString()
   @IsString()

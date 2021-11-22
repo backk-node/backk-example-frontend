@@ -2,6 +2,7 @@ import React from 'react';
 import './SelectInput.css';
 import { getSelectInputPossibleValues } from 'backk-frontend-utils';
 import { GenericInputProps } from '../generic/GenericInput';
+import isOptionalProperty from 'backk-frontend-utils/lib/utils/isOptionalProperty';
 
 export interface SelectInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
   multiple?: boolean;
@@ -18,12 +19,17 @@ export default function SelectInput<T extends { [key: string]: any }>({
   Class,
   propertyName,
   serviceFunctionType,
-  isInputEnabled,
   transformInputValueToPropertyValue = defaultTransformInputValueToPropertyValue,
   multiple = false,
 }: SelectInputProps<T>) {
+  const isOptional = isOptionalProperty(Class, propertyName);
+
   async function onChange(event: React.FormEvent<HTMLSelectElement>) {
-    instance[propertyName] = transformInputValueToPropertyValue(event.currentTarget.value);
+    let propertyValue = transformInputValueToPropertyValue(event.currentTarget.value);
+    if (event.currentTarget.value === 'None') {
+      propertyValue = undefined; // NOSONAR
+    }
+    instance[propertyName] = propertyValue;
   }
 
   const selectInputValues = getSelectInputPossibleValues(Class, propertyName);
@@ -31,13 +37,16 @@ export default function SelectInput<T extends { [key: string]: any }>({
     <option key={selectInputValue}>{selectInputValue}</option>
   ));
 
+  if (isOptional) {
+    options.unshift(<option key="None">None</option>);
+  }
+
   return (
     <React.Fragment>
       <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
       <select
         multiple={multiple}
         defaultValue={serviceFunctionType === 'update' ? instance[propertyName] : selectInputValues[0]}
-        disabled={isInputEnabled === undefined ? undefined : !isInputEnabled}
         onChange={onChange}
       >
         {options}

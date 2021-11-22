@@ -1,6 +1,6 @@
 import React from 'react';
 import { GenericInputProps } from '../generic/GenericInput';
-import BasicInput from '../basic/BasicInput';
+import GenericBasicInput from '../basic/GenericBasicInput';
 
 function transformInputValueToPropertyValue(inputValue: any) {
   const numericValue = parseFloat(inputValue);
@@ -9,5 +9,5 @@ function transformInputValueToPropertyValue(inputValue: any) {
 
 export default function NumberInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
   const basicInputProps = { ...props, transformInputValueToPropertyValue };
-  return <BasicInput type="number" {...basicInputProps} />;
+  return <GenericBasicInput type="number" {...basicInputProps} />;
 }

@@ -5,7 +5,6 @@ import { GenericInputProps } from '../generic/GenericInput';
 export default function CheckboxInput<T extends { [key: string]: any }>({
   instance,
   propertyName,
-  isInputEnabled,
   serviceFunctionType,
 }: GenericInputProps<T>) {
   function onChange(event: React.FormEvent<HTMLInputElement>) {
@@ -18,7 +17,6 @@ export default function CheckboxInput<T extends { [key: string]: any }>({
       <input
         type="checkbox"
         defaultChecked={serviceFunctionType === 'update' ? instance[propertyName] : undefined}
-        disabled={isInputEnabled === undefined ? undefined : !isInputEnabled}
         onChange={onChange}
       />
     </React.Fragment>

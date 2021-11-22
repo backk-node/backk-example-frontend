@@ -9,8 +9,6 @@ import {
 } from 'backk-frontend-utils';
 import SuccessOrErrorIndicator from '../successorerrorindicator/SuccessOrErrorIndicator';
 import GenericInput from '../../common/input/generic/GenericInput';
-import isOptionalProperty from 'backk-frontend-utils/lib/utils/isOptionalProperty';
-import OptionalGenericInput from '../input/generic/OptionalGenericInput';
 
 export interface FormProps<T extends { [key: string]: any }> {
   Class: new () => T;
@@ -32,9 +30,6 @@ export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) 
     )
     .map((propertyName: any) => {
       const genericInputProps = { ...props, propertyName };
-      if (isOptionalProperty(Class, propertyName)) {
-        return <OptionalGenericInput key={propertyName} {...genericInputProps} />;
-      }
       return <GenericInput key={propertyName} {...genericInputProps} />;
     });
 
