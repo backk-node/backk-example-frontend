@@ -18,7 +18,8 @@ export interface BasicInputProps<T extends { [key: string]: any }> extends Gener
   isDialogInputType?: boolean;
   shouldShowValidationMessage?: boolean;
   associatedButtonText?: string;
-  onAssociatedButtonClick?: () => void;
+  onAssociatedButtonClick?: (event: React.FormEvent<HTMLButtonElement>) => void;
+  shouldDisplayLabel?: boolean;
 }
 
 export function defaultTransformInputValueToPropertyValue(
@@ -40,6 +41,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
   defaultValue,
   isDialogInputType = false,
   shouldShowValidationMessage = true,
+  shouldDisplayLabel = true,
   associatedButtonText,
   onAssociatedButtonClick,
 }: BasicInputProps<T>) {
@@ -107,16 +109,18 @@ export default function BasicInput<T extends { [key: string]: any }>({
 
   return (
     <React.Fragment>
-      <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
-      <input
-        ref={inputRef}
-        type={type}
-        defaultValue={defaultValue ?? serviceFunctionType === 'update' ? instance[propertyName] : undefined}
-        {...getInputValidationProps(Class, propertyName)}
-        onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
-        onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}
-      />
-      {associatedButton}
+      <label>{shouldDisplayLabel ? propertyName[0].toUpperCase() + propertyName.slice(1) : ''}</label>
+      <span className="inputAndAssociatedButton">
+        <input
+          ref={inputRef}
+          type={type}
+          defaultValue={defaultValue ?? serviceFunctionType === 'update' ? instance[propertyName] : undefined}
+          {...getInputValidationProps(Class, propertyName)}
+          onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
+          onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}
+        />
+        {associatedButton}
+      </span>
       {validationMessage}
     </React.Fragment>
   );

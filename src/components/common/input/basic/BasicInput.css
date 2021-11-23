@@ -1,10 +1,11 @@
-form input,
+form span.inputAndAssociatedButton,
 form label {
   display: table-cell;
   margin-bottom: 0.25rem;
 }
 
 form input {
+  margin-bottom: 0.25rem;
   margin-left: 0.25rem;
 }
 

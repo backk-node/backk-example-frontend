@@ -1,6 +1,6 @@
 import React from 'react';
 import './GenericInput.css';
-import { getInputType, ServiceFunctionType } from 'backk-frontend-utils';
+import { getInputType, isBuiltIntTypeArrayProperty, ServiceFunctionType } from 'backk-frontend-utils';
 import FileInput from '../file/FileInput';
 import CheckboxInput from '../checkbox/CheckboxInput';
 import NumberInput from '../number/NumberInput';
@@ -48,5 +48,5 @@ export default function GenericInput<T extends { [key: string]: any }>(props: Ge
       input = <GenericBasicInput type={inputType} {...props} />;
   }
 
-  return <div className="row">{input}</div>;
+  return isBuiltIntTypeArrayProperty(Class, propertyName) ? input : <div className="row">{input}</div>;
 }

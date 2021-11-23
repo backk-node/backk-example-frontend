@@ -21,11 +21,13 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
     return propertyValue ? [propertyValue] : [];
   }
 
-  function addInput() {
+  function addInput(event: React.FormEvent<HTMLButtonElement>) {
+    event.preventDefault();
     setInputCount(inputCount + 1);
   }
 
-  function removeInput(index: number) {
+  function removeInput(event: React.FormEvent<HTMLButtonElement>, index: number) {
+    event.preventDefault();
     setInputCount(inputCount - 1);
     instance[propertyName] = instance[propertyName].splice(index, 1);
   }
@@ -34,14 +36,21 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
     .fill(0)
     .map((_, index) => {
       return (
-        <BasicInput
-          associatedButtonText={index === inputCount - 1 ? '+' : '-'}
-          onAssociatedButtonClick={index === inputCount - 1 ? addInput : () => removeInput(index)}
-          transformInputValueToPropertyValue={(inputEventOrRef) =>
-            transformInputValueToArrayPropertyValue(inputEventOrRef, index)
-          }
-          {...props}
-        />
+        <div key={index} className="row">
+          <BasicInput
+            shouldDisplayLabel={index === 0}
+            associatedButtonText={index === inputCount - 1 ? '+' : '\u2013'}
+            onAssociatedButtonClick={
+              index === inputCount - 1
+                ? addInput
+                : (event: React.FormEvent<HTMLButtonElement>) => removeInput(event, index)
+            }
+            transformInputValueToPropertyValue={(inputEventOrRef) =>
+              transformInputValueToArrayPropertyValue(inputEventOrRef, index)
+            }
+            {...props}
+          />
+        </div>
       );
     });
 
