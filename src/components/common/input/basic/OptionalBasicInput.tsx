@@ -8,16 +8,18 @@ export default function OptionalBasicInput<T extends { [key: string]: any }>(pro
     instance[propertyName] = undefined as any;
   }, [instance, propertyName]);
 
-  function transformOptionalInputValueToPropertyValue(
-    inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
+  async function transformOptionalInputValueToPropertyValue(
+    inputEventOrRef: React.MutableRefObject<HTMLInputElement | null> | React.FocusEvent<HTMLInputElement>
   ) {
-    const propertyValue = (transformInputValueToPropertyValue ?? defaultTransformInputValueToPropertyValue)(
-      inputEventOrRef
-    );
+    const propertyValue = await (
+      transformInputValueToPropertyValue ?? defaultTransformInputValueToPropertyValue
+    )(inputEventOrRef);
 
     if (propertyValue === '') {
       instance[propertyName] = undefined as any;
     }
+
+    return propertyValue;
   }
 
   return (

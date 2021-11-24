@@ -1,8 +1,12 @@
 import React from 'react';
 import { GenericInputProps } from '../generic/GenericInput';
 import GenericBasicInput from '../basic/GenericBasicInput';
+import { defaultTransformInputValueToPropertyValue } from '../basic/BasicInput';
 
-function transformInputValueToPropertyValue(inputValue: any) {
+function transformInputValueToPropertyValue(
+  inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
+) {
+  const inputValue = defaultTransformInputValueToPropertyValue(inputEventOrRef);
   const numericValue = parseFloat(inputValue);
   return isNaN(numericValue) ? inputValue : numericValue;
 }

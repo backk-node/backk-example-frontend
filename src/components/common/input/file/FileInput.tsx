@@ -4,12 +4,12 @@ import GenericBasicInput from '../basic/GenericBasicInput';
 
 function transformInputValueToPropertyValue(
   inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
-): Promise<any> {
-  return new Promise<string | ArrayBuffer | null>((resolve) => {
+) {
+  return new Promise<string>((resolve) => {
     const fileReader = new FileReader();
 
     fileReader.onload = function () {
-      resolve(fileReader.result);
+      resolve(fileReader.result as string);
     };
 
     fileReader.onerror = () => resolve('');

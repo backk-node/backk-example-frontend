@@ -9,11 +9,13 @@ import {
 } from 'backk-frontend-utils';
 import { GenericInputProps } from '../generic/GenericInput';
 
+type PropertyValue = Promise<string> | string | number | Date | Array<PropertyValue>;
+
 export interface BasicInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
   type: string;
   transformInputValueToPropertyValue?: (
-    inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
-  ) => Promise<any> | any;
+    inputEventOrRef: React.MutableRefObject<HTMLInputElement | null> | React.FocusEvent<HTMLInputElement>
+  ) => Promise<PropertyValue> | PropertyValue;
   defaultValue?: any;
   isDialogInputType?: boolean;
   shouldShowValidationMessage?: boolean;
@@ -23,11 +25,11 @@ export interface BasicInputProps<T extends { [key: string]: any }> extends Gener
 }
 
 export function defaultTransformInputValueToPropertyValue(
-  inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
-): Promise<any> | any {
+  inputEventOrRef: React.MutableRefObject<HTMLInputElement | null> | React.FocusEvent<HTMLInputElement>
+) {
   return 'currentTarget' in inputEventOrRef
     ? inputEventOrRef.currentTarget.value
-    : inputEventOrRef.current.value;
+    : inputEventOrRef?.current?.value ?? '';
 }
 
 export default function BasicInput<T extends { [key: string]: any }>({
@@ -69,12 +71,12 @@ export default function BasicInput<T extends { [key: string]: any }>({
     } else {
       await validatePropertyValue(propertyValue);
     }
-    instance[propertyName] = propertyValue;
+    instance[propertyName] = propertyValue as any;
   }
 
   useEffect(() => {
     async function forcePropertyValueValidation() {
-      if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef.current) {
+      if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef) {
         setLastDoneImmediateValidationId(forceImmediateValidationId);
         const propertyValue = await transformInputValueToPropertyValue(inputRef);
         if (serviceFunctionType !== 'update' || (serviceFunctionType === 'update' && propertyValue !== '')) {

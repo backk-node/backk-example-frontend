@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import BasicInput, { BasicInputProps, defaultTransformInputValueToPropertyValue } from './BasicInput';
 
 export default function BasicInputArray<T extends { [key: string]: any }>(props: BasicInputProps<T>) {
-  const { instance, propertyName } = props;
+  const { instance, propertyName, transformInputValueToPropertyValue } = props;
   const [inputCount, setInputCount] = useState(1);
 
-  function transformInputValueToArrayPropertyValue(
+  async function transformInputValueToArrayPropertyValue(
     inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>,
     index: number
   ) {
-    const propertyValue = (
-      props.transformInputValueToPropertyValue ?? defaultTransformInputValueToPropertyValue
+    const propertyValue = await (
+      transformInputValueToPropertyValue ?? defaultTransformInputValueToPropertyValue
     )(inputEventOrRef);
 
     if (propertyValue && Array.isArray(instance[propertyName])) {
       instance[propertyName][index] = propertyValue;
-      return instance[propertyValue];
+      return instance[propertyName];
     }
 
     return propertyValue ? [propertyValue] : [];
@@ -38,6 +38,7 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
       return (
         <div key={index} className="row">
           <BasicInput
+            {...props}
             shouldDisplayLabel={index === 0}
             associatedButtonText={index === inputCount - 1 ? '+' : '\u2013'}
             onAssociatedButtonClick={
@@ -48,7 +49,6 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
             transformInputValueToPropertyValue={(inputEventOrRef) =>
               transformInputValueToArrayPropertyValue(inputEventOrRef, index)
             }
-            {...props}
           />
         </div>
       );
