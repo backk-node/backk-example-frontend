@@ -2,6 +2,7 @@ import React from 'react';
 import { defaultTransformInputValueToPropertyValue } from '../../basic/BasicInput';
 import { GenericInputProps } from '../../generic/GenericInput';
 import GenericBasicInput from '../../basic/GenericBasicInput';
+import dayjs from 'dayjs';
 
 function transformInputValueToPropertyValue(
   inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
@@ -10,6 +11,11 @@ function transformInputValueToPropertyValue(
 }
 
 export default function DateTimeInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
-  const basicInputProps = { ...props, transformInputValueToPropertyValue };
+  const { instance, propertyName } = props;
+  const propertyValue = instance[propertyName];
+  const defaultValue = propertyValue
+    ? dayjs(propertyValue).format('YYYY-MM-DD') + 'T' + dayjs(propertyValue).format('HH:mm')
+    : undefined;
+  const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
   return <GenericBasicInput type="datetime-local" {...basicInputProps} />;
 }

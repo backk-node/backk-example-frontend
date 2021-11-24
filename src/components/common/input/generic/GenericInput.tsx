@@ -9,7 +9,7 @@ import GenericSelectInput from '../select/GenericSelectInput';
 import ColorInput from '../color/ColorInput';
 import GenericBasicInput from '../basic/GenericBasicInput';
 
-export interface GenericInputProps<T extends { [key: string]: any }> {
+export interface GenericInputProps<T extends Record<string, any>> {
   instance: T;
   Class: new () => T;
   propertyName: keyof T & string;

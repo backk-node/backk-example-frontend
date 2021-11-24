@@ -12,6 +12,10 @@ function transformInputValueToPropertyValue(
 }
 
 export default function NumberInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
-  const basicInputProps = { ...props, transformInputValueToPropertyValue };
+  const { instance, propertyName } = props;
+  const propertyValue = instance[propertyName];
+  // noinspection SuspiciousTypeOfGuard
+  const defaultValue = typeof propertyValue === 'number' && !isNaN(propertyValue) ? propertyValue : undefined;
+  const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
   return <GenericBasicInput type="number" {...basicInputProps} />;
 }

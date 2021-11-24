@@ -14,6 +14,9 @@ function transformInputValueToPropertyValue(
 }
 
 export default function MonthInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
-  const basicInputProps = { ...props, transformInputValueToPropertyValue };
+  const { instance, propertyName } = props;
+  const propertyValue = instance[propertyName];
+  const defaultValue = propertyValue ? dayjs(propertyValue).format('YYYY-MM') : undefined;
+  const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
   return <GenericBasicInput type="month" {...basicInputProps} />;
 }

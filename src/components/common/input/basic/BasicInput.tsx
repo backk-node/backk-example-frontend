@@ -90,7 +90,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
   });
 
   useEffect(() => {
-    if (defaultValue !== undefined) {
+    if (defaultValue !== undefined && instance[propertyName] !== defaultValue) {
       instance[propertyName] = defaultValue;
     }
   }, [defaultValue, instance, propertyName]);
@@ -116,7 +116,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
         <input
           ref={inputRef}
           type={type}
-          defaultValue={defaultValue ?? serviceFunctionType === 'update' ? instance[propertyName] : undefined}
+          defaultValue={defaultValue ?? instance[propertyName] ?? undefined}
           {...getInputValidationProps(Class, propertyName)}
           onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
           onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}
