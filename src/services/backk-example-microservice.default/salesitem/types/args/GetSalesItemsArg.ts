@@ -73,5 +73,20 @@ export default class GetSalesItemsArg extends DefaultSortingAndPagination {
     each: true,
   })
   @Type(() => SortBy)
-  sortBys: SortBy[] = [];
+  sortBys: SortBy[] = [
+    {
+      fieldName: '_id',
+      sortDirection: 'DESC',
+    },
+    {
+      subEntityPath: '*',
+      fieldName: '_id',
+      sortDirection: 'ASC',
+    },
+    {
+      subEntityPath: '*',
+      fieldName: 'id',
+      sortDirection: 'ASC',
+    },
+  ];
 }

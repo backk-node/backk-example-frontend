@@ -15,11 +15,17 @@ export default function SuccessOrErrorIndicator({ error }: Props) {
   const [isSuccessMessageShown, setIsSuccessMessageShown] = useState(true);
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      setIsSuccessMessageShown(false);
-    }, SUCCESS_MESSAGE_TIMEOUT_IN_MS);
-    return () => clearTimeout(timerId);
-  });
+    let timerId: NodeJS.Timeout | undefined;
+
+    if (error === null) {
+      setIsSuccessMessageShown(true);
+      timerId = setTimeout(() => {
+        setIsSuccessMessageShown(false);
+      }, SUCCESS_MESSAGE_TIMEOUT_IN_MS);
+    }
+
+    return timerId ? () => clearTimeout(timerId!) : undefined;
+  }, [error]);
 
   if (error) {
     if (!isLocalValidationError(error)) {

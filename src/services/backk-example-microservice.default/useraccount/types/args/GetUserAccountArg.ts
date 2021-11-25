@@ -12,7 +12,10 @@ export default class GetUserAccountArg extends DefaultPostQueryOperations {
   @IsString({
     each: true,
   })
-  excludeResponseFields: string[] = [];
+  excludeResponseFields: string[] = [
+    'ownSalesItems.primaryImageDataUri',
+    'followedUserAccounts.ownSalesItems',
+  ];
 
   @IsInstance(SortBy, {
     each: true,
@@ -21,5 +24,9 @@ export default class GetUserAccountArg extends DefaultPostQueryOperations {
     each: true,
   })
   @Type(() => SortBy)
-  sortBys: SortBy[] = [];
+  sortBys: SortBy[] = [
+    ...new DefaultPostQueryOperations().sortBys,
+    new SortBy('paymentMethods', 'isDefault', 'DESC'),
+    new SortBy('ownSalesItems', 'state', 'ASC'),
+  ];
 }

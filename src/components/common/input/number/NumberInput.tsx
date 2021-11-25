@@ -15,7 +15,7 @@ export default function NumberInput<T extends { [key: string]: any }>(props: Gen
   const { instance, propertyName } = props;
   const propertyValue = instance[propertyName];
   // noinspection SuspiciousTypeOfGuard
-  const defaultValue = typeof propertyValue === 'number' && !isNaN(propertyValue) ? propertyValue : undefined;
+  const defaultValue = typeof propertyValue === 'number' && !isNaN(propertyValue) ? propertyValue : '';
   const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
   return <GenericBasicInput type="number" {...basicInputProps} />;
 }
