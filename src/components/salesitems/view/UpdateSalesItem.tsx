@@ -6,23 +6,28 @@ import Form from '../../common/form/Form';
 import updateSalesItem from '../model/actions/updateSalesItem';
 
 export interface UpdateSalesItemProps {
-  currentSalesItem: SalesItem;
+  currentSalesItem?: SalesItem;
 }
 
 const { salesItemState } = store.getState();
 
 export default function UpdateSalesItem({ currentSalesItem }: UpdateSalesItemProps) {
   store.useState([salesItemState]);
+  const { forceImmediateUpdateFormValidationId, salesItemUpdateError } = salesItemState;
   const newSalesItem = Object.assign(new SalesItem(), currentSalesItem);
 
-  return (
-    <Form
-      Class={SalesItem}
-      instance={newSalesItem}
-      serviceFunctionType={'update'}
-      forceImmediateValidationId={salesItemState.forceImmediateUpdateFormValidationId}
-      error={salesItemState.salesItemUpdateError}
-      onSubmitForm={preventDefaultAnd(updateSalesItem, currentSalesItem, newSalesItem)}
-    />
-  );
+  if (currentSalesItem) {
+    return (
+      <Form
+        Class={SalesItem}
+        instance={newSalesItem}
+        serviceFunctionType={'update'}
+        forceImmediateValidationId={forceImmediateUpdateFormValidationId}
+        error={salesItemUpdateError}
+        onSubmitForm={preventDefaultAnd(updateSalesItem, currentSalesItem, newSalesItem)}
+      />
+    );
+  }
+
+  return null;
 }

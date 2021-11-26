@@ -7,6 +7,7 @@ const { salesItemState } = store.getState();
 
 export default async function createSalesItem(salesItem: SalesItem): Promise<void> {
   salesItemState.salesItemCreationError = undefined; // NOSONAR
+  console.log(salesItem);
   const [createdSalesItem, error] = await salesItemService.createSalesItem(salesItem);
   salesItemState.createdSalesItem = createdSalesItem?.data;
   salesItemState.salesItemCreationError = error;

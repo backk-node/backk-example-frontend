@@ -1,6 +1,5 @@
 import React from 'react';
 import store from '../../../store/store';
-import getErrorMessage from '../../../utils/getErrorMessage';
 import Form from '../../common/form/Form';
 import preventDefaultAnd from '../../../utils/preventDefaultAnd';
 import TagName from '../../../services/backk-example-microservice.default/tag/args/TagName';
@@ -20,6 +19,7 @@ export default function Tags() {
       serviceFunctionType={'other'}
       forceImmediateValidationId={forceImmediateGetFormValidationId}
       error={tagsGetError}
+      buttonText="Get Tags by Name"
       onSubmitForm={preventDefaultAnd(getTagsByName, tagName)}
     />
   );
@@ -27,8 +27,6 @@ export default function Tags() {
   let tagsContent;
   if (isGettingTags) {
     tagsContent = <div>Getting tags, please wait...</div>;
-  } else if (tagsGetError) {
-    tagsContent = <div>{'Getting tags failed: ' + getErrorMessage(tagsGetError)}</div>;
   } else {
     const tagListItems = tags.map((tag) => <li key={tag._id}>{tag.name}</li>);
     tagsContent = (

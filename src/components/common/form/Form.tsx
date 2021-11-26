@@ -17,10 +17,11 @@ export interface FormProps<T extends { [key: string]: any }> {
   forceImmediateValidationId: number;
   onSubmitForm: (event: React.FormEvent<HTMLButtonElement>) => Promise<void>;
   error: PossibleBackkError;
+  buttonText?: string;
 }
 
 export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) {
-  const { Class, instance, serviceFunctionType } = props;
+  const { buttonText, Class, instance, serviceFunctionType } = props;
 
   const inputs = Object.keys(instance)
     .filter(
@@ -38,9 +39,9 @@ export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) 
   return (
     <React.Fragment>
       <form>
-        <p>{`${verb} new ${Class.name}:`}</p>
+        <p>{serviceFunctionType === 'other' ? '' : `${verb} new ${Class.name}:`}</p>
         {inputs}
-        <button onClick={onSubmitForm}>{`${verb} ${Class.name}`}</button>
+        <button onClick={onSubmitForm}>{buttonText ?? `${verb} ${Class.name}`}</button>
       </form>
       <SuccessOrErrorIndicator error={error} />
     </React.Fragment>

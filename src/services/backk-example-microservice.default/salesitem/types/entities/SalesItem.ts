@@ -1,5 +1,6 @@
 // DO NOT MODIFY THIS FILE! This is an auto-generated file
 import {
+  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
   AcceptFileTypes,
   ArrayMaxSize,
   ArrayMinSize,
@@ -13,14 +14,13 @@ import {
   IsString,
   IsUndefined,
   Lengths,
-  MaxLength,
   MAX_INT_VALUE,
+  MaxLength,
   MinMax,
   Type,
   ValidateIf,
   ValidateNested,
   Values,
-  _IdAndVersionAndCreatedAtTimestampAndLastModifiedTimestampAndUserAccountId,
 } from 'backk-frontend-utils';
 import Tag from '../../../tag/entities/Tag';
 import { Area } from '../enums/Area';
@@ -35,7 +35,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
-  title: string | undefined = '';
+  title: string | undefined;
 
   @MaxLength(Lengths._1K)
   @IsAnyString()
@@ -88,7 +88,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.price !== undefined, {
     groups: ['__backk_update__'],
   })
-  price: number | undefined = NaN;
+  price: number | undefined;
 
   @IsFloat(2)
   @MinMax(0, Values._1B)
