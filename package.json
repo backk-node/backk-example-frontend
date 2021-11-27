@@ -13,8 +13,7 @@
     "@types/node": "12.20.36",
     "@types/react": "17.0.33",
     "@types/react-dom": "17.0.10",
-    "@types/uuid": "8.3.1",
-    "backk-frontend-utils": "1.0.118",
+    "backk-frontend-utils": "1.0.119",
     "classnames": "2.3.1",
     "cross-env": "7.0.3",
     "crypto-js": "4.1.1",
@@ -29,7 +28,6 @@
     "react-scripts": "4.0.3",
     "typescript": "4.4.4",
     "universal-model-react": "0.13.2",
-    "uuid": "8.3.2",
     "web-vitals": "1.1.2"
   },
   "scripts": {
@@ -64,5 +62,6 @@
       "npm run format",
       "npm run lint"
     ]
-  }
+  },
+  "devDependencies": {}
 }

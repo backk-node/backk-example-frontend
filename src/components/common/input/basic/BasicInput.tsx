@@ -109,7 +109,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
         <input
           ref={inputRef}
           type={type}
-          defaultValue={defaultValue ?? instance[propertyName]}
+          defaultValue={type === 'file' ? undefined : defaultValue ?? instance[propertyName]}
           {...getInputValidationProps(Class, propertyName)}
           onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
           onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}

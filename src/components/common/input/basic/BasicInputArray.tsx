@@ -3,54 +3,66 @@ import GenericBasicInput, { GenericBasicInputProps, PropertyValue } from './Gene
 
 export default function BasicInputArray<T extends { [key: string]: any }>(props: GenericBasicInputProps<T>) {
   const { defaultValue, instance, propertyName } = props;
-  const [inputCount, setInputCount] = useState(instance[propertyName].length || 1);
+  const [hasInputs, setHasInputs] = useState(
+    instance[propertyName].length > 0 ? Array(instance[propertyName].length).fill(true) : [true]
+  );
 
   function transformPropertyValueToArrayPropertyValue(propertyValue: PropertyValue, index: number) {
-    if (propertyValue && Array.isArray(instance[propertyName])) {
-      instance[propertyName][index] = propertyValue;
-      return instance[propertyName];
-    }
-    return propertyValue ? [propertyValue] : [];
+    instance[propertyName][index] = propertyValue;
+    return instance[propertyName];
   }
 
   function addInput(event: React.FormEvent<HTMLButtonElement>) {
     event.preventDefault();
-    setInputCount(inputCount + 1);
+    setHasInputs([...hasInputs, true]);
   }
 
   function removeInput(event: React.FormEvent<HTMLButtonElement>, index: number) {
     event.preventDefault();
-    setInputCount(inputCount - 1);
-    instance[propertyName] = instance[propertyName].splice(index, 1);
+    hasInputs[index] = false;
+    setHasInputs([...hasInputs]);
+    instance[propertyName][index] = undefined; // NOSONAR
   }
 
-  const inputs = Array(inputCount)
-    .fill(0)
-    .map((_, index) => {
-      return (
-        <div key={index} className="row">
-          <GenericBasicInput
-            {...props}
-            genericType="array"
-            defaultValue={defaultValue ?? instance[propertyName][index]}
-            shouldDisplayLabel={index === 0}
-            transformPropertyValue={(inputEventOrRef) =>
-              transformPropertyValueToArrayPropertyValue(inputEventOrRef, index)
-            }
-          >
-            <button
-              onClick={
-                index === inputCount - 1
-                  ? addInput
-                  : (event: React.FormEvent<HTMLButtonElement>) => removeInput(event, index)
-              }
-            >
-              {index === inputCount - 1 ? '+' : '\u2013'}
-            </button>
-          </GenericBasicInput>
-        </div>
+  const inputCount = hasInputs.filter((hasInput) => hasInput).length;
+  const lastInputIndex = hasInputs.lastIndexOf(true);
+
+  const inputs = hasInputs.map((hasInput, index) => {
+    if (!hasInput) {
+      return null;
+    }
+
+    let removeInputButton;
+    if (inputCount > 1) {
+      removeInputButton = (
+        <button onClick={(event: React.FormEvent<HTMLButtonElement>) => removeInput(event, index)}>
+          {'\u2013'}
+        </button>
       );
-    });
+    }
+
+    let addInputButton;
+    if (index === lastInputIndex) {
+      addInputButton = <button onClick={addInput}>+</button>;
+    }
+
+    return (
+      <div key={index} className="row">
+        <GenericBasicInput
+          {...props}
+          genericType="array"
+          defaultValue={defaultValue ?? instance[propertyName][index]}
+          shouldDisplayLabel={index === 0}
+          transformPropertyValue={(inputEventOrRef) =>
+            transformPropertyValueToArrayPropertyValue(inputEventOrRef, index)
+          }
+        >
+          {removeInputButton}
+          {addInputButton}
+        </GenericBasicInput>
+      </div>
+    );
+  });
 
   return <React.Fragment>{inputs}</React.Fragment>;
 }
