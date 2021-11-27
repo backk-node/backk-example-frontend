@@ -3,17 +3,12 @@ import TimeInput from '../timeinput/TimeInput';
 import DateTimeInput from '../datetimeinput/DateTimeInput';
 import DateInput from '../dateinput/DateInput';
 import MonthInput from '../monthinput/MonthInput';
-
-import { GenericInputProps } from '../../generic/GenericInput';
-
-export interface GenericDateTimeInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
-  type: 'date' | 'time' | 'datetime-local' | 'month';
-}
+import { GenericBasicInputProps } from '../../basic/GenericBasicInput';
 
 export default function GenericDateTimeInput<T extends { [key: string]: any }>({
   type,
   ...genericInputProps
-}: GenericDateTimeInputProps<T>) {
+}: GenericBasicInputProps<T>) {
   switch (type) {
     case 'time':
       return <TimeInput {...genericInputProps} />;

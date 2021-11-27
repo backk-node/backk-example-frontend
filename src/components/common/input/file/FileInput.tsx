@@ -1,6 +1,6 @@
 import React from 'react';
 import { GenericInputProps } from '../generic/GenericInput';
-import GenericBasicInput from '../basic/GenericBasicInput';
+import BasicInput from '../basic/BasicInput';
 
 function transformInputValueToPropertyValue(
   inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
@@ -29,5 +29,5 @@ function transformInputValueToPropertyValue(
 
 export default function FileInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {
   const basicInputProps = { ...props, isDialogInputType: true, transformInputValueToPropertyValue };
-  return <GenericBasicInput type="file" {...basicInputProps} />;
+  return <BasicInput defaultValue="" type="file" {...basicInputProps} />;
 }

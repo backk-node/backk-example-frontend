@@ -7,21 +7,11 @@ import {
   PossibleString,
   validateServiceFunctionArgumentProperty,
 } from 'backk-frontend-utils';
-import { GenericInputProps } from '../generic/GenericInput';
+import { GenericBasicInputProps } from './GenericBasicInput';
 
-type PropertyValue = Promise<string> | string | number | Date | Array<PropertyValue>;
-
-export interface BasicInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
-  type: string;
-  transformInputValueToPropertyValue?: (
-    inputEventOrRef: React.MutableRefObject<HTMLInputElement | null> | React.FocusEvent<HTMLInputElement>
-  ) => Promise<PropertyValue> | PropertyValue;
-  defaultValue?: any;
+export interface BasicInputProps<T extends { [key: string]: any }> extends GenericBasicInputProps<T> {
   isDialogInputType?: boolean;
   shouldShowValidationMessage?: boolean;
-  associatedButtonText?: string;
-  onAssociatedButtonClick?: (event: React.FormEvent<HTMLButtonElement>) => void;
-  shouldDisplayLabel?: boolean;
 }
 
 export function defaultTransformInputValueToPropertyValue(
@@ -115,8 +105,8 @@ export default function BasicInput<T extends { [key: string]: any }>({
       <span className="inputAndAssociatedButton">
         <input
           ref={inputRef}
-          type={type}
-          defaultValue={defaultValue ?? instance[propertyName] ?? undefined}
+          type={type ?? 'text'}
+          defaultValue={defaultValue ?? instance[propertyName]}
           {...getInputValidationProps(Class, propertyName)}
           onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
           onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}

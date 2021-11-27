@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
-import BasicInput, { BasicInputProps, defaultTransformInputValueToPropertyValue } from './BasicInput';
+import { defaultTransformInputValueToPropertyValue } from './BasicInput';
+import GenericBasicInput, { GenericBasicInputProps } from './GenericBasicInput';
 
-export default function OptionalBasicInput<T extends { [key: string]: any }>(props: BasicInputProps<T>) {
+export default function OptionalBasicInput<T extends { [key: string]: any }>(
+  props: GenericBasicInputProps<T>
+) {
   const { instance, propertyName, transformInputValueToPropertyValue } = props;
 
   useEffect(() => {
@@ -23,6 +26,10 @@ export default function OptionalBasicInput<T extends { [key: string]: any }>(pro
   }
 
   return (
-    <BasicInput transformInputValueToPropertyValue={transformOptionalInputValueToPropertyValue} {...props} />
+    <GenericBasicInput
+      type="optional"
+      transformInputValueToPropertyValue={transformOptionalInputValueToPropertyValue}
+      {...props}
+    />
   );
 }

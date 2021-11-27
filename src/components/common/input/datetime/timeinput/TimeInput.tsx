@@ -1,9 +1,8 @@
 import React from 'react';
-import { defaultTransformInputValueToPropertyValue } from '../../basic/BasicInput';
+import BasicInput, { defaultTransformInputValueToPropertyValue } from '../../basic/BasicInput';
 import { GenericInputProps } from '../../generic/GenericInput';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import GenericBasicInput from '../../basic/GenericBasicInput';
 
 dayjs.extend(customParseFormat);
 
@@ -18,5 +17,5 @@ export default function TimeInput<T extends { [key: string]: any }>(props: Gener
   const propertyValue = instance[propertyName];
   const defaultValue = propertyValue ? dayjs(propertyValue).format('HH:mm') : undefined;
   const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
-  return <GenericBasicInput type="time" {...basicInputProps} />;
+  return <BasicInput type="time" {...basicInputProps} />;
 }

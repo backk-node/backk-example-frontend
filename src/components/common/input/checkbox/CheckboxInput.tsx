@@ -11,9 +11,9 @@ export default function CheckboxInput<T extends Record<string, any>>({
   }
 
   return (
-    <React.Fragment>
+    <div className="row">
       <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
       <input type="checkbox" defaultChecked={instance[propertyName]} onChange={onChange} />
-    </React.Fragment>
+    </div>
   );
 }

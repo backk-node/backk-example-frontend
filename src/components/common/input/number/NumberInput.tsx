@@ -1,7 +1,6 @@
 import React from 'react';
 import { GenericInputProps } from '../generic/GenericInput';
-import GenericBasicInput from '../basic/GenericBasicInput';
-import { defaultTransformInputValueToPropertyValue } from '../basic/BasicInput';
+import BasicInput, { defaultTransformInputValueToPropertyValue } from '../basic/BasicInput';
 
 function transformInputValueToPropertyValue(
   inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>
@@ -17,5 +16,5 @@ export default function NumberInput<T extends { [key: string]: any }>(props: Gen
   // noinspection SuspiciousTypeOfGuard
   const defaultValue = typeof propertyValue === 'number' && !isNaN(propertyValue) ? propertyValue : '';
   const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
-  return <GenericBasicInput type="number" {...basicInputProps} />;
+  return <BasicInput type="number" {...basicInputProps} />;
 }

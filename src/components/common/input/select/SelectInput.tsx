@@ -35,11 +35,11 @@ export default function SelectInput<T extends { [key: string]: any }>({
   ));
 
   return (
-    <React.Fragment>
+    <div className="row">
       <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
       <select multiple={multiple} defaultValue={instance[propertyName]} onChange={onChange}>
         {options}
       </select>
-    </React.Fragment>
+    </div>
   );
 }

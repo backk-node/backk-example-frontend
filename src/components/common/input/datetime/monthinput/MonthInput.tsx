@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultTransformInputValueToPropertyValue } from '../../basic/BasicInput';
+import BasicInput, { defaultTransformInputValueToPropertyValue } from '../../basic/BasicInput';
 import { GenericInputProps } from '../../generic/GenericInput';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -18,5 +18,5 @@ export default function MonthInput<T extends { [key: string]: any }>(props: Gene
   const propertyValue = instance[propertyName];
   const defaultValue = propertyValue ? dayjs(propertyValue).format('YYYY-MM') : undefined;
   const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
-  return <GenericBasicInput type="month" {...basicInputProps} />;
+  return <BasicInput type="month" {...basicInputProps} />;
 }

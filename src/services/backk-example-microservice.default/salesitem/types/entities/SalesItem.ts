@@ -35,7 +35,7 @@ export default class SalesItem extends _IdAndVersionAndCreatedAtTimestampAndLast
   @ValidateIf((o: any) => o.title !== undefined, {
     groups: ['__backk_update__'],
   })
-  title: string | undefined;
+  title: string | undefined = '';
 
   @MaxLength(Lengths._1K)
   @IsAnyString()
