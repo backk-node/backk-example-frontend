@@ -19,7 +19,7 @@ export default function OptionalBasicInput<T extends { [key: string]: any }>(
 
   return (
     <GenericBasicInput
-      type="optional"
+      genericType="optional"
       transformPropertyValue={setInstancePropertyToUndefinedIfInputEmpty}
       {...props}
     />

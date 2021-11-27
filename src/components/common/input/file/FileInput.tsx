@@ -29,13 +29,14 @@ export default function FileInput<T extends { [key: string]: any }>(props: Gener
         fileReader.readAsDataURL(file);
       } catch {
         resolve('');
+        setDataUri('');
       }
     });
   }
 
   const basicInputProps = { ...props, isDialogInputType: true, transformInputValueToPropertyValue };
   return (
-    <BasicInput defaultValue="" type="file" {...basicInputProps}>
+    <BasicInput {...basicInputProps} defaultValue="" type="file">
       {children}
       {dataUri?.startsWith('data:image/') ? <img alt={propertyName + ' image'} src={dataUri} /> : null}
     </BasicInput>

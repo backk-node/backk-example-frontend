@@ -10,6 +10,7 @@ import {
 import { GenericBasicInputProps, PropertyValue } from './GenericBasicInput';
 
 export interface BasicInputProps<T extends { [key: string]: any }> extends GenericBasicInputProps<T> {
+  type: string;
   isDialogInputType?: boolean;
   shouldShowValidationMessage?: boolean;
   transformInputValueToPropertyValue?: (
@@ -107,7 +108,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
       <span className="inputAndChildren">
         <input
           ref={inputRef}
-          type={type ?? 'text'}
+          type={type}
           defaultValue={defaultValue ?? instance[propertyName]}
           {...getInputValidationProps(Class, propertyName)}
           onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}

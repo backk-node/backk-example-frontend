@@ -13,7 +13,7 @@ export type PropertyValue = Promise<string> | string | number | Date | Array<Pro
 
 export interface GenericBasicInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
   transformPropertyValue?: (propertyValue: PropertyValue) => PropertyValue;
-  type?: string;
+  genericType?: string;
   defaultValue?: any;
   shouldDisplayLabel?: boolean;
   children?: any;
@@ -22,11 +22,11 @@ export interface GenericBasicInputProps<T extends { [key: string]: any }> extend
 export default function GenericBasicInput<T extends { [key: string]: any }>(
   props: GenericBasicInputProps<T>
 ) {
-  const { Class, propertyName, type } = props;
+  const { Class, propertyName, genericType } = props;
 
-  if (IsOptionalProperty(Class, propertyName) && !type) {
+  if (IsOptionalProperty(Class, propertyName) && !genericType) {
     return <OptionalBasicInput {...props} />;
-  } else if (isBuiltInTypeArrayProperty(Class, propertyName) && !type) {
+  } else if (isBuiltInTypeArrayProperty(Class, propertyName) && !genericType) {
     return <BasicInputArray {...props} />;
   }
 
@@ -37,7 +37,7 @@ export default function GenericBasicInput<T extends { [key: string]: any }>(
     case 'datetime-local':
     case 'date':
     case 'month':
-      return <GenericDateTimeInput type={inputType} {...props} />;
+      return <GenericDateTimeInput dateTimeInputType={inputType} {...props} />;
     case 'file':
       return <FileInput {...props} />;
     case 'number':
@@ -45,6 +45,6 @@ export default function GenericBasicInput<T extends { [key: string]: any }>(
     case 'color':
       return <ColorInput {...props} />;
     default:
-      return <BasicInput {...props} />;
+      return <BasicInput type="text" {...props} />;
   }
 }

@@ -31,7 +31,7 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
         <div key={index} className="row">
           <GenericBasicInput
             {...props}
-            type="array"
+            genericType="array"
             defaultValue={defaultValue ?? instance[propertyName][index]}
             shouldDisplayLabel={index === 0}
             transformPropertyValue={(inputEventOrRef) =>
