@@ -3,7 +3,6 @@ import BasicInput, { defaultTransformInputValueToPropertyValue } from '../../bas
 import { GenericInputProps } from '../../generic/GenericInput';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import GenericBasicInput from '../../basic/GenericBasicInput';
 
 dayjs.extend(customParseFormat);
 

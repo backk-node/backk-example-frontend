@@ -99,7 +99,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
     );
   }
 
-  return (
+  const input = (
     <React.Fragment>
       <label>{shouldDisplayLabel ? propertyName[0].toUpperCase() + propertyName.slice(1) : ''}</label>
       <span className="inputAndAssociatedButton">
@@ -116,4 +116,6 @@ export default function BasicInput<T extends { [key: string]: any }>({
       {validationMessage}
     </React.Fragment>
   );
+
+  return associatedButton ? input : <div className="row">{input}</div>;
 }

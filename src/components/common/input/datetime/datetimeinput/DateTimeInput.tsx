@@ -1,7 +1,6 @@
 import React from 'react';
 import BasicInput, { defaultTransformInputValueToPropertyValue } from '../../basic/BasicInput';
 import { GenericInputProps } from '../../generic/GenericInput';
-import GenericBasicInput from '../../basic/GenericBasicInput';
 import dayjs from 'dayjs';
 
 function transformInputValueToPropertyValue(
