@@ -10,12 +10,18 @@ export default function OptionalBasicInput<T extends { [key: string]: any }>(
     instance[propertyName] = undefined as any;
   }, [instance, propertyName]);
 
-  function transformPropertyValue(propertyValue: PropertyValue) {
+  function setInstancePropertyToUndefinedIfInputEmpty(propertyValue: PropertyValue) {
     if (propertyValue === '') {
       instance[propertyName] = undefined as any;
     }
     return propertyValue;
   }
 
-  return <GenericBasicInput type="optional" transformPropertyValue={transformPropertyValue} {...props} />;
+  return (
+    <GenericBasicInput
+      type="optional"
+      transformPropertyValue={setInstancePropertyToUndefinedIfInputEmpty}
+      {...props}
+    />
+  );
 }
