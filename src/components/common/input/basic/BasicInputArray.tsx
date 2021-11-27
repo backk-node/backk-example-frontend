@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
-import { defaultTransformInputValueToPropertyValue } from './BasicInput';
-import GenericBasicInput, { GenericBasicInputProps } from './GenericBasicInput';
+import GenericBasicInput, { GenericBasicInputProps, PropertyValue } from './GenericBasicInput';
 
 export default function BasicInputArray<T extends { [key: string]: any }>(props: GenericBasicInputProps<T>) {
-  const { defaultValue, instance, propertyName, transformInputValueToPropertyValue } = props;
+  const { defaultValue, instance, propertyName } = props;
   const [inputCount, setInputCount] = useState(instance[propertyName].length || 1);
 
-  async function transformInputValueToArrayPropertyValue(
-    inputEventOrRef: React.MutableRefObject<any> | React.FocusEvent<any>,
-    index: number
-  ) {
-    const propertyValue = await (
-      transformInputValueToPropertyValue ?? defaultTransformInputValueToPropertyValue
-    )(inputEventOrRef);
-
+  function transformPropertyValueToArrayPropertyValue(propertyValue: PropertyValue, index: number) {
     if (propertyValue && Array.isArray(instance[propertyName])) {
       instance[propertyName][index] = propertyValue;
       return instance[propertyName];
     }
-
     return propertyValue ? [propertyValue] : [];
   }
 
@@ -43,16 +34,20 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
             type="array"
             defaultValue={defaultValue ?? instance[propertyName][index]}
             shouldDisplayLabel={index === 0}
-            associatedButtonText={index === inputCount - 1 ? '+' : '\u2013'}
-            onAssociatedButtonClick={
-              index === inputCount - 1
-                ? addInput
-                : (event: React.FormEvent<HTMLButtonElement>) => removeInput(event, index)
+            transformPropertyValue={(inputEventOrRef) =>
+              transformPropertyValueToArrayPropertyValue(inputEventOrRef, index)
             }
-            transformInputValueToPropertyValue={(inputEventOrRef) =>
-              transformInputValueToArrayPropertyValue(inputEventOrRef, index)
-            }
-          />
+          >
+            <button
+              onClick={
+                index === inputCount - 1
+                  ? addInput
+                  : (event: React.FormEvent<HTMLButtonElement>) => removeInput(event, index)
+              }
+            >
+              {index === inputCount - 1 ? '+' : '\u2013'}
+            </button>
+          </GenericBasicInput>
         </div>
       );
     });

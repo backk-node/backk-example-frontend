@@ -9,17 +9,14 @@ import NumberInput from '../number/NumberInput';
 import ColorInput from '../color/ColorInput';
 import { GenericInputProps } from '../generic/GenericInput';
 
-type PropertyValue = Promise<string> | string | number | Date | Array<PropertyValue>;
+export type PropertyValue = Promise<string> | string | number | Date | Array<PropertyValue>;
 
 export interface GenericBasicInputProps<T extends { [key: string]: any }> extends GenericInputProps<T> {
+  transformPropertyValue?: (propertyValue: PropertyValue) => PropertyValue;
   type?: string;
-  transformInputValueToPropertyValue?: (
-    inputEventOrRef: React.MutableRefObject<HTMLInputElement | null> | React.FocusEvent<HTMLInputElement>
-  ) => Promise<PropertyValue> | PropertyValue;
   defaultValue?: any;
-  associatedButtonText?: string;
-  onAssociatedButtonClick?: (event: React.FormEvent<HTMLButtonElement>) => void;
   shouldDisplayLabel?: boolean;
+  children?: any;
 }
 
 export default function GenericBasicInput<T extends { [key: string]: any }>(
