@@ -45,29 +45,6 @@ export default function BasicInput<T extends { [key: string]: any }>({
   const [validationErrorMessage, setValidationErrorMessage] = useState(undefined as PossibleString);
   const [lastDoneImmediateValidationId, setLastDoneImmediateValidationId] = useState(0);
 
-  async function validatePropertyValue(propertyValue: any): Promise<void> {
-    const possibleValidationErrorMessage = await validateServiceFunctionArgumentProperty(
-      Class,
-      propertyName,
-      propertyValue,
-      serviceFunctionType
-    );
-
-    if (possibleValidationErrorMessage !== validationErrorMessage) {
-      setValidationErrorMessage(possibleValidationErrorMessage);
-    }
-  }
-
-  async function validateAndUpdatePropertyValue(event: React.FocusEvent<HTMLInputElement>) {
-    let propertyValue = transformPropertyValue(await transformInputValueToPropertyValue(event));
-    if (propertyValue === '' || propertyValue === undefined) {
-      setValidationErrorMessage(undefined);
-    } else {
-      await validatePropertyValue(propertyValue);
-    }
-    instance[propertyName] = propertyValue as any;
-  }
-
   useEffect(() => {
     async function forcePropertyValueValidation() {
       if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef) {
@@ -92,6 +69,29 @@ export default function BasicInput<T extends { [key: string]: any }>({
       instance[propertyName] = defaultValue;
     }
   }, [defaultValue, instance, propertyName]);
+
+  async function validatePropertyValue(propertyValue: any): Promise<void> {
+    const possibleValidationErrorMessage = await validateServiceFunctionArgumentProperty(
+      Class,
+      propertyName,
+      propertyValue,
+      serviceFunctionType
+    );
+
+    if (possibleValidationErrorMessage !== validationErrorMessage) {
+      setValidationErrorMessage(possibleValidationErrorMessage);
+    }
+  }
+
+  async function validateAndUpdatePropertyValue(event: React.FocusEvent<HTMLInputElement>) {
+    let propertyValue = transformPropertyValue(await transformInputValueToPropertyValue(event));
+    if (propertyValue === '' || propertyValue === undefined) {
+      setValidationErrorMessage(undefined);
+    } else {
+      await validatePropertyValue(propertyValue);
+    }
+    instance[propertyName] = propertyValue as any;
+  }
 
   let validationMessage;
   if (shouldShowValidationMessage) {

@@ -8,7 +8,7 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
   );
 
   function transformPropertyValueToArrayPropertyValue(propertyValue: PropertyValue, index: number) {
-    instance[propertyName][index] = propertyValue;
+    instance[propertyName][index] = propertyValue === '' ? undefined : propertyValue;
     return instance[propertyName];
   }
 
@@ -25,6 +25,7 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
   }
 
   const inputCount = hasInputs.filter((hasInput) => hasInput).length;
+  const firstInputIndex = hasInputs.indexOf(true);
   const lastInputIndex = hasInputs.lastIndexOf(true);
 
   const inputs = hasInputs.map((hasInput, index) => {
@@ -52,7 +53,7 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
           {...props}
           genericType="array"
           defaultValue={defaultValue ?? instance[propertyName][index]}
-          shouldDisplayLabel={index === 0}
+          shouldDisplayLabel={index === firstInputIndex}
           transformPropertyValue={(inputEventOrRef) =>
             transformPropertyValueToArrayPropertyValue(inputEventOrRef, index)
           }
