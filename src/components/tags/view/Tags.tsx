@@ -1,7 +1,6 @@
 import React from 'react';
 import store from '../../../store/store';
 import Form from '../../common/form/Form';
-import preventDefaultAnd from '../../../utils/preventDefaultAnd';
 import TagName from '../../../services/backk-example-microservice.default/tag/args/TagName';
 import getTagsByName from '../model/actions/getTagsByName';
 
@@ -20,7 +19,7 @@ export default function Tags() {
       forceImmediateValidationId={forceImmediateGetFormValidationId}
       error={tagsGetError}
       buttonText="Get Tags by Name"
-      onSubmitForm={preventDefaultAnd(getTagsByName, tagName)}
+      onSubmitForm={getTagsByName}
     />
   );
 

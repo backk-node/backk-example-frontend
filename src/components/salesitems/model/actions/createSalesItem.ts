@@ -8,7 +8,6 @@ const { salesItemState } = store.getState();
 export default async function createSalesItem(salesItem: SalesItem): Promise<void> {
   salesItemState.salesItemCreationError = undefined; // NOSONAR
   const [createdSalesItem, error] = await salesItemService.createSalesItem(salesItem);
-  console.log(salesItem);
   salesItemState.createdSalesItem = createdSalesItem?.data;
   salesItemState.salesItemCreationError = error;
   if (isLocalValidationError(error)) {

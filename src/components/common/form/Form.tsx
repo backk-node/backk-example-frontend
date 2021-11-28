@@ -2,8 +2,10 @@ import React from 'react';
 import './Form.css';
 import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
 import {
+  getInstanceWithUndefinedRemovedFromArrays,
   isObjectProperty,
   PossibleBackkError,
+  removeUnchangedProperties,
   ServiceFunctionType,
   shouldPropertyBePresent,
 } from 'backk-frontend-utils';
@@ -15,13 +17,22 @@ export interface FormProps<T extends { [key: string]: any }> {
   instance: T;
   serviceFunctionType: ServiceFunctionType;
   forceImmediateValidationId: number;
-  onSubmitForm: (event: React.FormEvent<HTMLButtonElement>) => Promise<void>;
+  onSubmitForm: (instance: T) => Promise<void>;
   error: PossibleBackkError;
+  currentInstance?: T;
   buttonText?: string;
 }
 
 export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) {
-  const { buttonText, Class, instance, serviceFunctionType } = props;
+  const { buttonText, Class, currentInstance, instance, serviceFunctionType } = props;
+
+  function submitForm(event: React.FormEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    if (serviceFunctionType === 'update') {
+      removeUnchangedProperties(instance, currentInstance);
+    }
+    onSubmitForm(getInstanceWithUndefinedRemovedFromArrays(instance));
+  }
 
   const inputs = Object.keys(instance)
     .filter(
@@ -41,7 +52,7 @@ export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) 
       <form>
         <p>{serviceFunctionType === 'other' ? '' : `${verb} new ${Class.name}:`}</p>
         {inputs}
-        <button onClick={onSubmitForm}>{buttonText ?? `${verb} ${Class.name}`}</button>
+        <button onClick={submitForm}>{buttonText ?? `${verb} ${Class.name}`}</button>
       </form>
       <SuccessOrErrorIndicator error={error} />
     </React.Fragment>

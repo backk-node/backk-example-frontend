@@ -1,7 +1,6 @@
 import React from 'react';
 import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
 import store from '../../../store/store';
-import preventDefaultAnd from '../../../utils/preventDefaultAnd';
 import Form from '../../common/form/Form';
 import updateSalesItem from '../model/actions/updateSalesItem';
 
@@ -20,11 +19,12 @@ export default function UpdateSalesItem({ currentSalesItem }: UpdateSalesItemPro
     return (
       <Form
         Class={SalesItem}
+        currentInstance={currentSalesItem}
         instance={newSalesItem}
         serviceFunctionType={'update'}
         forceImmediateValidationId={forceImmediateUpdateFormValidationId}
         error={salesItemUpdateError}
-        onSubmitForm={preventDefaultAnd(updateSalesItem, currentSalesItem, newSalesItem)}
+        onSubmitForm={updateSalesItem}
       />
     );
   }

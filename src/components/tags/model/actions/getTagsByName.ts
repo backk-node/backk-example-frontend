@@ -6,6 +6,7 @@ import TagName from '../../../../services/backk-example-microservice.default/tag
 const { tagsState } = store.getState();
 
 export default async function getTagsByName(tagName: TagName): Promise<void> {
+  tagsState.tagsGetError = undefined; // NOSONAR
   tagsState.isGettingTags = true;
   const [tags, error] = await tagService.getTagsByName(tagName);
   tagsState.isGettingTags = false;
