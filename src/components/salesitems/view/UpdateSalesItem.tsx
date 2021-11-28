@@ -12,8 +12,9 @@ const { salesItemState } = store.getState();
 
 export default function UpdateSalesItem({ currentSalesItem }: UpdateSalesItemProps) {
   store.useState([salesItemState]);
-  const { forceImmediateUpdateFormValidationId, salesItemUpdateError } = salesItemState;
+  const { forceImmediateUpdateFormValidationId, salesItemUpdateError, version } = salesItemState;
   const newSalesItem = Object.assign(new SalesItem(), currentSalesItem);
+  newSalesItem.version = version;
 
   if (currentSalesItem) {
     return (

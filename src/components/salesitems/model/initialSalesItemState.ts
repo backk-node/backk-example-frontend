@@ -7,6 +7,7 @@ const initialSalesItemState = {
   salesItemUpdateError: undefined as PossibleBackkError,
   forceImmediateCreateFormValidationId: 0,
   forceImmediateUpdateFormValidationId: 0,
+  version: 1,
 };
 
 export default initialSalesItemState;

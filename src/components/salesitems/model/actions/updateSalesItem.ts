@@ -6,10 +6,12 @@ import isLocalValidationError from 'backk-frontend-utils/lib/errors/isLocalValid
 const { salesItemState } = store.getState();
 
 export default async function updateSalesItem(newSalesItem: SalesItem): Promise<void> {
-  console.log(newSalesItem);
+  salesItemState.salesItemUpdateError = undefined; // NOSONAR
   const [, error] = await salesItemService.updateSalesItem(newSalesItem);
-  console.log(error);
   salesItemState.salesItemUpdateError = error;
+  if (!error) {
+    salesItemState.version += 1;
+  }
   if (isLocalValidationError(error)) {
     salesItemState.forceImmediateUpdateFormValidationId += 1;
   }
