@@ -42,7 +42,13 @@ export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) 
     )
     .map((propertyName: any) => {
       const genericInputProps = { ...props, propertyName };
-      return <GenericInput key={propertyName} {...genericInputProps} />;
+      return (
+        <GenericInput
+          key={propertyName}
+          defaultValue={serviceFunctionType === 'update' ? instance[propertyName] : undefined}
+          {...genericInputProps}
+        />
+      );
     });
 
   const verb = serviceFunctionType[0].toUpperCase() + serviceFunctionType.slice(1);

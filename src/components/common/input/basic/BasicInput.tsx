@@ -50,9 +50,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
       if (lastDoneImmediateValidationId !== forceImmediateValidationId && inputRef) {
         setLastDoneImmediateValidationId(forceImmediateValidationId);
         const propertyValue = transformPropertyValue(await transformInputValueToPropertyValue(inputRef));
-        if (serviceFunctionType !== 'update' || (serviceFunctionType === 'update' && propertyValue !== '')) {
-          await validatePropertyValue(propertyValue);
-        }
+        await validatePropertyValue(propertyValue);
       }
     }
 
@@ -113,7 +111,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
             type === 'file' || propertyName === 'version' ? undefined : defaultValue ?? instance[propertyName]
           }
           value={propertyName === 'version' ? defaultValue : undefined}
-          readOnly={propertyName === 'version' ? true : false}
+          readOnly={propertyName === 'version'}
           {...getInputValidationProps(Class, propertyName)}
           onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
           onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}

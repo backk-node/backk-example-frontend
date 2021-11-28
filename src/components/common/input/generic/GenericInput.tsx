@@ -11,6 +11,7 @@ export interface GenericInputProps<T extends Record<string, any>> {
   propertyName: keyof T & string;
   serviceFunctionType: ServiceFunctionType;
   forceImmediateValidationId: number;
+  defaultValue?: any;
 }
 
 export default function GenericInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {

@@ -8,6 +8,7 @@ const { salesItemState } = store.getState();
 export default async function updateSalesItem(newSalesItem: SalesItem): Promise<void> {
   salesItemState.salesItemUpdateError = undefined; // NOSONAR
   const [, error] = await salesItemService.updateSalesItem(newSalesItem);
+  console.log(newSalesItem);
   salesItemState.salesItemUpdateError = error;
   if (!error) {
     salesItemState.version += 1;

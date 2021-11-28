@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GenericBasicInput, { GenericBasicInputProps, PropertyValue } from './GenericBasicInput';
 
 export default function BasicInputArray<T extends { [key: string]: any }>(props: GenericBasicInputProps<T>) {
-  const { defaultValue, instance, propertyName } = props;
+  const { instance, propertyName } = props;
   const [hasInputs, setHasInputs] = useState(
     instance[propertyName].length > 0 ? Array(instance[propertyName].length).fill(true) : [true]
   );
@@ -52,7 +52,7 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
         <GenericBasicInput
           {...props}
           genericType="array"
-          defaultValue={defaultValue ?? instance[propertyName][index]}
+          defaultValue={instance[propertyName][index]}
           shouldDisplayLabel={index === firstInputIndex}
           transformPropertyValue={(inputEventOrRef) =>
             transformPropertyValueToArrayPropertyValue(inputEventOrRef, index)
