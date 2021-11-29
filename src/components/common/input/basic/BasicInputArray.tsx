@@ -8,6 +8,7 @@ export default function BasicInputArray<T extends { [key: string]: any }>(props:
   );
 
   function transformPropertyValueToArrayPropertyValue(propertyValue: PropertyValue, index: number) {
+    instance[propertyName] = [...instance[propertyName]] as any;
     instance[propertyName][index] = propertyValue === '' ? undefined : propertyValue;
     return instance[propertyName];
   }
