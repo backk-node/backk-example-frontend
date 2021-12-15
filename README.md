@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# Backk Example Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Backk example frontend is a React app that uses backk-example-microservice's generated client to connect to [backk-example-microservice](https://github.com/backk-node/backk-example-microservice)
+The generated client is copied from backk-example-microservice to `src/services/backk-example-microservice.default`.
+`backk-example-microservice.default` is the namespaced microservice for `backk-example-microservice`, where `default` is the Kubernetes namespace of the microservice.
+If your frontend wants to use other microservices, you can copy more generated clients to directory `src/services`.
 
-## Available Scripts
+Copying a generated client manually is just one way of using generated clients, other possibilities in your frontend client project are:
+- You can reference the directory in the microservice containing the generated client directly from the frontend client project if you are using a monorepo
+- You can create a git submodule or subtree that references the microservice repo containing the generated client code
+- If your microservice's CI pipeline publish generated clients as NPM packages, you can install the needed NPM packages in your frontend client project
 
-In the project directory, you can run:
+## Starting Example Frontend
+1. Clone backk-example-frontend to a local directory
+2. Run `npm install`
+3. Run `npm start`
+4. Start [backk-example-microservice](https://github.com/backk-node/backk-example-microservice)
+5. Change the URL of frontend in the browser to `http://localhost:3001/?serverPort=3000`, or use the port that backk-example-microservice is using if it is not 3000.
+6. Now you can use the user-interface to query Tags by name filter and create new sales items. When new sales item is created, you will have possibility to update the sales item.
 
-### `npm start`
+![Backk Example Frontend](./doc/screen.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Production
+Generated client(s) must be configured with microservices' Kubernetes Cluster Edge FQDN
+Each generated client has `MicroserviceOptions`class in `_backk` directory.
+FQDN can be configured:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```ts
+MicroserviceOptions.setFqdn('give FQDN here')
+```
 
-### `npm test`
+If FQDN is not configured, `localhost` will be used as default.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Authorization
+Generated client(s) must be configured with Access Token storage encryption key.
+Generated clients assume that Access Token is stored in Session Storage with key `accessToken`
+Generated clients assume that Access Token is encrypted.
 
-### `npm run build`
+Encryption key can be set:
+```ts
+MicroserviceOptions.setAccessTokenStorageEncryptionKey('give encryption key here')
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Functionality
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Backk example frontend has implemented a form and input component that are easy to use.
+Backk example frontend uses [universal-mode-react](https://github.com/universal-model/universal-model-react) as state management solution.
+For example, You can create a form for creating a new sales item with following code:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```tsx
+import React from 'react';
+import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
+import createSalesItem from '../model/actions/createSalesItem';
+import store from '../../../store/store';
+import Form from '../../common/form/Form';
 
-### `npm run eject`
+const salesItem = new SalesItem();
+const { salesItemState } = store.getState();
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+export default function CreateSalesItem() {
+  store.useState([salesItemState]);
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  return (
+    <Form
+      Class={SalesItem}
+      instance={salesItem}
+      serviceFunctionType={'create'}
+      forceImmediateValidationId={salesItemState.forceImmediateCreateFormValidationId}
+      error={salesItemState.salesItemCreationError}
+      onSubmitForm={createSalesItem}
+    />
+  );
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```

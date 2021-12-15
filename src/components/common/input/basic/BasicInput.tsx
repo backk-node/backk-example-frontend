@@ -3,7 +3,7 @@ import './BasicInput.css';
 import {
   getInputValidationProps,
   getValidationMessage,
-  getValidationMessageClassNames,
+  getValidationMessageHtmlClassNames,
   PossibleString,
   validateServiceFunctionArgumentProperty,
 } from 'backk-frontend-utils';
@@ -94,7 +94,7 @@ export default function BasicInput<T extends { [key: string]: any }>({
   let validationMessage;
   if (shouldShowValidationMessage) {
     validationMessage = (
-      <label className={getValidationMessageClassNames(validationErrorMessage)}>
+      <label className={getValidationMessageHtmlClassNames(validationErrorMessage)}>
         {getValidationMessage(validationErrorMessage)}
       </label>
     );
