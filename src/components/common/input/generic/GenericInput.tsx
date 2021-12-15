@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
 import './GenericInput.css';
-import { getInputType, ServiceFunctionType } from 'backk-frontend-utils';
+import { getInputType, InputType, ServiceFunctionType } from 'backk-frontend-utils';
 import CheckboxInput from '../checkbox/CheckboxInput';
 import GenericSelectInput from '../select/GenericSelectInput';
 import GenericBasicInput from '../basic/GenericBasicInput';
@@ -12,6 +12,7 @@ export interface GenericInputProps<T extends Record<string, any>> {
   serviceFunctionType: ServiceFunctionType;
   forceImmediateValidationId: number;
   defaultValue?: any;
+  InputTypeToInputComponentMap?: Partial<Record<InputType, ComponentType<any>>>;
 }
 
 export default function GenericInput<T extends { [key: string]: any }>(props: GenericInputProps<T>) {

@@ -17,9 +17,9 @@ export default function SelectInput<T extends { [key: string]: any }>({
   instance,
   Class,
   propertyName,
-  serviceFunctionType,
   transformInputValueToPropertyValue = defaultTransformInputValueToPropertyValue,
   multiple = false,
+  InputTypeToInputComponentMap,
 }: SelectInputProps<T>) {
   async function onChange(event: React.FormEvent<HTMLSelectElement>) {
     let propertyValue = transformInputValueToPropertyValue(event.currentTarget.value);
@@ -34,12 +34,22 @@ export default function SelectInput<T extends { [key: string]: any }>({
     <option key={selectInputValue}>{selectInputValue}</option>
   ));
 
+  const selectProps = {
+    multiple,
+    onChange,
+    defaultValue: instance[propertyName],
+  };
+
+  let selectComponent = <select {...selectProps}>{options}</select>;
+  if (InputTypeToInputComponentMap?.['select']) {
+    const SelectComponent = InputTypeToInputComponentMap['select'];
+    selectComponent = <SelectComponent {...selectProps}>{options}</SelectComponent>;
+  }
+
   return (
     <div className="row">
       <label>{propertyName[0].toUpperCase() + propertyName.slice(1)}</label>
-      <select multiple={multiple} defaultValue={instance[propertyName]} onChange={onChange}>
-        {options}
-      </select>
+      {selectComponent}
     </div>
   );
 }

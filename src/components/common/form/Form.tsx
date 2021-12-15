@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
 import './Form.css';
 import SalesItem from '../../../services/backk-example-microservice.default/salesitem/types/entities/SalesItem';
 import {
   getInstanceWithUndefinedRemovedFromArrays,
+  InputType,
   isObjectProperty,
   PossibleBackkError,
   removeUnchangedProperties,
@@ -21,6 +22,7 @@ export interface FormProps<T extends { [key: string]: any }> {
   error: PossibleBackkError;
   currentInstance?: T;
   buttonText?: string;
+  InputTypeToInputComponentMap?: Partial<Record<InputType, ComponentType<any>>>;
 }
 
 export default function Form({ error, onSubmitForm, ...props }: FormProps<any>) {

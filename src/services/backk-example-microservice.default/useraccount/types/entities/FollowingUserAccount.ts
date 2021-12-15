@@ -12,7 +12,7 @@ import {
   MaxLengthAndMatches,
   ValidateIf,
 } from 'backk-frontend-utils';
-import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
+import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .inputType file
 
 export default class FollowingUserAccount {
   @IsUndefined({

@@ -17,5 +17,5 @@ export default function DateInput<T extends { [key: string]: any }>(props: Gener
   const propertyValue = instance[propertyName];
   const defaultValue = propertyValue ? dayjs(propertyValue).format('YYYY-MM-DD') : undefined;
   const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
-  return <BasicInput type="date" {...basicInputProps} />;
+  return <BasicInput inputType="date" {...basicInputProps} />;
 }

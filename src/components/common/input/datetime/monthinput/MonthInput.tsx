@@ -17,5 +17,5 @@ export default function MonthInput<T extends { [key: string]: any }>(props: Gene
   const propertyValue = instance[propertyName];
   const defaultValue = propertyValue ? dayjs(propertyValue).format('YYYY-MM') : undefined;
   const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
-  return <BasicInput type="month" {...basicInputProps} />;
+  return <BasicInput inputType="month" {...basicInputProps} />;
 }

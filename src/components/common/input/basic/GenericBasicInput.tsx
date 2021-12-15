@@ -45,6 +45,6 @@ export default function GenericBasicInput<T extends { [key: string]: any }>(
     case 'color':
       return <ColorInput {...props} />;
     default:
-      return <BasicInput type="text" {...props} />;
+      return <BasicInput inputType="text" {...props} />;
   }
 }

@@ -4,13 +4,14 @@ import {
   getInputValidationProps,
   getValidationMessage,
   getValidationMessageHtmlClassNames,
+  InputType,
   PossibleString,
   validateServiceFunctionArgumentProperty,
 } from 'backk-frontend-utils';
 import { GenericBasicInputProps, PropertyValue } from './GenericBasicInput';
 
 export interface BasicInputProps<T extends { [key: string]: any }> extends GenericBasicInputProps<T> {
-  type: string;
+  inputType: InputType;
   isDialogInputType?: boolean;
   shouldShowValidationMessage?: boolean;
   transformInputValueToPropertyValue?: (
@@ -34,12 +35,13 @@ export default function BasicInput<T extends { [key: string]: any }>({
   transformInputValueToPropertyValue = defaultTransformInputValueToPropertyValue,
   transformPropertyValue = (propertyValue) => propertyValue,
   forceImmediateValidationId,
-  type,
+  inputType,
   defaultValue,
   isDialogInputType = false,
   shouldShowValidationMessage = true,
   shouldDisplayLabel = true,
   children,
+  InputTypeToInputComponentMap,
 }: BasicInputProps<T>) {
   const inputRef = useRef(null as HTMLInputElement | null);
   const [validationErrorMessage, setValidationErrorMessage] = useState(undefined as PossibleString);
@@ -100,22 +102,29 @@ export default function BasicInput<T extends { [key: string]: any }>({
     );
   }
 
+  const inputProps = {
+    ...getInputValidationProps(Class, propertyName),
+    ref: inputRef,
+    type: inputType,
+    defaultValue:
+      inputType === 'file' || propertyName === 'version' ? undefined : defaultValue ?? instance[propertyName],
+    value: propertyName === 'version' ? defaultValue : undefined,
+    readOnly: propertyName === 'version',
+    onBlur: isDialogInputType ? undefined : validateAndUpdatePropertyValue,
+    onChange: isDialogInputType ? validateAndUpdatePropertyValue : undefined,
+  };
+
+  let inputComponent = <input {...inputProps} />;
+  if (InputTypeToInputComponentMap?.[inputType]) {
+    const InputComponent = InputTypeToInputComponentMap[inputType]!;
+    inputComponent = <InputComponent {...inputProps} />;
+  }
+
   const input = (
     <React.Fragment>
       <label>{shouldDisplayLabel ? propertyName[0].toUpperCase() + propertyName.slice(1) : ''}</label>
       <span className="inputAndChildren">
-        <input
-          ref={inputRef}
-          type={type}
-          defaultValue={
-            type === 'file' || propertyName === 'version' ? undefined : defaultValue ?? instance[propertyName]
-          }
-          value={propertyName === 'version' ? defaultValue : undefined}
-          readOnly={propertyName === 'version'}
-          {...getInputValidationProps(Class, propertyName)}
-          onBlur={isDialogInputType ? undefined : validateAndUpdatePropertyValue}
-          onChange={isDialogInputType ? validateAndUpdatePropertyValue : undefined}
-        />
+        {inputComponent}
         {children}
       </span>
       {validationMessage}

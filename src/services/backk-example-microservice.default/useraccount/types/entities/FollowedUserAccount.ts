@@ -13,7 +13,7 @@ import {
   ValidateIf,
 } from 'backk-frontend-utils';
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
-import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
+import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .inputType file
 
 export default class FollowedUserAccount {
   @IsUndefined({

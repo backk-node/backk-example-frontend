@@ -57,6 +57,10 @@ import Form from '../../common/form/Form';
 const salesItem = new SalesItem();
 const { salesItemState } = store.getState();
 
+function MyNumberInput(props: any) {
+  return <input {...props} style={{ backgroundColor: 'lightyellow'}}/>;
+}
+
 export default function CreateSalesItem() {
   store.useState([salesItemState]);
 
@@ -68,8 +72,14 @@ export default function CreateSalesItem() {
       forceImmediateValidationId={salesItemState.forceImmediateCreateFormValidationId}
       error={salesItemState.salesItemCreationError}
       onSubmitForm={createSalesItem}
+      InputTypeToInputComponentMap={{
+        number: MyNumberInput
+      }}
     />
   );
 }
-
 ```
+
+By default `Form` renders browser's standard HTML inputs, but you can instruct the form to use your custom components by defining the `InputTypeToInputComponentMap` property.
+In above example, we define that inputs with type 'number' should be rendered using `MyNumberInput` component, which is the same as standard HTML input, but with a light yellow background
+You should keep in mind that your custom input components should comply with standard inputs' API (attributes and event handlers)

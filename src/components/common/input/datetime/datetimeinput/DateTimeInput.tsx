@@ -16,5 +16,5 @@ export default function DateTimeInput<T extends { [key: string]: any }>(props: G
     ? dayjs(propertyValue).format('YYYY-MM-DD') + 'T' + dayjs(propertyValue).format('HH:mm')
     : undefined;
   const basicInputProps = { ...props, transformInputValueToPropertyValue, defaultValue };
-  return <BasicInput type="datetime-local" {...basicInputProps} />;
+  return <BasicInput inputType="datetime-local" {...basicInputProps} />;
 }

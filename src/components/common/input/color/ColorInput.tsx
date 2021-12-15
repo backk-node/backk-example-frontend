@@ -7,7 +7,7 @@ export default function ColorInput<T extends { [key: string]: any }>(props: Gene
 
   return (
     <BasicInput
-      type="color"
+      inputType="color"
       isDialogInputType={true}
       defaultValue={instance[propertyName] || '#000000'}
       shouldShowValidationMessage={false}

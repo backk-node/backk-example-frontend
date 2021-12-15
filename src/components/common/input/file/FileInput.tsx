@@ -36,7 +36,7 @@ export default function FileInput<T extends { [key: string]: any }>(props: Gener
 
   const basicInputProps = { ...props, isDialogInputType: true, transformInputValueToPropertyValue };
   return (
-    <BasicInput {...basicInputProps} type="file">
+    <BasicInput {...basicInputProps} inputType="file">
       {children}
       {dataUri?.startsWith('data:image/') ? <img alt={propertyName + ' image'} src={dataUri} /> : null}
     </BasicInput>

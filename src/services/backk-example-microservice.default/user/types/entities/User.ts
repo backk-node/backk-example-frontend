@@ -15,7 +15,7 @@ import {
 import OwnSalesItem from '../../../salesitem/types/entities/OwnSalesItem';
 import FollowedUserAccount from '../../../useraccount/types/entities/FollowedUserAccount';
 import FollowingUserAccount from '../../../useraccount/types/entities/FollowingUserAccount';
-import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .type file
+import MicroserviceOptions from '../../../_backk/MicroserviceOptions'; // This is an auto-generated file from the respective .inputType file
 
 export default class User {
   @IsUndefined({

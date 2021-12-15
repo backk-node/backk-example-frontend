@@ -7,6 +7,10 @@ import Form from '../../common/form/Form';
 const salesItem = new SalesItem();
 const { salesItemState } = store.getState();
 
+function MyNumberInput(props: any) {
+  return <input {...props} style={{ backgroundColor: 'lightyellow' }} />;
+}
+
 export default function CreateSalesItem() {
   store.useState([salesItemState]);
 
@@ -18,6 +22,9 @@ export default function CreateSalesItem() {
       forceImmediateValidationId={salesItemState.forceImmediateCreateFormValidationId}
       error={salesItemState.salesItemCreationError}
       onSubmitForm={createSalesItem}
+      InputTypeToInputComponentMap={{
+        number: MyNumberInput,
+      }}
     />
   );
 }
